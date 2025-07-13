@@ -38,7 +38,7 @@ aplayer: true
 
 ### 🎵[深昏睡](https://www.bilibili.com/video/BV1e2JBzPEqa)
 
-<img src="https://cdn.yuumi.link/images/songs/深昏睡.png" alt="深昏睡" style="height:250px;"/>
+[<img src="https://cdn.yuumi.link/images/songs/深昏睡.png" alt="深昏睡" style="height:250px;"/>](https://music.163.com/#/song?id=2707096680)
 
 - *2025.5.21*
 - Original：[春野](https://www.bilibili.com/video/BV1dx411s7po)

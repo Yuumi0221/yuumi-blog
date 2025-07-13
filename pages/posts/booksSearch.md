@@ -2,7 +2,7 @@
 layout: post
 title: 各种搜书网站整理
 date: 2021-09-28
-updated: 2021-11-20
+updated: 2025-07-13
 tags: 
   - 分享
   - 资源
@@ -12,7 +12,7 @@ categories: [小分享, 书刊]
 
 <div class="primary">
 
-> 为了防止自己老是忘记自己收藏过搜书网站（什么弱智），就随手整理了一下书刊类电子资源。废话不多说，直接甩链接！
+> 为了防止自己老是忘记自己收藏过搜书网站（什么笨蛋），就随手整理了一下书刊类电子资源。废话不多说，直接甩链接！
 
 </div>
 
@@ -26,19 +26,11 @@ categories: [小分享, 书刊]
 
 Tags：全面
 
-![eleps (自定义)](https://cdn.yuumi.link/images/booksSearch/eleps%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
-
 - 大部分情况下用它就够啦！
 - 提供DOC / TXT／PDF／MOBI／EPUB／AZW 等多种格式
 - 论坛／书站的搜索结果
 
-### 搜书网
-
-网站：https://www.soushu.vip/
-
-Tags：全面
-
-<img src="https://cdn.yuumi.link/images/booksSearch/logo.png2.1.0" alt="搜书网-WellCMS" style="zoom:80%;" />
+![eleps (自定义)](https://cdn.yuumi.link/images/booksSearch/eleps%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png#pic_left)
 
 ### Sobooks
 
@@ -47,16 +39,6 @@ Tags：全面
 Tags：文学、人文社科
 
 ![image-20210928224351935 (自定义)](https://cdn.yuumi.link/images/booksSearch/image-20210928224351935%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
-
-### 三分钟阅读
-
-网站：https://www.sanfenzhong.net/
-
-Tag：杂志
-
-![三分钟阅读](https://cdn.yuumi.link/images/booksSearch/logo@2x.png)_这个图标夜间模式才能看到_
-
-- 《读者》、《意林》、国学经典
 
 
 
@@ -68,11 +50,10 @@ Tag：杂志
 
 Tags：计算机
 
-
+- 找计算机专业的书真的牛得不行，宝藏网站
 
 ![logo2 (自定义)](https://cdn.yuumi.link/images/booksSearch/logo2%20(%E8%87%AA%E5%AE%9A%E4%B9%89).gif)
 
-- 找计算机专业的书真的牛得不行，宝藏网站
 
 ### 书栈网
 
@@ -80,16 +61,10 @@ Tags：计算机
 
 Tags：计算机、互联网、专业
 
-![logo (自定义)](https://cdn.yuumi.link/images/booksSearch/logo%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
-
 - 专注于互联网知识领域的电子书平台
 - 电子书榜单功能
 
-### iBooker布克
-
-网址：https://home.apachecn.org/
-
-Tags：计算机
+![logo (自定义)](https://cdn.yuumi.link/images/booksSearch/logo%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
 
 ### 书格
 
@@ -97,10 +72,10 @@ Tags：计算机
 
 Tags：古书
 
-![书格](https://cdn.yuumi.link/images/booksSearch/logo-16328394780005.png)
-
 - 一个古色古香的电子古书网站
 - 读者交流区
+
+![书格](https://cdn.yuumi.link/images/booksSearch/logo-16328394780005.png)
 
 ### 编程随想
 
@@ -108,17 +83,7 @@ Tags：古书
 
 Tags：多学科
 
-- 是大佬整理分享在github上的小小书站
-
-
-
-## 网络小说
-
-### 知轩藏书
-
-网址：http://www.zxcs.me/
-
-![logo-163284150366415 (自定义)](https://cdn.yuumi.link/images/booksSearch/logo-163284150366415%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
+- 大佬整理分享在github上的小小书站
 
 
 
@@ -126,9 +91,14 @@ Tags：多学科
 
 ### ZLibrary
 
-网站：https://jp1lib.org/
+网站：https://zh.z-library.sk/
+
+镜像入口：https://zlibrary.sodanav.com/
 
 Tag：各种语言
+
+- 因为版权问题闭站，后又起死回生的ZLibrary
+- 中文外文书籍应有尽有，超级强大的搜书网站
 
 ![logo.zlibrary (自定义)](https://cdn.yuumi.link/images/booksSearch/logo.zlibrary%20(%E8%87%AA%E5%AE%9A%E4%B9%89).png)
 
@@ -142,7 +112,7 @@ Tag：英文
 
 
 
-## 一些众所周知的学术资源网站
+## 学术资源
 
 ### 全国图书馆参考咨询联盟
 
@@ -152,10 +122,6 @@ Tag：英文
 
 - 用来找资源有无的，**不能下载书！！**
 
-### 各种学校图书馆网站
-
-
-- 自行百度吧（？）
 
 ### 中国知网
 
@@ -198,16 +164,15 @@ Tag：英文
 
 
 
-
-
 ## 结语
 
-没啦，暂时整理了这么多！其实我主要用的还是[学校图书馆](#各种学校图书馆网站)（及其关联的各大资源网站）、[鸠摩](#鸠摩搜书)，外文用[ZLibrary](#ZLibrary)啦。之后如果有新追加的再来更新www
+暂时整理了这么多！其实我主要用的还是[学校图书馆](#各种学校图书馆网站)（及其关联的各大资源网站）、[鸠摩](#鸠摩搜书)，以及[ZLibrary](#ZLibrary)啦。之后如果有新追加的再来更新www
 
-> 2021.11.1更新
+> ——2021.11.1更新——
+> 今日被推荐了脚本之家电子书，里面计算机专业书籍真的好全！还有各种版本，非常nice！
 
-今日被推荐了脚本之家电子书，里面计算机专业书籍真的好全！还有各种版本，非常nice！（原来脚本之家还有电子书，我才知道——）
+> ——2021.11.20更新——
+> 在室友的帮助下找到了超级完美的外文文献检索&下载网站，简直就是写论文利器啊！因此赶忙收藏了过来。
 
-> 2021.11.20更新
-
-在室友的帮助下找到了超级完美的外文文献检索&下载网站，简直就是写论文利器啊！因此赶忙收藏了过来。
+> ——2025.7.13更新——
+> 很长一段时间没有找书的需求，许久不见再看发现时过境迁，遂更新了文章，删去了一些寄了的搜书网站。
