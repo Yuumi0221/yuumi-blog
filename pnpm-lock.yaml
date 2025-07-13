@@ -18,23 +18,23 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
       valaxy:
-        specifier: 0.25.1
-        version: 0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
+        specifier: 0.25.2
+        version: 0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
       valaxy-addon-bangumi:
         specifier: ^0.2.2
-        version: 0.2.2(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
+        version: 0.2.2(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
       valaxy-addon-components:
         specifier: ^0.1.0
         version: 0.1.0
       valaxy-addon-lightgallery:
         specifier: ^0.0.4
-        version: 0.0.4(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
+        version: 0.0.4(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
       valaxy-addon-waline:
         specifier: ^0.2.1
-        version: 0.2.1(typescript@5.8.3)(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
+        version: 0.2.1(typescript@5.8.3)(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
       valaxy-theme-yun:
-        specifier: 0.25.1
-        version: 0.25.1(vue@3.5.17(typescript@5.8.3))
+        specifier: 0.25.2
+        version: 0.25.2(vue@3.5.17(typescript@5.8.3))
     devDependencies:
       typescript:
         specifier: ^5.8.3
@@ -1146,11 +1146,11 @@ packages:
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
 
-  '@valaxyjs/devtools@0.25.1':
-    resolution: {integrity: sha512-7u9SQSCHcNcz0rABpAk1n4ZoSXPfuUpBv7A21mKy5PDZIxv/0X5QuTSWrd4+vRxMD8Js9wsCl9gjq+ltkOqzBA==}
+  '@valaxyjs/devtools@0.25.2':
+    resolution: {integrity: sha512-aEr709cpnXKVkTSAirHRrRFqhzjCc4I+1lR7pMY+gdxRcQDk+km6csA2R/qwiuEjMYtuABvbGkcCR9fnxQpzvQ==}
 
-  '@valaxyjs/utils@0.25.1':
-    resolution: {integrity: sha512-dwd8jE9uHW6ojsYV3UtbidU47uWYDCeUz4XkLzaJe3kYDt3nF1NgSHIBjZp2+OF3q9cMDJeeeECOJwJs0YwYvw==}
+  '@valaxyjs/utils@0.25.2':
+    resolution: {integrity: sha512-jPdR6zQu/LOgcKLNGKHYj2AF2xd4M3K1cq+7tSoER9gqbqUnT8wQQu4uq2TGYiHGOA3F48zMqrJyrLjfku4p/g==}
 
   '@vitejs/plugin-vue@6.0.0':
     resolution: {integrity: sha512-iAliE72WsdhjzTOp2DtvKThq1VBC4REhwRcaA+zPAAph6I+OQhUXv+Xu2KS7ElxYtb7Zc/3R30Hwv1DxEo7NXQ==}
@@ -3429,11 +3429,11 @@ packages:
     peerDependencies:
       valaxy: '>=0.22'
 
-  valaxy-theme-yun@0.25.1:
-    resolution: {integrity: sha512-Ctl3FpFqBGriNo9jCwM5JcTo6yjDoYHe/VN2luYqXSFFsqKjiiM/7tAzQU2uqmePxRKsehF/twJt7hBdYw8d/A==}
+  valaxy-theme-yun@0.25.2:
+    resolution: {integrity: sha512-5W32s4NkvZWWfMV4j3MeckUpzet65DS0kvp/uLn+qaJOLWVCQFdM4jw7NGTMdaTcWBBaqyaQQNoEITliwzC+HA==}
 
-  valaxy@0.25.1:
-    resolution: {integrity: sha512-WbvYUplFVBn0OPbpMvf/LMLEOsabnpR9f7jN3LaMyAeVhwyNXtYZDZDAprKZKoOlvdP6So2UCUBmiRqU/l3mbA==}
+  valaxy@0.25.2:
+    resolution: {integrity: sha512-GYYNYtwBTlRLiNmRO8JRpSiK3mFAObtCcBo3aYdaBGSsrU71HEywxfPx0AFSy2iAtDyRBh4CDbk9uVfXkE48UQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
 
@@ -4901,7 +4901,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@valaxyjs/devtools@0.25.1(debug@4.4.1)(rollup@4.45.0)(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))':
+  '@valaxyjs/devtools@0.25.2(debug@4.4.1)(rollup@4.45.0)(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))':
     dependencies:
       '@rollup/pluginutils': 5.2.0(rollup@4.45.0)
       axios: 1.10.0(debug@4.4.1)
@@ -4918,7 +4918,7 @@ snapshots:
       - supports-color
       - vite
 
-  '@valaxyjs/utils@0.25.1': {}
+  '@valaxyjs/utils@0.25.2': {}
 
   '@vitejs/plugin-vue@6.0.0(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
@@ -7414,26 +7414,26 @@ snapshots:
 
   uuid@11.1.0: {}
 
-  valaxy-addon-bangumi@0.2.2(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
+  valaxy-addon-bangumi@0.2.2(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
     dependencies:
       bilibili-bangumi-component: 0.3.1
-      valaxy: 0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
+      valaxy: 0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
 
   valaxy-addon-components@0.1.0: {}
 
-  valaxy-addon-lightgallery@0.0.4(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
+  valaxy-addon-lightgallery@0.0.4(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
     dependencies:
       lightgallery: 2.7.2
-      valaxy: 0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
+      valaxy: 0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
 
-  valaxy-addon-waline@0.2.1(typescript@5.8.3)(valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
+  valaxy-addon-waline@0.2.1(typescript@5.8.3)(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
     dependencies:
       '@waline/client': 3.4.1(typescript@5.8.3)
-      valaxy: 0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
+      valaxy: 0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - typescript
 
-  valaxy-theme-yun@0.25.1(vue@3.5.17(typescript@5.8.3)):
+  valaxy-theme-yun@0.25.2(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@ctrl/tinycolor': 4.1.0
       '@explosions/fireworks': 0.2.0
@@ -7447,7 +7447,7 @@ snapshots:
       - magicast
       - vue
 
-  valaxy@0.25.1(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0):
+  valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0):
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@antfu/utils': 9.2.0
@@ -7459,8 +7459,8 @@ snapshots:
       '@unhead/addons': 2.0.12(rollup@4.45.0)
       '@unhead/schema-org': 2.0.12(@unhead/vue@2.0.12(vue@3.5.17(typescript@5.8.3)))
       '@unhead/vue': 2.0.12(vue@3.5.17(typescript@5.8.3))
-      '@valaxyjs/devtools': 0.25.1(debug@4.4.1)(rollup@4.45.0)(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))
-      '@valaxyjs/utils': 0.25.1
+      '@valaxyjs/devtools': 0.25.2(debug@4.4.1)(rollup@4.45.0)(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      '@valaxyjs/utils': 0.25.2
       '@vitejs/plugin-vue': 6.0.0(vite@7.0.4(@types/node@24.0.13)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       '@vue/devtools-api': 7.7.2
       '@vueuse/core': 13.5.0(vue@3.5.17(typescript@5.8.3))
