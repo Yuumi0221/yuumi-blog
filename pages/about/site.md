@@ -8,6 +8,8 @@ nav: false
 
 欢迎来这里畅所欲言~~
 
+[Yuumi's Link抢先体验版](https://links.yuumi.link/)
+
 ### 关于评论头像
 
 有三种方法可以拥有自定义评论头像：
