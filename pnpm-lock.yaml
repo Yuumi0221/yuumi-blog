@@ -26,6 +26,9 @@ importers:
       valaxy-addon-components:
         specifier: ^0.1.0
         version: 0.1.0
+      valaxy-addon-face:
+        specifier: ^0.2.0
+        version: 0.2.0
       valaxy-addon-lightgallery:
         specifier: ^0.0.4
         version: 0.0.4(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))
@@ -3418,6 +3421,9 @@ packages:
 
   valaxy-addon-components@0.1.0:
     resolution: {integrity: sha512-7uCJgUgc2JHISmz/UDQlhBqGSNW4QKmkiRlcwj5WhjhScC/KktK8JtADeKh6FCaAJHbjShovHB/9UPVtnTwORg==}
+
+  valaxy-addon-face@0.2.0:
+    resolution: {integrity: sha512-Dc8qx5WHbJgbMhMpbUmV9KSYAciWAp0xRAZERVytyvOvbjwZE0DL+yXCTHuAseetohEb0LyaOSKemVrrsS6UlQ==}
 
   valaxy-addon-lightgallery@0.0.4:
     resolution: {integrity: sha512-+pQJUBCPXff5Isd5ZfNrgkEqh+oKPvzNvgw74vAxmPEeWKvW8786lftVgkoWByFrNsn92iN7q7h5jt3evmQFDg==}
@@ -7420,6 +7426,8 @@ snapshots:
       valaxy: 0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
 
   valaxy-addon-components@0.1.0: {}
+
+  valaxy-addon-face@0.2.0: {}
 
   valaxy-addon-lightgallery@0.0.4(valaxy@0.25.2(@babel/parser@7.28.0)(@nuxt/kit@3.17.6)(@types/markdown-it@14.1.2)(@types/node@24.0.13)(@vue/compiler-dom@3.5.17)(@vue/compiler-sfc@3.5.17)(axios@1.10.0)(eslint@9.31.0(jiti@2.4.2))(postcss@8.5.6)(rollup@4.45.0)(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)):
     dependencies:

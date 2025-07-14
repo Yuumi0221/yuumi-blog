@@ -10,6 +10,7 @@ tags:
   - ACG
   - 日文
 categories: 小歌曲
+cover: https://cdn.yuumi.link/images/settings/Yuumi_Icon.png
 aplayer: true
 ---
 

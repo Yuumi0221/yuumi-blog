@@ -14,7 +14,7 @@ cover: https://cdn.yuumi.link/images/settings/yuumi.png
 >
 
 
-🌸东之魔法大学在读大学生
+🌸魔法见习生研习中
 
 🌸拥抱世界、热爱美好
 
@@ -31,6 +31,7 @@ cover: https://cdn.yuumi.link/images/settings/yuumi.png
 	<embed src="https://wakatime.com/share/@Yuumi/03d69028-f46a-428b-a168-2696cb23afe7.svg" width=50% />
 </figure>
 
+<a> </a>
 
 <div style="text-align: center"><b>感谢你在茫茫互联的网络中点进了我的主页，并看到了这里。衷心地祝愿你能成为更好的自己💛</b></div>
 

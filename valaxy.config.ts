@@ -1,10 +1,11 @@
 import { defineValaxyConfig } from 'valaxy'
 // import { defineConfig } from 'valaxy'
 import type { UserThemeConfig } from 'valaxy-theme-yun'
-import { addonWaline } from "valaxy-addon-waline";
-// import { addonComponents } from "valaxy-addon-components";
-import { addonLightGallery } from 'valaxy-addon-lightgallery';
+import { addonWaline } from "valaxy-addon-waline"
+// import { addonComponents } from "valaxy-addon-components"
+import { addonLightGallery } from 'valaxy-addon-lightgallery'
 import { addonBangumi } from 'valaxy-addon-bangumi'
+import { addonFace } from 'valaxy-addon-face'
 
 // add icons what you will need
 const safelist = [
@@ -142,6 +143,9 @@ export default defineValaxyConfig<UserThemeConfig>({
           --bbc-primary-color: #d69b54;
         }
       `,
+    }),
+    addonFace({
+      path: 'https://cdn.yuumi.link/emotes/',
     }),
   ],
   
