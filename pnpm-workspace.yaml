@@ -1,3 +1,6 @@
+packages:
+  - slides/*
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
