@@ -16,13 +16,13 @@
     "aplayer": "^1.10.1",
     "fuse.js": "^7.1.0",
     "markdown": "^0.5.0",
-    "valaxy": "0.25.2",
+    "valaxy": "0.25.5",
     "valaxy-addon-bangumi": "^0.2.2",
     "valaxy-addon-components": "^0.1.0",
     "valaxy-addon-face": "^0.2.0",
     "valaxy-addon-lightgallery": "^0.0.4",
     "valaxy-addon-waline": "^0.2.1",
-    "valaxy-theme-yun": "0.25.2"
+    "valaxy-theme-yun": "0.25.5"
   },
   "devDependencies": {
     "typescript": "^5.8.3"
