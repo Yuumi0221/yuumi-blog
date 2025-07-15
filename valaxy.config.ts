@@ -31,7 +31,13 @@ export default defineValaxyConfig<UserThemeConfig>({
 
     pages: [
       {
-        name: '追番列表',
+        name: '项目',
+        url: '/projects/',
+        icon: 'i-ri-code-s-slash-line',
+        color: '#ff6cb1b9',
+      },
+      {
+        name: '追番',
         url: '/anime/',
         icon: 'i-ri-movie-line',
         color: '#737de5',
@@ -99,7 +105,6 @@ export default defineValaxyConfig<UserThemeConfig>({
         icp: 'xxxx',
       },
     },
-    
   },
 
   groupIcons: {
@@ -126,7 +131,6 @@ export default defineValaxyConfig<UserThemeConfig>({
       emoji: [
         '//unpkg.com/@waline/emojis@1.2.0/bmoji',
         '//unpkg.com/@waline/emojis@1.2.0/tieba',
-        '//unpkg.com/@waline/emojis@1.2.0/qq',
       ],
     }),
     addonLightGallery(),
@@ -134,7 +138,7 @@ export default defineValaxyConfig<UserThemeConfig>({
       api: 'https://bilibilibgm.yuumi.link/api',
       bilibiliUid: '7498906',
       bgmUid: 'yuumi',
-      bilibiliEnabled: true,
+      bilibiliEnabled: false,
       bgmEnabled: true,
       customCss: `
         :host {
