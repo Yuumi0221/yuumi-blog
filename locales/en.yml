@@ -5,8 +5,32 @@ intro:
 
 menu:
   slides: Slides
+  posts: Posts
+  projects: Projects
+  anime: Anime
+  albums: Albums
+  links: Links
   categories: Categories
   tags: Tags
   search: Search
   home: Home
   archives: Archives
+
+siteConfig:
+  subtitle: Let's keep it going.
+  author:
+    message: Looking for dawn.
+  social:
+    music163: NetEase Cloud Music
+    weibo: Weibo
+    rednote: RedNote
+    youtube: YouTube
+    bilibili: Bilibili
+    email: E-mail
+    zhihu: Zhihu
+    twitter: X
+  sponsor:
+    description: If you like it, could you support me?
+    alipay: Alipay
+    wechatpay: WeChat Pay
+    qqpay: QQ Pay

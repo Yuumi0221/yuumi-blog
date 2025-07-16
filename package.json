@@ -25,6 +25,8 @@
     "valaxy-theme-yun": "0.25.5"
   },
   "devDependencies": {
+    "@iconify-json/arcticons": "^1.2.30",
+    "@iconify-json/ri": "^1.2.5",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.13.1"

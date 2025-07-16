@@ -1,50 +1,51 @@
-import { defineSiteConfig } from 'valaxy'
+import { $t, defineSiteConfig } from 'valaxy'
 
 export default defineSiteConfig({
   url: 'https://www.yuumi.link',
   favicon: "https://cdn.yuumi.link/images/settings/yuumi.svg",
   lang: 'zh-CN',
-  title: "-Yuumi's Blog-",
-  subtitle: '続きを鳴らそう——',
+  title: '-Yuumi\'s Blog-',
+  subtitle: $t('siteConfig.subtitle'),
+  
   author: {
     name: 'Yuumi',
     avatar: "https://cdn.yuumi.link/images/settings/favicon.png",
     status: {
       emoji: '💛',
-      message: 'Looking for dawn.',
+      message: $t('siteConfig.author.message'),
     },
   },
   description: '',
   social: [
     {
-      name: 'RSS',
-      link: '/atom.xml',
-      icon: 'i-ri-rss-line',
-      color: 'orange',
+      name: $t('siteConfig.social.rednote'),
+      link: 'https://www.xiaohongshu.com/user/profile/5f6abe560000000001002329',
+      icon: 'i-simple-icons-xiaohongshu',
+      color: '#da465aff',
     },
     {
-      name: '网易云音乐',
+      name: $t('siteConfig.social.music163'),
       link: 'http://music.163.com/artist?id=30377410&userid=436730182',
       icon: 'i-ri-netease-cloud-music-line',
-      color: '#C10D0C',
+      color: '#ca3636ff',
     },
     {
-      name: '微博',
-      link: 'https://weibo.com/u/3075122387',
-      icon: 'i-ri-weibo-line',
-      color: '#E6162D',
-    },
-    {
-      name: '哔哩哔哩',
+      name: $t('siteConfig.social.bilibili'),
       link: 'https://space.bilibili.com/7498906',
       icon: 'i-ri-bilibili-line',
-      color: '#FF8EB3',
+      color: '#fa97b3ff',
     },
     {
-      name: 'Notion',
-      link: 'https://yuumis.notion.site',
-      icon: 'i-simple-icons-notion',
-      color: '#717171',
+      name: $t('siteConfig.social.youtube'),
+      link: 'https://www.youtube.com/@yuumihoshino1836',
+      icon: 'i-ri-youtube-line',
+      color: '#e03759ff',
+    },
+    {
+      name: $t('siteConfig.social.twitter'),
+      link: 'https://x.com/Yuumi12118924',
+      icon: 'i-ri-twitter-x-line',
+      color: '#3c6886ff',
     },
     {
       name: 'GitHub',
@@ -53,29 +54,41 @@ export default defineSiteConfig({
       color: '#9b9b9b',
     },
     {
-      name: 'E-Mail',
+      name: 'Notion',
+      link: 'https://yuumis.notion.site',
+      icon: 'i-ri-notion-fill',
+      color: '#717171',
+    },
+    {
+      name: $t('siteConfig.social.email'),
       link: 'mailto:yuumi0221@163.com',
       icon: 'i-ri-mail-line',
-      color: '#8E71C1',
+      color: '#71aac1ff',
     },
     {
-      name: 'Pixiv',
-      link: 'https://www.pixiv.net/users/10168567',
-      icon: 'i-simple-icons:pixiv',
-      color: '#0096FA',
+      name: 'RSS',
+      link: '/atom.xml',
+      icon: 'i-ri-rss-line',
+      color: 'orange',
     },
-    {
-      name: '知乎',
-      link: 'https://www.zhihu.com/people/yuumi-81',
-      icon: 'i-ri-zhihu-line',
-      color: '#0084FF',
-    },
-    {
-      name: 'Twitter',
-      link: 'https://twitter.com/Yuumi12118924',
-      icon: 'i-ri-twitter-line',
-      color: '#1da1f2',
-    },
+    // {
+    //   name: $t('siteConfig.social.weibo'),
+    //   link: 'https://weibo.com/u/3075122387',
+    //   icon: 'i-ri-weibo-line',
+    //   color: '#E6162D',
+    // },
+    // {
+    //   name: 'Pixiv',
+    //   link: 'https://www.pixiv.net/users/10168567',
+    //   icon: 'i-arcticons:pixiv',
+    //   color: '#0096FA',
+    // },
+    // {
+    //   name: $t('siteConfig.social.zhihu'),
+    //   link: 'https://www.zhihu.com/people/yuumi-81',
+    //   icon: 'i-ri-zhihu-line',
+    //   color: '#0084FF',
+    // },
   ],
 
   search: {
@@ -104,22 +117,22 @@ export default defineSiteConfig({
 
   sponsor: {
     enable: true,
-    title: '内个……如果可以的话……',
+    description: '如果你喜欢的话……',
     methods: [
       {
-        name: '支付宝',
+        name: $t('siteConfig.sponsor.alipay'),
         url: 'https://cdn.yuumi.link/images/settings/alipay.jpg',
         color: '#00A3EE',
         icon: 'i-ri-alipay-line',
       },
       {
-        name: '微信支付',
+        name: $t('siteConfig.sponsor.wechatpay'),
         url: 'https://cdn.yuumi.link/images/settings/wechatpay.png',
         color: '#2DC100',
         icon: 'i-ri-wechat-pay-line',
       },
       {
-        name: 'QQ 支付',
+        name: $t('siteConfig.sponsor.qqpay'),
         url: 'https://cdn.yuumi.link/images/settings/qqpay.png',
         color: '#12B7F5',
         icon: 'i-ri-qq-line',

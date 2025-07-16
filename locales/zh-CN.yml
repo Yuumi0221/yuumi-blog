@@ -6,8 +6,31 @@ intro:
 menu:
   slides: 幻灯片
   posts: 文章
+  projects: 项目
+  anime: 追番
+  albums: 相册
+  links: 友链
   categories: 分类
   tags: 标签
   search: 搜索
   home: 首页
   archives: 归档
+
+siteConfig:
+  subtitle: 続きを鳴らそう——
+  author:
+    message: 寻望破晓
+  social:
+    music163: 网易云音乐
+    weibo: 微博
+    rednote: 小红书
+    youtube: 油管
+    bilibili: 哔哩哔哩
+    email: 邮箱
+    zhihu: 知乎
+    twitter: 推特
+  sponsor:
+    description: 如果喜欢的话，可以支持一下吗~
+    alipay: 支付宝
+    wechatpay: 微信支付
+    qqpay: QQ支付

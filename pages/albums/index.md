@@ -1,6 +1,6 @@
 ---
 layout: albums
-title: 相册
+title: 
 icon: i-ri-gallery-line
 nav: false
 comment: false
