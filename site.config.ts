@@ -45,7 +45,13 @@ export default defineSiteConfig({
       name: $t('siteConfig.social.twitter'),
       link: 'https://x.com/Yuumi12118924',
       icon: 'i-ri-twitter-x-line',
-      color: '#3c6886ff',
+      color: '#405b6dff',
+    },
+    {
+      name: 'steam',
+      link: 'https://steamcommunity.com/id/yuumi0221/',
+      icon: 'i-ri-steam-line',
+      color: '#32769bff',
     },
     {
       name: 'GitHub',
