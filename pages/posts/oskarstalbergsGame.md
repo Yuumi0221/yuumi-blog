@@ -13,8 +13,6 @@ categories: 小游戏
 
 <!-- more -->
 
-开坑！等着有空了来填w
-
 # Townscaper
 
 [网页demo版](https://oskarstalberg.com/Townscaper/)

@@ -4,15 +4,11 @@ title: 摄影与生活
 date: 2022-11-01
 updated: 2022-11-01
 tags:
-  - 摄影
-  - 作业
+  - 生活
 categories: 小摄影
 cover: https://cdn.yuumi.link/albums/water/水中黄昏.jpg
+excerpt: 记《摄影与生活》课程的两次摄影作业。
 ---
-
-记《摄影与生活》课程的两次摄影作业。
-
-<!-- more -->
 
 > 第一次把自己拍摄的东西展示给除了好朋友以外的其他人看，其实还挺紧张的。一直以来自己拍的照片大多都是自娱自乐，不知道在别人眼中我的作品是什么样的，会有什么意想不到的解读。不知道在专业人士看来有什么可取之处，应该向哪里提升。
 
@@ -51,4 +47,4 @@ cover: https://cdn.yuumi.link/albums/water/水中黄昏.jpg
 
 ## 其他照片
 
-感兴趣的话可以戳[这里](https://yuumi.link/albums)看看公开的相册
+感兴趣的话可以戳[这里](https://www.yuumi.link/albums)看看公开的相册

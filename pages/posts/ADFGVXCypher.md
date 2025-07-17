@@ -6,15 +6,11 @@ updated: 2022-11-15
 tags:
   - C++
   - QT
-  - 作业
   - 加密算法
 categories: 小作业
 cover: https://cdn.yuumi.link/images/ADFGVXCypher/image-20221104162849897.png
+excerpt: 课堂小作业，实现古老的ADFGVX加密算法
 ---
-
-课堂小作业，实现古老的ADFGVX加密算法
-
-<!-- more -->
 
 这次的作业要求是完成 ADFGVX 加密算法，做一个可以加密、解密的小应用。要了解 ADFGVX 加密算法，首先得介绍一下 Polybius 加密算法。（其实以下介绍纯纯照搬老师给的pdf）
 

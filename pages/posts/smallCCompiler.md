@@ -6,17 +6,11 @@ updated: 2023-01-17
 tags:  
   - C
   - QT
-  - Yacc/Bison
-  - Lex/Flex
   - 编译器
-  - 作业
 categories: 小作业
 cover: https://cdn.yuumi.link/images/smallCCompiler/image-20221111165005827.png
+excerpt: 一个 SmallC 语言的编译器
 ---
-
-一个 SmallC 语言的编译器
-
-<!-- more -->
 
 smallC 语言在语法上与 C 语言类似，要比 C 语言简单的多。它的所有变量都是整型变量。具有 IF、WHILE 等控制语句。注释用 “`/*`” 和 “`*/`” 括起来，但不能嵌套。表达式局限于布尔表达式和算术表达式。语言的单词符号有：
 

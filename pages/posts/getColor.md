@@ -4,21 +4,12 @@ title: 图片像素颜色的可视化
 date: 2021-10-12
 updated: 2021-10-12
 tags: 
-  - 作业
   - JavaScript
   - HTML
-  - K-means
   - ECharts
 categories: 小作业
+excerpt: 课堂小作业。又是妄想一夜学会JS和HTML的一天
 ---
-
-<div class="primary">
-
->课堂小作业。又是妄想一夜学会JS和HTML的一天
-
-</div>
-
-<!-- more -->
 
 ## 课程作业
 

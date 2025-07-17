@@ -8,7 +8,7 @@ tags:
   - 翻唱
   - VOCALOID
   - ACG
-  - 日文
+  - 日语
 categories: 小歌曲
 cover: https://cdn.yuumi.link/images/settings/Yuumi_Icon.png
 aplayer: true

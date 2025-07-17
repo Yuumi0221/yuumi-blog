@@ -8,12 +8,10 @@ tags:
   - Valaxy
 categories: 小教程
 cover: https://cdn.yuumi.link/images/valaxy/valaxy.png
+excerpt: 重磅更新！！！
 ---
 
-重磅更新！！！
-<!-- more -->
-
-:::warning BREAKING NEWS!!!
+::: warning BREAKING NEWS!!!
 
 Yuumi's Blog 重磅更新！！！
 已由 [Hexo](https://hexo.io/zh-cn/index.html) 转为 [Valaxy](https://valaxy.site/) 框架！！！
@@ -104,7 +102,7 @@ pnpm create valaxy
 
 什么是vscode？
 
-[Visual Studio Code](https://code.visualstudio.com/)，超级方便的代码编辑器，建议~~人手一个~~用它来编辑网站的配置。
+[Visual Studio Code](https://code.visualstudio.com/)，超级方便的代码编辑器，建议<span class="bg-$smc-c-text hover:bg-$va-c-bg transition">人手一个</span>用它来编辑网站的配置。
 
 :::
 
@@ -518,5 +516,5 @@ on:
 
 快去给自己的主页宣传一波吧！目前 Valaxy 只有 [Yun](https://github.com/YunYouJun/valaxy/tree/main/packages/valaxy-theme-yun) 和[文档](https://github.com/YunYouJun/valaxy/tree/main/packages/valaxy-theme-press)两个主题，期待大佬们的新作品！
 
-感谢你看到这里，如果能对你有帮助的话就太好了！~~（如果能来听听我的歌的话就更好了）~~
+感谢你看到这里，如果能对你有帮助的话就太好了！<span class="bg-$smc-c-text hover:bg-$va-c-bg transition">（如果能来听听我的歌的话就更好了）</span>
 

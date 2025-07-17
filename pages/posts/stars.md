@@ -4,8 +4,8 @@ title: 踏出追星的第一步
 date: 2023-08-22
 updated: 2023-08-22
 tags: 
-  - 摄影
   - 出游
+  - 生活
 categories: 小摄影
 cover: https://cdn.yuumi.link/images/stars/星轨水印4k.png
 aplayer: true

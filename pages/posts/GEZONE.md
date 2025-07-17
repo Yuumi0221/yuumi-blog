@@ -6,8 +6,8 @@ updated: 2022-10-12
 tags: 
   - 翻唱
   - IZONE
-  - 韩文
-  - 日文
+  - 韩语
+  - 日语
 categories: 小歌曲
 aplayer: true
 ---

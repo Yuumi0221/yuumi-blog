@@ -8,12 +8,8 @@ tags:
   - FF14
 categories: 小游戏
 cover: https://cdn.yuumi.link/images/ffLadiesDay/女儿节.png
-
+excerpt: 商城不能试听乐谱，就离谱！
 ---
-
-商城不能试听乐谱，就离谱！
-
-<!-- more -->
 
 链接为试听，并附上了一点点相关信息（和观后感），欢迎补充！！
 
