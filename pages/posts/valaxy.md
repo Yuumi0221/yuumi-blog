@@ -106,7 +106,7 @@ pnpm create valaxy
 
 :::
 
-### 其他命令
+### 常用命令
 
 如果出现了一些bug，可以考虑删除 node_modules 文件夹，再使用以下命令重新安装依赖：
 

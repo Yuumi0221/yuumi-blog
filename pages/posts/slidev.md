@@ -29,11 +29,13 @@ hide: true
 
 使用 [Nodesource](https://deb.nodesource.com/) 快速安装（[选择版本快速安装](https://nodesource.com/products/distributions)）
 
-```bash
+::: code-group
+
+```bash [curl]
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
 ```
 
-```bash
+```bash [apt]
 sudo apt-get install -y nodejs
 ```
 
@@ -43,14 +45,18 @@ sudo apt-get install -y nodejs
 
 - [安装 nvm最新版本](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) （目前为 `v0.40.3`）
 
-	```bash
+	::: code-group
+	
+	```bash [curl]
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 	```
 
-	```bash
+	```bash [wget]
 	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 	```
-
+	
+	:::
+	
 	重启终端，或使用以下命令激活 nvm：
 
 	```bash
@@ -114,3 +120,77 @@ sudo apt-get install -y nodejs
 :::
 
 ## 创建 Slidev 项目
+
+在终端运行以下命令，以在当前文件夹创建 Slidev 项目。
+
+::: code-group
+
+```bash [npm]
+npm init slidev@latest
+```
+
+```bash [pnpm]
+pnpm create slidev
+```
+
+```bash [yarn]
+yarn create slidev
+```
+
+:::
+
+根据提示输入 Slidev  项目名；询问是否安装并启动，输入 `y`；按↑↓键选择包管理器（建议选择pnpm，快速且无冲突）。看到这样的提示后，浏览器打开链接能正常显示幻灯片，即为创建成功！
+
+![install](C:/Users/Yuumi/Downloads/slide/install.png)
+
+![welcome](C:/Users/Yuumi/Downloads/slide/welcome.png)
+
+::: details pnpm: Ignored build scripts
+
+为了防止恶意代码执行，pnpm会默认禁止依赖包在安装时自动执行构建脚本，因此我们需要手动选择包构建脚本。
+
+![warning](C:/Users/Yuumi/Downloads/slide/warning.png)
+
+先按 Ctrl+C 退出当前运行程序，进入刚刚创建的项目文件夹（此处为slidev-test）。按 `a` 选择所有包，再按 `y` 确认即可。
+
+![approve-builds](C:/Users/Yuumi/Downloads/slide/approve-builds.png)
+
+:::
+
+## 基本命令
+
+Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/builtin/cli#dev)，基本的操作都可以通过 `slidev` 命令完成。以下是一些常用的命令：
+
+- `slidev` - 启动开发服务器。
+- `slidev export` - 将幻灯片导出为 PDF、PPTX 或 PNG 文件，详见[导出](https://cn.sli.dev/guide/exporting)。
+- `slidev build` - 将幻灯片构建为静态网页，详见[部署](https://cn.sli.dev/guide/hosting)。
+- `slidev --help` - 显示帮助信息
+
+创建 slidev 项目时，会在根目录自动创建 `package.json` 文件。将 `slidev` 命令添加到 `package.json` 的 `scripts` 字段中，就可以更方便地运行这些命令：
+
+```json [package.json]
+{
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+}
+```
+
+::: code-group
+
+```bash  [npm]
+npm run dev
+npm run build
+npm run export
+```
+
+```bash [pnpm]
+pnpm dev
+pnpm build
+pnpm export
+```
+
+:::
+
