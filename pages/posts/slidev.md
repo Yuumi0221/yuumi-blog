@@ -141,19 +141,19 @@ yarn create slidev
 
 根据提示输入 Slidev  项目名；询问是否安装并启动，输入 `y`；按↑↓键选择包管理器（建议选择pnpm，快速且无冲突）。看到这样的提示后，浏览器打开链接能正常显示幻灯片，即为创建成功！
 
-![install](C:/Users/Yuumi/Downloads/slide/install.png)
+![install](https://cdn.yuumi.link/images/slidev/install.png)
 
-![welcome](C:/Users/Yuumi/Downloads/slide/welcome.png)
+![welcome](https://cdn.yuumi.link/images/slidev/welcome.png)
 
 ::: details pnpm: Ignored build scripts
 
 为了防止恶意代码执行，pnpm会默认禁止依赖包在安装时自动执行构建脚本，因此我们需要手动选择包构建脚本。
 
-![warning](C:/Users/Yuumi/Downloads/slide/warning.png)
+![warning](https://cdn.yuumi.link/images/slidev/warning.png)
 
 先按 Ctrl+C 退出当前运行程序，进入刚刚创建的项目文件夹（此处为slidev-test）。按 `a` 选择所有包，再按 `y` 确认即可。
 
-![approve-builds](C:/Users/Yuumi/Downloads/slide/approve-builds.png)
+![approve-builds](https://cdn.yuumi.link/images/slidev/approve-builds.png)
 
 :::
 
