@@ -1,0 +1,1 @@
+import"./chunks/@vueuse/motion.CHqXhTU0.js";import{c6 as o,bf as t,X as c,b3 as r}from"./framework.CVaIbib-.js";const n={};function s(_,a){const e=t("RouterView");return r(),c(e)}const i=o(n,[["render",s]]);export{i as default};
