@@ -14,7 +14,7 @@ cover: https://cdn.yuumi.link/images/settings/yuumi.png
 >
 
 
-🌸魔法见习生研习中
+🌸魔法见习生研修中
 
 🌸拥抱世界、热爱美好
 

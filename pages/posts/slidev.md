@@ -19,9 +19,9 @@ hide: true
 - 项目地址：[slidev](https://github.com/slidevjs/slidev)
 - 项目演示：[Slidev-test](https://slides.yuumi.link/slidev-test/)
 
-# 创建 Slidev
+## 创建 Slidev
 
-## 环境配置
+### 环境配置
 
 首先需要安装 [Node.js](https://nodejs.org/en) 版本 ≥ `18.0`，推荐在 Linux 系统配置环境<span class="bg-$smc-c-text hover:bg-$va-c-bg transition">（因为 Node.js 在 Windows 下的版本控制太麻烦了（）</span>。
 
@@ -119,7 +119,7 @@ sudo apt-get install -y nodejs
 
 :::
 
-## 创建 Slidev 项目
+### 创建 Slidev 项目
 
 在终端运行以下命令，以在当前文件夹创建 Slidev 项目。
 
@@ -157,7 +157,7 @@ yarn create slidev
 
 :::
 
-## 基本命令
+### 基本命令
 
 Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/builtin/cli#dev)，基本的操作都可以通过 `slidev` 命令完成。以下是一些常用的命令：
 
@@ -166,7 +166,7 @@ Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/
 - `slidev build` - 将幻灯片构建为静态网页，详见[部署](https://cn.sli.dev/guide/hosting)。
 - `slidev --help` - 显示帮助信息
 
-创建 slidev 项目时，会在根目录自动创建 `package.json` 文件。将 `slidev` 命令添加到 `package.json` 的 `scripts` 字段中，就可以更方便地运行这些命令：
+创建 slidev 项目时，会在根目录自动创建 `./package.json` 文件。将 `slidev` 命令添加到 `./package.json` 的 `scripts` 字段中，就可以更方便地运行这些命令：
 
 ```json [package.json]
 {
@@ -193,4 +193,86 @@ pnpm export
 ```
 
 :::
+
+### VS Code 扩展
+
+可以在 vscode 中添加 Slidev 的扩展，来更方便地开发、预览幻灯片。详情见：[VS Code扩展](https://cn.sli.dev/features/vscode-extension)。
+
+![vsc-ex](https://cdn.yuumi.link/images/slidev/vsc-ex.png)
+
+## 编辑幻灯片
+
+Slidev 使用 Markdown 来编写幻灯片，主文件是根目录下的 `./slides.md`，支持基本的 Markdown 语法和功能。
+
+### 基本语法
+
+#### 分隔幻灯片
+
+在下一页幻灯片前需要添加上下两侧留有空行的 `---` 作为分隔符：
+
+```markdown
+# Title
+
+Hello, **Slidev**!
+
+--- // [!code ++]
+
+# Slide 2
+
+第二页幻灯片
+
+--- // [!code ++]
+
+# Slide 3
+
+第三页幻灯片
+```
+
+![add-slide](https://cdn.yuumi.link/images/slidev/add-slide.png)_分隔幻灯片效果_
+
+#### 幻灯片配置
+
+可以在每页幻灯片的开头配置 YAML 格式的 Frontmatter，来设置这张幻灯片的格式。比较特殊的是，第一个 Frontmatter 称为 Headmatter，可以用来配置整个幻灯片，如[主题](https://cn.sli.dev/guide/theme-addon)。
+
+Frontmatter 以分隔符开头、结尾，因此设置了 Frontmatter 后不需要再额外添加分隔符。
+
+在 vscode 中，鼠标悬停在属性上可以看到相应的描述、文档和可选项。详细的配置细节可以看这里：[自定义](https://cn.sli.dev/custom/)。
+
+```markdown
+---
+theme: seriph
+title: Welcome to Slidev
+---
+
+# 第一页
+
+第一页的 frontmatter 也是整个演示文稿的 headmatter
+
+幻灯片主题为 seriph，标题为 Welcome to Slidev
+
+---
+layout: center
+background: /background-1.png
+class: text-red
+transition: fade-out
+---
+
+# 第二页
+
+本页的布局是 `center`，背景是一张图片
+
+除标题外的文字颜色为红色，以淡出的效果切换到下一页幻灯片
+
+---
+
+# 第三页
+
+本页没有 frontmatter
+```
+
+![frontmatter](https://cdn.yuumi.link/images/slidev/frontmatter.png)_幻灯片配置效果_
+
+
+
+
 
