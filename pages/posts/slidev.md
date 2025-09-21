@@ -289,7 +289,7 @@ console.log('Hello, World!')
 ```
 ````
 
-![code](C:/Users/Yuumi/Downloads/slide/code.png)
+![code](https://cdn.yuumi.link/images/slidev/code.png)
 
 更多功能需要使用 [Shiki](https://github.com/shikijs/shiki) 语法高亮器来达成。
 
