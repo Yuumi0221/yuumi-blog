@@ -2,7 +2,7 @@
 layout: post
 title: Yuumi的翻唱合集
 date: 2022-08-31
-updated: 2025-05-21
+updated: 2025-09-21
 top: 10
 tags:
   - 翻唱
@@ -37,6 +37,59 @@ aplayer: true
 
 ## 2025
 
+### 🎵[箱庭のコラル](https://www.bilibili.com/video/BV1LDWGzgECa)
+
+[<img src="https://cdn.yuumi.link/images/songs/箱庭.png" alt="箱庭" style="height:250px;"/>](https://music.163.com/#/song?id=2748418716)
+
+- *2025.9.20*
+- Original：[ワンダーランズ×ショウタイム × KAITO](https://www.youtube.com/watch?v=SVCi-d0UrVw)
+- Vocal&Tuning: Yuumi
+- Mix: 章宛枫
+- Video: Yuumi<meting-js
+	 id="2748418716"
+	 server="netease"
+	 type="song"
+	 theme="#D69B54">
+	</meting-js>
+
+
+### 🎵[溶梦](https://www.bilibili.com/video/BV1gDpFzZEFH)
+
+[<img src="https://cdn.yuumi.link/images/songs/溶梦.png" alt="溶梦" style="height:250px;"/>](https://music.163.com/#/song?id=2746283943)
+
+- *2025.9.14*
+- 作词、作曲、编曲：章宛枫
+- 演唱：Yuumi
+- 混音：章宛枫
+- 曲绘：晴空
+- Live2D：Yuumi
+- PV：电宝
+
+<meting-js
+ id="2746283943"
+ server="netease"
+ type="song"
+ theme="#D69B54">
+</meting-js>
+
+
+### 🎵[星月夜の調べ](https://www.bilibili.com/video/BV1qtbWzpEC4)
+
+[<img src="https://cdn.yuumi.link/images/songs/星月夜.png" alt="星月夜" style="height:250px;"/>](https://music.163.com/#/song?id=2736749406)
+
+- *2025.8.15*
+- Original：[Albemuth](https://www.bilibili.com/video/BV1W94y16779)
+- Vocal: Yuumi & 奶茶Miruky
+- Mix：樱庭落
+
+<meting-js
+ id="2736749406"
+ server="netease"
+ type="song"
+ theme="#D69B54">
+</meting-js>
+
+
 ### 🎵[深昏睡](https://www.bilibili.com/video/BV1e2JBzPEqa)
 
 [<img src="https://cdn.yuumi.link/images/songs/深昏睡.png" alt="深昏睡" style="height:250px;"/>](https://music.163.com/#/song?id=2707096680)
@@ -44,7 +97,7 @@ aplayer: true
 - *2025.5.21*
 - Original：[春野](https://www.bilibili.com/video/BV1dx411s7po)
 - Vocal&Mix: Yuumi
-- Special thanks: @章宛枫
+- Special thanks: 章宛枫
 
 <meting-js
  id="2707096680"

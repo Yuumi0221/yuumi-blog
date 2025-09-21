@@ -192,6 +192,12 @@ pnpm build
 pnpm export
 ```
 
+```bash [yarn]
+yarn dev
+yarn build
+yarn export
+```
+
 :::
 
 ### VS Code 扩展
@@ -202,11 +208,9 @@ pnpm export
 
 ## 编辑幻灯片
 
-Slidev 使用 Markdown 来编写幻灯片，主文件是根目录下的 `./slides.md`，支持基本的 Markdown 语法和功能。
+Slidev 使用 Markdown 来编写幻灯片，主文件是根目录下的 `./slides.md`，支持基本的 Markdown 语法和功能。下面介绍一些我常用的 Slidev 配置和功能。
 
-### 基本语法
-
-#### 分隔幻灯片
+### 分隔幻灯片
 
 在下一页幻灯片前需要添加上下两侧留有空行的 `---` 作为分隔符：
 
@@ -230,13 +234,16 @@ Hello, **Slidev**!
 
 ![add-slide](https://cdn.yuumi.link/images/slidev/add-slide.png)_分隔幻灯片效果_
 
-#### 幻灯片配置
+### 幻灯片样式
 
-可以在每页幻灯片的开头配置 YAML 格式的 Frontmatter，来设置这张幻灯片的格式。比较特殊的是，第一个 Frontmatter 称为 Headmatter，可以用来配置整个幻灯片，如[主题](https://cn.sli.dev/guide/theme-addon)。
+可以在每页幻灯片的开头配置 YAML 格式的 Frontmatter，来设置这张幻灯片的格式。比较特殊的是，第一个 Frontmatter 称为 Headmatter，可以用来配置整个幻灯片。
 
 Frontmatter 以分隔符开头、结尾，因此设置了 Frontmatter 后不需要再额外添加分隔符。
 
 在 vscode 中，鼠标悬停在属性上可以看到相应的描述、文档和可选项。详细的配置细节可以看这里：[自定义](https://cn.sli.dev/custom/)。
+
+- theme：[幻灯片主题](https://cn.sli.dev/guide/theme-addon#use-theme)
+- layout：[幻灯片布局](https://cn.sli.dev/guide/layout)
 
 ```markdown {1-4,12-17,25}
 ---
@@ -272,7 +279,75 @@ transition: fade-out
 
 ![frontmatter](https://cdn.yuumi.link/images/slidev/frontmatter.png)_幻灯片配置效果_
 
+### 代码块
+
+在 Slidev 中可以高自由度的展示代码，如下使用 Markdown 语法来高亮代码块：
+
+````markdown
+```ts
+console.log('Hello, World!')
+```
+````
+
+![code](C:/Users/Yuumi/Downloads/slide/code.png)
+
+更多功能需要使用 [Shiki](https://github.com/shikijs/shiki) 语法高亮器来达成。
+
+::: details 如果没有安装Shiki，可以运行以下命令进行安装：
+
+::: code-group
+
+```bash [npm]
+npm install -D shiki
+```
+
+```bash [pnpm]
+pnpm add -D shiki
+```
+
+```bash [yarn]
+yarn add -D shiki
+```
+
+:::
+
+#### 行号
 
 
 
+#### 代码块最大高度
+
+
+
+#### 高亮代码行
+
+
+
+#### monaco代码编辑器
+
+
+
+#### 引入幻灯片
+
+
+
+### 幻灯片动画
+
+
+
+## 导出
+
+导出为PDF
+
+
+
+## 编译和部署
+
+### 编译并部署
+
+
+
+### 多子项目
+
+将多个幻灯片放在一个项目中管理
 
