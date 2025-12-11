@@ -45,12 +45,14 @@ aplayer: true
 - Original：[ワンダーランズ×ショウタイム × KAITO](https://www.youtube.com/watch?v=SVCi-d0UrVw)
 - Vocal&Tuning: Yuumi
 - Mix: 章宛枫
-- Video: Yuumi<meting-js
-	 id="2748418716"
-	 server="netease"
-	 type="song"
-	 theme="#D69B54">
-	</meting-js>
+- Video: Yuumi
+
+<meting-js
+ id="2748418716"
+ server="netease"
+ type="song"
+ theme="#D69B54">
+</meting-js>
 
 
 ### 🎵[溶梦](https://www.bilibili.com/video/BV1gDpFzZEFH)
