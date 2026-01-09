@@ -37,6 +37,23 @@ aplayer: true
 
 ## 2025
 
+### 🎵[Snow Song Show](https://www.bilibili.com/video/BV1rHB7B1EuG)
+
+[<img src="https://cdn.yuumi.link/images/songs/sss.png" alt="sss" style="height:250px;"/>](https://music.163.com/#/song?id=3332746720)
+
+- *2025.12.25*
+- Original：[sasakure.UK x DECO*27](https://www.youtube.com/watch?v=6YbqME4xI00)
+- Vocal: 奶茶Miruky & Yuumi
+- Mix: 阳绫Themis
+
+<meting-js
+ id="3332746720"
+ server="netease"
+ type="song"
+ theme="#D69B54">
+</meting-js>
+
+
 ### 🎵[箱庭のコラル](https://www.bilibili.com/video/BV1LDWGzgECa)
 
 [<img src="https://cdn.yuumi.link/images/songs/箱庭.png" alt="箱庭" style="height:250px;"/>](https://music.163.com/#/song?id=2748418716)
