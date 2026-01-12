@@ -35,6 +35,9 @@ photos:
   - caption: 柠檬
     src: https://cdn.yuumi.link/albums/GEZONE/柠檬2.png
     desc: 花舞
+  - caption: AmeAkane
+    src: https://cdn.yuumi.link/albums/GEZONE/小啊2.png
+    desc: 花舞
   - caption: Yuumi
     src: https://cdn.yuumi.link/albums/GEZONE/玉米2.png
     desc: 花舞
