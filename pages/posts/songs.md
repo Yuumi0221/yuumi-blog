@@ -35,6 +35,19 @@ aplayer: true
 - 歌曲以时间逆序排列
 - 点击标题进入b站，点击图片进入网易云
 
+## 2026
+
+### 🎵[クロノスタシス](https://www.bilibili.com/video/BV124qMB4EHF)
+
+<img src="https://cdn.yuumi.link/images/songs/时停错觉.jpg" alt="时停错觉" style="height:250px;"/>
+
+- *2026.1.11*
+- Original：[きのこ帝国](https://www.youtube.com/watch?v=cCx4I4Fk5FE)
+- Vocal: Yuumi
+- Instrument: 饼飞Cookifei
+- Mix: 章宛枫
+
+
 ## 2025
 
 ### 🎵[Snow Song Show](https://www.bilibili.com/video/BV1rHB7B1EuG)
