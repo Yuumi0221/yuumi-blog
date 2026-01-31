@@ -95,6 +95,7 @@ export default defineValaxyConfig<UserThemeConfig>({
       beian: {
         enable: true,
         icp: '沪ICP备2026002379号',
+        police:'沪公网安备31010502007663号',
       },
     },
   },

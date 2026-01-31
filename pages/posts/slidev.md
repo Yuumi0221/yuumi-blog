@@ -13,7 +13,7 @@ hide: true
 
 在久远的过去，还在使用 Hexo 框架编写博客时，就被 [Slide](https://www.yuumi.link/posts/pageBuilding#%E5%B9%BB%E7%81%AF%E7%89%87) 这样简洁高效、便于展示代码的幻灯片，深深吸引（？）。更新到 [Valaxy](https://www.yuumi.link/posts/valaxy) 框架后，云游君卸载了主题中的Slide组件，而推荐大家使用更为强大的 [Slidev](https://cn.sli.dev/)。
 
-究竟是怎样的 Slide 项目，甚至能成为大佬们框架开发的参考？[为什么选择Slidev？](https://cn.sli.dev/guide/why)这下不得不深入♂探索一下了。尽管我并没有很多演示文稿需要做，制作幻灯片的频率可以说是非常低，但是不能没有！
+究竟是怎样的 Slide 项目，甚至能成为大佬们框架开发的参考？[为什么选择Slidev？](https://cn.sli.dev/guide/why)这下不得不深入♂探索一下了。尽管我并没有很多演示文稿需要做，制作幻灯片的频率可以说是非常低，但是不能没有！<span class="bg-$smc-c-text hover:bg-$va-c-bg transition">其实只是喜欢捣鼓工具（）</span>
 
 - 官方文档：[Slidev](https://cn.sli.dev/)
 - 项目地址：[slidev](https://github.com/slidevjs/slidev)

@@ -25,7 +25,7 @@ export default defineSiteConfig({
     },
     {
       name: $t('siteConfig.social.music163'),
-      link: 'http://music.163.com/artist?id=30377410&userid=436730182',
+      link: 'https://music.163.com/#/artist?id=30377410',
       icon: 'i-ri-netease-cloud-music-line',
       color: '#ca3636ff',
     },
@@ -41,30 +41,30 @@ export default defineSiteConfig({
       icon: 'i-ri-youtube-line',
       color: '#e03759ff',
     },
-    {
-      name: $t('siteConfig.social.twitter'),
-      link: 'https://x.com/Yuumi12118924',
-      icon: 'i-ri-twitter-x-line',
-      color: '#405b6dff',
-    },
-    {
-      name: 'steam',
-      link: 'https://steamcommunity.com/id/yuumi0221/',
-      icon: 'i-ri-steam-line',
-      color: '#32769bff',
-    },
-    {
-      name: 'GitHub',
-      link: 'https://github.com/Yuumi0221',
-      icon: 'i-ri-github-line',
-      color: '#9b9b9b',
-    },
-    {
-      name: 'Notion',
-      link: 'https://yuumis.notion.site',
-      icon: 'i-ri-notion-fill',
-      color: '#717171',
-    },
+    // {
+    //   name: $t('siteConfig.social.twitter'),
+    //   link: 'https://x.com/Yuumi12118924',
+    //   icon: 'i-ri-twitter-x-line',
+    //   color: '#405b6dff',
+    // },
+    // {
+    //   name: 'steam',
+    //   link: 'https://steamcommunity.com/id/yuumi0221/',
+    //   icon: 'i-ri-steam-line',
+    //   color: '#32769bff',
+    // },
+    // {
+    //   name: 'GitHub',
+    //   link: 'https://github.com/Yuumi0221',
+    //   icon: 'i-ri-github-line',
+    //   color: '#9b9b9b',
+    // },
+    // {
+    //   name: 'Notion',
+    //   link: 'https://yuumis.notion.site',
+    //   icon: 'i-ri-notion-fill',
+    //   color: '#717171',
+    // },
     {
       name: $t('siteConfig.social.email'),
       link: 'mailto:yuumi0221@163.com',

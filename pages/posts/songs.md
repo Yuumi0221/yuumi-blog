@@ -2,7 +2,7 @@
 layout: post
 title: Yuumi的翻唱合集
 date: 2022-08-31
-updated: 2025-09-21
+updated: 2026-01-21
 top: 10
 tags:
   - 翻唱
@@ -16,7 +16,7 @@ aplayer: true
 
 ★ **Bilibili：[Yu-u-mi](https://space.bilibili.com/7498906)**
 
-★ **网易云音乐：[Yuumi](https://music.163.com/#/artist?id=30377410&userid=436730182)**
+★ **网易云音乐：[Yuumi](https://music.163.com/#/artist?id=30377410)**
 
 <!-- more -->
 
@@ -48,7 +48,7 @@ aplayer: true
 - Mix: 章宛枫
 
 
-## 2025
+## 2025（共5首）
 
 ### 🎵[Snow Song Show](https://www.bilibili.com/video/BV1rHB7B1EuG)
 
