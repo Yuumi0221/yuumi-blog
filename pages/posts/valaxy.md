@@ -242,6 +242,7 @@ pnpm up --latest -i
       beian: {
         enable: true,
         icp: 'xxxx',	// 备案
+        police: 'xxxx', // 公网备案
       },
     },
 ```
