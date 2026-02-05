@@ -20,20 +20,20 @@ projects:
         textColor: black
         # github: YunYouJun/air-conditioner
         url: https://slides.yuumi.link/slidev-test/
-      - name: Data Visualization Project
-        emoji: 🐵
-        color: '#dfa3dcff'
-        desc: 数据可视化课程项目Pre
-        textColor: black
-        # github: YunYouJun/air-conditioner
-        url: https://slides.yuumi.link/DVPPT/
-      - name: Computer-Aided Manufacturing Final
-        emoji: 🐵
-        color: '#413b58ff'
-        desc: 计算机辅助智能制造结课项目Pre
-        textColor: white
-        # github: YunYouJun/air-conditioner
-        url: https://slides.yuumi.link/CAMFinal/
+      # - name: Data Visualization Project
+      #   emoji: 🐵
+      #   color: '#dfa3dcff'
+      #   desc: 数据可视化课程项目Pre
+      #   textColor: black
+      #   # github: YunYouJun/air-conditioner
+      #   url: https://slides.yuumi.link/DVPPT/
+      # - name: Computer-Aided Manufacturing Final
+      #   emoji: 🐵
+      #   color: '#413b58ff'
+      #   desc: 计算机辅助智能制造结课项目Pre
+      #   textColor: white
+      #   # github: YunYouJun/air-conditioner
+      #   url: https://slides.yuumi.link/CAMFinal/
 
 
 

@@ -7,7 +7,7 @@ tags:
   - Slidev
 categories: 小教程
 cover: https://cdn.yuumi.link/images/slidev/slidev.png
-excerpt: 🥺回来吧我的Slide🥺 ☀️我最骄傲的帮手☀️ ⚡历历在目的PPT⚡ 😭眼泪莫名在流淌😭
+excerpt: 🥺回来吧我的Slide🥺 ☀️我最骄傲的帮手☀️ ⚡历历在目PPT⚡ 😭眼泪莫名在流淌😭
 hide: true
 ---
 
@@ -351,3 +351,21 @@ yarn add -D shiki
 
 将多个幻灯片放在一个项目中管理
 
+主项目中（编译slides文件夹中所有子项目）：
+
+```json [package.json]
+"scripts": {
+    "build": "pnpm -r --filter './slides/**' run build",
+}
+```
+
+
+子项目中（编译到./dist中）：
+
+```json [slides/slidev-test/package.json]
+"scripts": {
+    "build": "rimraf ../../dist/slidev-test && NODE_OPTIONS=--max_old_space_size=4096 slidev build --base /slidev-test/ --out ../../dist/slidev-test",
+}
+```
+
+如果觉得在部署平台中编译得太慢，可以本地编译完后将主项目`package.json`中的`'./slides/**'`改为其他空白文件夹，如`'./packages/**'`
