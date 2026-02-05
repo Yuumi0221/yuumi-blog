@@ -65,7 +65,7 @@
     },
     {
         "url": "https://0v0.day",
-        "avatar": "https://0v0.day/image/avator.jpg",
+        "avatar": "https://0v0.day/upload/eb477e31-c6a8-4e9b-b888-265b66e7fcc3.png",
         "name": "深秋",
         "blog": "深秋's blog",
         "desc": "人间忽晚，山河已秋",
@@ -94,6 +94,12 @@
         "blog": "Roof above the sea star",
         "desc": "余生漫漫, 不见 不散",
         "color": "#97d2ffff"
+    },
+    {
+        "url": "https://www.tenca.cn/",
+        "avatar": "https://www.tenca.cn/zb_users/upload/2025/12/202512071765040403331717.jpg",
+        "name": "Dark零点博客",
+        "desc": "记录小众热爱与生活碎片"
     }
   ]
   
