@@ -383,7 +383,7 @@ src: ./pages/new.md#2,5-7
 
 ### 幻灯片动画
 
-其实我还没怎么研究所以先看动画指南](https://cn.sli.dev/guide/animations)吧x
+其实我还没怎么研究所以先看[动画指南](https://cn.sli.dev/guide/animations)吧x
 
 ## 导出
 
@@ -399,7 +399,7 @@ src: ./pages/new.md#2,5-7
 
 可以参考[构建为静态网页](https://cn.sli.dev/guide/hosting#spa)，在本地编译幻灯片，并部署到其他静态服务器中。也可以不在本地编译，直接部署到静态网页托管平台中：[静态部署](https://cn.sli.dev/guide/hosting#hosting)。
 
-此处再推荐一个国内静态网页托管平台：[EdgeOne](https://console.cloud.tencent.com/edgeone/pages)，操作方法与 Vercel 基本相同：
+此处再推荐一个国内静态网页托管平台：腾讯云的 [EdgeOne](https://console.cloud.tencent.com/edgeone/pages)，操作方法与 Vercel 基本相同：
 
 1. 在 Pages 页面点击创建项目 → 导入 Git 仓库
 2. 选择幻灯片项目仓库
