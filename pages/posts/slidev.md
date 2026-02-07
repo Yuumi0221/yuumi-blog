@@ -333,7 +333,7 @@ function add(
 ```
 ````
 
-![codeLight](https://cdn.yuumi.link/images/slidev/codeLight.mp4)
+![codeLight](https://cdn.yuumi.link/images/slidev/codeLight.gif)
 
 #### 行号
 
