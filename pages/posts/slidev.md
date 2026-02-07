@@ -2,13 +2,13 @@
 layout: post
 title: Slidev——为开发者打造的演示文稿工具
 date: 2025-07-17
-updated: 2025-07-17
+updated: 2026-02-07
 tags: 
   - Slidev
 categories: 小教程
 cover: https://cdn.yuumi.link/images/slidev/slidev.png
 excerpt: 🥺回来吧我的Slide🥺 ☀️我最骄傲的帮手☀️ ⚡历历在目PPT⚡ 😭眼泪莫名在流淌😭
-hide: true
+hide: false
 ---
 
 在久远的过去，还在使用 Hexo 框架编写博客时，就被 [Slide](https://www.yuumi.link/posts/pageBuilding#%E5%B9%BB%E7%81%AF%E7%89%87) 这样简洁高效、便于展示代码的幻灯片，深深吸引（？）。更新到 [Valaxy](https://www.yuumi.link/posts/valaxy) 框架后，云游君卸载了主题中的Slide组件，而推荐大家使用更为强大的 [Slidev](https://cn.sli.dev/)。
@@ -159,7 +159,13 @@ yarn create slidev
 
 ### 基本命令
 
-Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/builtin/cli#dev)，基本的操作都可以通过 `slidev` 命令完成。以下是一些常用的命令：
+Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/builtin/cli#dev)，基本的操作都可以通过 `slidev` 命令完成。全局安装 CLI ：
+
+```bash
+npm i -g @slidev/cli
+```
+
+以下是一些常用的命令，部分内容将在后续介绍：
 
 - `slidev` - 启动开发服务器。
 - `slidev export` - 将幻灯片导出为 PDF、PPTX 或 PNG 文件，详见[导出](https://cn.sli.dev/guide/exporting)。
@@ -180,7 +186,7 @@ Slidev 有一个属于自己的命令行工具 [@slidev/cli](https://cn.sli.dev/
 
 ::: code-group
 
-```bash  [npm]
+```bash [npm]
 npm run dev
 npm run build
 npm run export
@@ -291,9 +297,9 @@ console.log('Hello, World!')
 
 ![code](https://cdn.yuumi.link/images/slidev/code.png)
 
-更多功能需要使用 [Shiki](https://github.com/shikijs/shiki) 语法高亮器来达成。
+更多功能需要使用 [Shiki](https://shiki.style/) 语法高亮器来达成。
 
-::: details 如果没有安装Shiki，可以运行以下命令进行安装：
+::: details 使用命令安装Shiki：
 
 ::: code-group
 
@@ -311,47 +317,104 @@ yarn add -D shiki
 
 :::
 
-#### 行号
-
-
-
-#### 代码块最大高度
-
-
-
 #### 高亮代码行
 
+- 在 `{}` 内添加行号来设置高亮行，（注意不要加空格）：`{2,4}` ；`hide` 隐藏代码块，`all` 高亮所有行，`none` 减淡所有行。
+- 可以设置不同高亮行，使用 `|` 来分割，点击鼠标切换到下一个高亮区域：
 
+````markdown
+```ts {hide|none|2-3|5|all}
+function add(
+  a: Ref<number> | number,
+  b: Ref<number> | number
+) {
+  return computed(() => unref(a) + unref(b))
+}
+```
+````
 
-#### monaco代码编辑器
+![codeLight](https://cdn.yuumi.link/images/slidev/codeLight.mp4)
 
+#### 行号
 
+::: warning
 
-#### 引入幻灯片
+需要注意，单独设置代码块行号时必须添加高亮代码行！如无需设置高亮行，可以使用 `{*}` 来占位；
 
+:::
 
+- 为幻灯片中的所有代码块启用行号：在 Headmatter 中设置 `lineNumbers: true`；
+
+- 为某个代码块单独设置行号：在代码块头设置 `lines: true`；
+
+- 设置起始行号（默认为1）：`startLine:5`；
+
+````markdown
+```ts {6,7}{lines:true,startLine:5}
+function add(
+a: Ref<number> | number,
+b: Ref<number> | number
+) {
+return computed(() => unref(a) + unref(b))
+}
+```
+````
+
+![codeNumber](https://cdn.yuumi.link/images/slidev/codeNumber.png)
+
+#### 其他设置
+
+还有许多可以设置的内容，如：[代码块最大高度](https://cn.sli.dev/features/code-block-max-height)、[Monaco 代码编辑器](https://cn.sli.dev/features/monaco-editor)、[Monaco 代码运行器](https://cn.sli.dev/features/monaco-run)、[导入代码片段](https://cn.sli.dev/features/import-snippet)、[Shiki 代码变化动画](https://cn.sli.dev/features/shiki-magic-move)、[TwoSlash 悬停信息查看](https://cn.sli.dev/features/twoslash)、[代码组](https://cn.sli.dev/features/code-groups)、[LaTeX](https://cn.sli.dev/features/latex)，可以直接参考官方文档，这里不多赘述。
+
+### 引入幻灯片
+
+在 Frontmatter 中设置 `src` 来引入其他 markdown 文件幻灯片，可以使用 `#` 指定要添加的页面。
+
+```markdown
+---
+src: ./pages/new.md
+hide: false
+---
+
+---
+src: ./pages/new.md#2,5-7
+---
+```
 
 ### 幻灯片动画
 
-
+其实我还没怎么研究所以先看动画指南](https://cn.sli.dev/guide/animations)吧x
 
 ## 导出
 
-导出为PDF
+建议使用导航栏中自带的导出按钮来导出：
 
+![export](https://cdn.yuumi.link/images/slidev/export.png)
 
+如导出时遇到困难，请参考[导出](https://cn.sli.dev/guide/exporting#cli)使用 CLI 命令来导出。
 
 ## 编译和部署
 
 ### 编译并部署
 
+可以参考[构建为静态网页](https://cn.sli.dev/guide/hosting#spa)，在本地编译幻灯片，并部署到其他静态服务器中。也可以不在本地编译，直接部署到静态网页托管平台中：[静态部署](https://cn.sli.dev/guide/hosting#hosting)。
 
+此处再推荐一个国内静态网页托管平台：[EdgeOne](https://console.cloud.tencent.com/edgeone/pages)，操作方法与 Vercel 基本相同：
+
+1. 在 Pages 页面点击创建项目 → 导入 Git 仓库
+2. 选择幻灯片项目仓库
+3. 构建设置中的框架预设选择 Vite，（可选）修改构建命令与安装命令
+4. 开始部署！
+
+部署完成后会提供临时域名供调试与查看，建议修改为自己的域名（注意，加速区域含国内时需要实名认证，并完成域名 ICP 备案）。
+
+![build](https://cdn.yuumi.link/images/slidev/build.png)
 
 ### 多子项目
 
-将多个幻灯片放在一个项目中管理
+可以将多个幻灯片项目放在一个主项目中管理，参考 [YunYouJun/talks: 👋 My Slides of Talks.](https://github.com/YunYouJun/talks)。
 
-主项目中（编译slides文件夹中所有子项目）：
+主项目中使用 `-r` 批量执行多个幻灯片项目，`--filter` 过滤需要编译的项目文件夹，此处为编译 slides 文件夹中所有子项目：
 
 ```json [package.json]
 "scripts": {
@@ -360,7 +423,7 @@ yarn add -D shiki
 ```
 
 
-子项目中（编译到./dist中）：
+子项目（此处为 slidev-test）中使用 `rimraf` 指令清空旧的构建目录，`NODE_OPTIONS=--max_old_space_size=4096` 设置Node进程的最大内存，再使用 `--base` 和 `--out` 指令设置幻灯片编译、输出路径：
 
 ```json [slides/slidev-test/package.json]
 "scripts": {
@@ -368,4 +431,4 @@ yarn add -D shiki
 }
 ```
 
-如果觉得在部署平台中编译得太慢，可以本地编译完后将主项目`package.json`中的`'./slides/**'`改为其他空白文件夹，如`'./packages/**'`
+如果觉得在部署平台中编译得太慢，可以在本地编译完后，将主项目 `package.json` 中的 `'./slides/**'` 改为其他空白文件夹，如 `'./packages/**'`，跳过部署平台的编译过程（注意需要与本地项目环境相同）。
