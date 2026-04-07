@@ -17,7 +17,8 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    ParamParsers: never
+    ParamParsers:
+      | never
   }
 }
 
@@ -306,13 +307,6 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/slides/': RouteRecordInfo<
-      '/slides/',
-      '/slides',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
     '/tags/': RouteRecordInfo<
       '/tags/',
       '/tags',
@@ -333,13 +327,13 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'node_modules/.pnpm/valaxy-theme-yun@0.27.0_vue@3.5.27_typescript@5.9.3_/node_modules/valaxy-theme-yun/pages/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@0.28.4_magicast@0.5.2_vue@3.5.32_typescript@6.0.2_/node_modules/valaxy-theme-yun/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy@0.27.0_@babel+parser@7.29.0_@nuxt+kit@3.21.0_@types+markdown-it@14.1.2_@types+no_e0916ef5e88d4a7ef0e889caea007c2d/node_modules/valaxy/client/pages/[...path].vue': {
+    'node_modules/.pnpm/valaxy@0.28.4_@babel+parser@7.29.2_@nuxt+kit@3.21.2_magicast@0.5.2__@types+markdown-it@_de7af1d69fc5e3359a6fc8290017cd2d/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -453,13 +447,13 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@0.27.0_vue@3.5.27_typescript@5.9.3_/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@0.28.4_magicast@0.5.2_vue@3.5.32_typescript@6.0.2_/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
       routes:
         | '/page/[page]'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@0.27.0_vue@3.5.27_typescript@5.9.3_/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@0.28.4_magicast@0.5.2_vue@3.5.32_typescript@6.0.2_/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
       routes:
         | '/posts/'
       views:
@@ -570,12 +564,6 @@ declare module 'vue-router/auto-routes' {
     'pages/projects/index.md': {
       routes:
         | '/projects/'
-      views:
-        | never
-    }
-    'pages/slides/index.md': {
-      routes:
-        | '/slides/'
       views:
         | never
     }
