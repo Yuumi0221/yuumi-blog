@@ -67,7 +67,7 @@ export default defineSiteConfig({
     // },
     {
       name: $t('siteConfig.social.email'),
-      link: 'mailto:yuumi0221@163.com',
+      link: 'mailto:mail@yuumi.link',
       icon: 'i-ri-mail-line',
       color: '#71aac1ff',
     },
