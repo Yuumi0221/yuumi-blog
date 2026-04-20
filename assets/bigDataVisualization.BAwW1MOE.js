@@ -1,0 +1,45 @@
+import{Bn as e,Or as t,dt as n,ft as r,ln as i,mn as a,sn as o,ut as s,xr as c,yt as l}from"./framework.zouWXpaQ.js";import{n as u}from"./theme.CNpUr7n_.js";import{i as d}from"./chunks/vue-i18n.CWI5RdDW.js";import{a as f,i as p}from"./chunks/vue-router.C1juWBTa.js";d();var m={__name:`bigDataVisualization`,setup(d,{expose:m}){let h=c(JSON.parse(`{"title":"大数据可视化小实践","description":"","frontmatter":{"layout":"post","title":"大数据可视化小实践","date":"2021-12-17","updated":"2021-12-17","tags":["HTML","数据可视化","ECharts","python"],"categories":"小作业"},"headers":[],"relativePath":"pages/posts/bigDataVisualization.md"}`)),g=f(),_=p(),v=Object.assign(_.meta.frontmatter||{},h.value?.frontmatter||{});return g.currentRoute.value.data=h.value,i(`valaxy:frontmatter`,v),globalThis.$frontmatter=v,m({frontmatter:{layout:`post`,title:`大数据可视化小实践`,date:`2021-12-17`,updated:`2021-12-17`,tags:[`HTML`,`数据可视化`,`ECharts`,`python`],categories:`小作业`}}),(i,c)=>{let d=u;return o(),n(d,{frontmatter:t(v)},{"main-content-md":e(()=>[c[0]||=s(`p`,null,`又是课堂小作业！这回的作业要求竟然只有一个主题？！没办法了，只好乱做一通了！`,-1),c[1]||=s(`div`,{class:`primary`},[s(`blockquote`,null,[s(`p`,null,`pyecharts！我把你拿下！`)])],-1),r(` more `),c[2]||=s(`h2`,{id:`项目概览`,tabindex:`-1`},[l(`项目概览 `),s(`a`,{class:`header-anchor`,href:`#项目概览`,"aria-label":`Permalink to "项目概览"`},`​`)],-1),c[3]||=s(`h3`,{id:`项目主题`,tabindex:`-1`},[l(`项目主题 `),s(`a`,{class:`header-anchor`,href:`#项目主题`,"aria-label":`Permalink to "项目主题"`},`​`)],-1),c[4]||=s(`p`,null,`大数据可视化`,-1),c[5]||=s(`h3`,{id:`小组成员`,tabindex:`-1`},[l(`小组成员 `),s(`a`,{class:`header-anchor`,href:`#小组成员`,"aria-label":`Permalink to "小组成员"`},`​`)],-1),c[6]||=s(`p`,null,`SYD、WYH、Yuumi`,-1),c[7]||=s(`h2`,{id:`数据`,tabindex:`-1`},[l(`数据 `),s(`a`,{class:`header-anchor`,href:`#数据`,"aria-label":`Permalink to "数据"`},`​`)],-1),c[8]||=s(`ul`,null,[s(`li`,null,[s(`p`,null,[l(`数据内容（`),s(`a`,{href:`https://www.kaggle.com/crailtap/taxi-trajectory/download`,target:`_blank`,rel:`noreferrer`},`下载`),l(`）：`)]),s(`p`,null,`​ 葡萄牙波尔图 2013.7.1 ~ 2014.6.30，为期一年时间段内出租车营运数据`)]),s(`li`,null,[s(`p`,null,`数据大小：`),s(`p`,null,`​ 2.03 G`)])],-1),c[9]||=s(`h2`,{id:`文件组织结构`,tabindex:`-1`},[l(`文件组织结构 `),s(`a`,{class:`header-anchor`,href:`#文件组织结构`,"aria-label":`Permalink to "文件组织结构"`},`​`)],-1),c[10]||=s(`p`,null,[l(`项目文件已上传至`),s(`a`,{href:`https://github.com/Yuumi0221/BigDataVisualization`,target:`_blank`,rel:`noreferrer`},`GitHub`),l(`。由于GitHub上传不了大文件，因此csv文件统统没有上传。`)],-1),c[11]||=s(`div`,{class:`language-`},[s(`button`,{title:`Copy code`,class:`copy`}),s(`span`,{class:`lang`}),s(`pre`,{class:`shiki shiki-themes github-light github-dark vp-code`},[s(`code`,{"v-pre":``},[s(`span`,{class:`line`},[s(`span`,null,`- Sources`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- taxi`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- train.csv (附下载地址)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`- Code`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- HeatMap`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- dataProcess`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- getStartPoint.ipynb`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- statistic_hour.ipynb`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- total`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- TimeData`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`				- 0.csv ~ 23.csv (运行代码生成)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- index.html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- StartPoint.csv (运行代码生成)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- hour_1`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- 0.csv ~ 23.csv (运行代码生成)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- index.html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- hour_2`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- 0.csv ~ 23.csv (运行代码生成)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- index.html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- RouteLine`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- routeLine.ipynb`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- routeLine.html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- routeLine_files`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- TotalAnalysis`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- TotalAnalysis.ipynb`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- TotalAnalysis.html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- newSource (运行代码生成)`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- miss_false_no_poly_new_source.csv`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- polyline_source.csv`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`			- unstack_call_type_df.csv`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`- html`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- DVPPT`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- Analysis`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- HeatMap`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- Road`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`- images`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- DVPPT`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- Analysis`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- HeatMap`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`		- Road`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`- PPT`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- DVPPT.md`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- DVPPT1.md`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`	- DVPPT2.md`)]),l(`
+`),s(`span`,{class:`line`},[s(`span`,null,`- ReadMe.md`)])])]),s(`button`,{class:`code-block-unfold-btn`})],-1),c[12]||=s(`h3`,{id:`sources`,tabindex:`-1`},[l(`Sources `),s(`a`,{class:`header-anchor`,href:`#sources`,"aria-label":`Permalink to "Sources"`},`​`)],-1),c[13]||=s(`p`,null,`原数据文件所在文件夹`,-1),c[14]||=s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`taxi`)]),s(`ul`,null,[s(`li`,null,[s(`p`,null,`train.csv`),s(`p`,null,`原数据csv文件`)])])])],-1),c[15]||=s(`h3`,{id:`ppt`,tabindex:`-1`},[l(`PPT `),s(`a`,{class:`header-anchor`,href:`#ppt`,"aria-label":`Permalink to "PPT"`},`​`)],-1),c[16]||=s(`p`,null,[l(`此次项目PPT由网页端进行展示，PPT传送门：`),s(`a`,{href:`https://yuumi.link/404`,target:`_blank`,rel:`noreferrer`},`「数据可视化pre PPT」（链接维护中）`)],-1),c[17]||=s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`DVPPT.md`)]),s(`p`,null,`PPT源文件`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`html`)]),s(`p`,null,`可视化后导出的html文件，用于展示可视化效果`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`images`)]),s(`p`,null,`可视化后导出的png图像文件，用于展示可视化效果`)])],-1),c[18]||=s(`h3`,{id:`code`,tabindex:`-1`},[l(`Code `),s(`a`,{class:`header-anchor`,href:`#code`,"aria-label":`Permalink to "Code"`},`​`)],-1),c[19]||=s(`p`,null,`此文件夹中中为项目源代码，由 JavaScript 和 python 两部分组成`,-1),c[20]||=s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`HeatMap`)]),s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`dataProcess`)]),s(`p`,null,`此文件夹中为 python 文件，进行数据抽取与预处理`),s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`getStartPoint.ipynb`)]),s(`p`,null,`抽取起始坐标`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`statistic_hour.ipynb`)]),s(`p`,null,`按小时颗粒度进行时间段分片`)])])])]),s(`p`,null,`以下三个文件夹中为JavaScript文件，进行热力图绘制源代码，因涉及到本地文件读取，请在localhost中打开`),s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`total`)]),s(`p`,null,`整体热力图绘制`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`hour_1`)]),s(`p`,null,`按小时颗粒度分片后热力图绘制，0~23时按顺序进行时序动画绘制`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`hour_2`)]),s(`p`,null,`按小时颗粒度分片后热力图绘制，添加交互功能，可选择查看制定时间段热力图`)])])])],-1),c[21]||=s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`RouteLine`)]),s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`routeLine.ipynb`)]),s(`p`,null,`python文件，进行数据预处理、数据清洗、路线清洗合并、路线绘制`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`routLine.html`)]),s(`p`,null,`routeLine.ipynb的网页预览文件`)])])]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`TotalAnalysis`)]),s(`ul`,null,[s(`li`,null,[s(`p`,null,[s(`strong`,null,`TotalAnalysis.ipynb`)]),s(`p`,null,`python文件，进行数据预处理、综合分析、图表绘制`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`TotalAnalysis.html`)]),s(`p`,null,`TotalAnalysis.ipynb的网页预览文件`)]),s(`li`,null,[s(`p`,null,[s(`strong`,null,`newSource`)]),s(`p`,null,`经运算处理后的数据文件`)])])])],-1)]),"main-header":e(()=>[a(i.$slots,`main-header`)]),"main-header-after":e(()=>[a(i.$slots,`main-header-after`)]),"main-nav":e(()=>[a(i.$slots,`main-nav`)]),"main-content-before":e(()=>[a(i.$slots,`main-content-before`)]),"main-content":e(()=>[a(i.$slots,`main-content`)]),"main-content-after":e(()=>[a(i.$slots,`main-content-after`)]),"main-nav-before":e(()=>[a(i.$slots,`main-nav-before`)]),"main-nav-after":e(()=>[a(i.$slots,`main-nav-after`)]),comment:e(()=>[a(i.$slots,`comment`)]),footer:e(()=>[a(i.$slots,`footer`)]),aside:e(()=>[a(i.$slots,`aside`)]),"aside-custom":e(()=>[a(i.$slots,`aside-custom`)]),default:e(()=>[a(i.$slots,`default`)]),_:3},8,[`frontmatter`])}}};export{m as default};

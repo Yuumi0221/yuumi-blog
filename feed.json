@@ -1,0 +1,217 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "-Yuumi's Blog-",
+    "home_page_url": "https://www.yuumi.link/",
+    "feed_url": "https://www.yuumi.link/feed.json",
+    "icon": "https://cdn.yuumi.link/images/settings/favicon.png",
+    "author": {
+        "name": "Yuumi",
+        "url": "https://valaxy.site"
+    },
+    "items": [
+        {
+            "id": "https://www.yuumi.link/posts/slidev",
+            "content_html": "<p>在久远的过去，还在使用 Hexo 框架编写博客时，就被 [Slide](<a href=\"https://www.yuumi.link/posts/pageBuilding#%E5%B9%BB%E7%81%AF%E7\">https://www.yuumi.link/posts/pageBuilding#幻灯�</a></p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/slidev\" target=\"_blank\">https://www.yuumi.link/posts/slidev</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/slidev",
+            "title": "Slidev——为开发者打造的演示文稿工具",
+            "date_modified": "2025-07-17T00:00:00.000Z",
+            "date_published": "2025-07-17T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/stars",
+            "content_html": "<p>我永远不会忘记，静谧夏夜那满天繁星。</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/stars\" target=\"_blank\">https://www.yuumi.link/posts/stars</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/stars",
+            "title": "踏出追星的第一步",
+            "date_modified": "2023-08-22T00:00:00.000Z",
+            "date_published": "2023-08-22T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/ffLadiesDay",
+            "content_html": "<p>链接为试听，并附上了一点点相关信息（和观后感），欢迎补充！！</p>\n<p>::: tip</p>\n<p>以下为地区副本曲，商城35</p>\n<p>:::</p>\n<ol>\n<li>[管弦乐琴乐谱：深宵之海（钢琴集）](<a href=\"https://www.bili\">https://www.bili</a></li>\n</ol>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/ffLadiesDay\" target=\"_blank\">https://www.yuumi.link/posts/ffLadiesDay</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/ffLadiesDay",
+            "title": "FF14国服2023女儿节自选乐谱一览",
+            "date_modified": "2023-08-03T00:00:00.000Z",
+            "date_published": "2023-08-03T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/LLsif",
+            "content_html": "<p>2023.3.31 15:00 (CST)，LoveLive! School Idol Festival（学园偶像祭）停止运营</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/LLsif\" target=\"_blank\">https://www.yuumi.link/posts/LLsif</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/LLsif",
+            "title": "爷青结——μ's与我的青春",
+            "date_modified": "2023-03-31T00:00:00.000Z",
+            "date_published": "2023-03-31T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/valaxy",
+            "content_html": "<p>::: warning BREAKING NEWS!!!</p>\n<p>Yuumi's Blog 重磅更新！！！<br>\n已由 <a href=\"https://hexo.io/zh-cn/index.html\">Hexo</a> 转为 [</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/valaxy\" target=\"_blank\">https://www.yuumi.link/posts/valaxy</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/valaxy",
+            "title": "超可爱！使用 Valaxy 搭建自己的博客",
+            "date_modified": "2023-03-29T00:00:00.000Z",
+            "date_published": "2023-03-29T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/ffhouse",
+            "content_html": "<p>这些房子哪儿都好，唯一不好的就是我 roll 不到——记自己的 roll 房史。</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/ffhouse\" target=\"_blank\">https://www.yuumi.link/posts/ffhouse</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/ffhouse",
+            "title": "狒狒买房记",
+            "date_modified": "2023-03-24T00:00:00.000Z",
+            "date_published": "2023-03-24T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/smallCCompiler",
+            "content_html": "<p>smallC 语言在语法上与 C 语言类似，要比 C 语言简单的多。它的所有变量都是整型变量。具有 IF、WHILE 等控制语句。注释用 “<code>/*</code>” 和 “<code>*/</code>” 括起来，但不能嵌套。表达式局</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/smallCCompiler\" target=\"_blank\">https://www.yuumi.link/posts/smallCCompiler</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/smallCCompiler",
+            "title": "smallCCompiler",
+            "date_modified": "2023-01-17T00:00:00.000Z",
+            "date_published": "2023-01-17T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/ADFGVXCypher",
+            "content_html": "<p>这次的作业要求是完成 ADFGVX 加密算法，做一个可以加密、解密的小应用。要了解 ADFGVX 加密算法，首先得介绍一下 Polybius 加密算法。（其实以下介绍纯纯照搬老师给的pdf）</p>\n<h2></h2>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/ADFGVXCypher\" target=\"_blank\">https://www.yuumi.link/posts/ADFGVXCypher</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/ADFGVXCypher",
+            "title": "ADFGVX加密算法",
+            "date_modified": "2022-11-15T00:00:00.000Z",
+            "date_published": "2022-11-15T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/photography",
+            "content_html": "<blockquote>\n<p>第一次把自己拍摄的东西展示给除了好朋友以外的其他人看，其实还挺紧张的。一直以来自己拍的照片大多都是自娱自乐，不知道在别人眼中我的作品是什么样的，会有什么意想不到的解读。不知道在专业人士看来有什么</p>\n</blockquote>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/photography\" target=\"_blank\">https://www.yuumi.link/posts/photography</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/photography",
+            "title": "摄影与生活",
+            "date_modified": "2022-11-01T00:00:00.000Z",
+            "date_published": "2022-11-01T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/songs",
+            "content_html": "<p>★ <strong>Bilibili：<a href=\"https://space.bilibili.com/7498906\">Yu-u-mi</a></strong></p>\n<p>★ <strong>网易云音乐：<a href=\"https://music.163.com/#/artist?id=30377410\">Yuumi</a></strong></p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/songs\" target=\"_blank\">https://www.yuumi.link/posts/songs</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/songs",
+            "title": "Yuumi的翻唱合集",
+            "date_modified": "2022-08-31T00:00:00.000Z",
+            "date_published": "2022-08-31T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/GEZONE",
+            "content_html": "<p>因为IZONE而组的一个翻唱组合，看起来好像真的是一个团一样ww 其实只是几个好朋友一起玩翻唱啦！</p>\n<blockquote>\n<p>鸽团成员：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬</p>\n</blockquote>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/GEZONE\" target=\"_blank\">https://www.yuumi.link/posts/GEZONE</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/GEZONE",
+            "title": "鸽子团翻唱合集",
+            "date_modified": "2022-08-21T00:00:00.000Z",
+            "date_published": "2022-08-21T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/bigDataVisualization",
+            "content_html": "<p>又是课堂小作业！这回的作业要求竟然只有一个主题？！没办法了，只好乱做一通了！</p>\n<div class=\"primary\">\n<blockquote>\n<p>pyecharts！我把你拿下！</p>\n</blockquote>\n</div>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/bigDataVisualization\" target=\"_blank\">https://www.yuumi.link/posts/bigDataVisualization</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/bigDataVisualization",
+            "title": "大数据可视化小实践",
+            "date_modified": "2021-12-17T00:00:00.000Z",
+            "date_published": "2021-12-17T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/oskarstalbergsGame",
+            "content_html": "<p>被朋友安利的 Oskar Stålberg 大佬制作的休闲治愈沙盒小游戏！</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/oskarstalbergsGame\" target=\"_blank\">https://www.yuumi.link/posts/oskarstalbergsGame</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/oskarstalbergsGame",
+            "title": "治愈沙盒建造游戏",
+            "date_modified": "2021-12-03T00:00:00.000Z",
+            "date_published": "2021-12-03T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/getColor",
+            "content_html": "<h2>课程作业</h2>\n<p>基于已完成的练习，实现一个图片颜色的可视化页面，基本功能要求如下：</p>\n<ol>\n<li>\n<p>对图片中的颜色进行聚类，类的数量K可在代码中指定（聚类算法可使用k-means等）；</p>\n</li>\n<li>\n<p>需可视化的</p>\n</li>\n</ol>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/getColor\" target=\"_blank\">https://www.yuumi.link/posts/getColor</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/getColor",
+            "title": "图片像素颜色的可视化",
+            "date_modified": "2021-10-12T00:00:00.000Z",
+            "date_published": "2021-10-12T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/testEchart",
+            "content_html": "<p>上课学了如何载入文件并用EChart模板制作动态可交互图表，于是便想将其收入囊中！如果图表也可以做完一键复制粘贴，那岂不是爽飞了？！果然偷懒是人类进步的源动力<span class=\"bg-$smc-c-text hover:bg-$va-c-bg transition\">，所以大佬们快快加油让我多偷偷懒吧</span>！！</p>\n<div class=\"primary\">\n<blockquote>\n<p>人总是能在不知不觉间感受到意想不到的乐趣，正如现在面对无数DDL仍在快乐玩儿图表的我——</p>\n</blockquote>\n</div>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/testEchart\" target=\"_blank\">https://www.yuumi.link/posts/testEchart</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/testEchart",
+            "title": "将EChart图表嵌入Hexo博客中",
+            "date_modified": "2021-10-08T00:00:00.000Z",
+            "date_published": "2021-10-08T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/pageBuilding",
+            "content_html": "<p>:::warning 2023.3.30 关于博客的更新！<br>\n<a href=\"https://www.yuumi.link/posts/valaxy\">超可爱！使用 Valaxy 搭建自己的博客</a><br>\n:::</p>\n<p>没想到</p>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/pageBuilding\" target=\"_blank\">https://www.yuumi.link/posts/pageBuilding</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/pageBuilding",
+            "title": "从零开始的建博客生活",
+            "date_modified": "2021-09-29T00:00:00.000Z",
+            "date_published": "2021-09-29T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://www.yuumi.link/posts/booksSearch",
+            "content_html": "<div class=\"primary\">\n<blockquote>\n<p>为了防止自己老是忘记自己收藏过搜书网站（什么笨蛋），就随手整理了一下书刊类电子资源。废话不多说，直接甩链接！</p>\n</blockquote>\n</div>\n<br/><p>访问 <a href=\"https://www.yuumi.link/posts/booksSearch\" target=\"_blank\">https://www.yuumi.link/posts/booksSearch</a> 阅读全文。</p>",
+            "url": "https://www.yuumi.link/posts/booksSearch",
+            "title": "各种搜书网站整理",
+            "date_modified": "2021-09-28T00:00:00.000Z",
+            "date_published": "2021-09-28T00:00:00.000Z",
+            "author": {
+                "name": "Yuumi",
+                "url": "https://valaxy.site"
+            }
+        }
+    ]
+}
