@@ -14,20 +14,20 @@
   },
   "dependencies": {
     "aplayer": "^1.10.1",
-    "fuse.js": "^7.3.0",
+    "fuse.js": "^7.5.0",
     "markdown": "^0.5.0",
-    "valaxy": "0.28.5",
+    "valaxy": "1.0.0-rc.3",
     "valaxy-addon-bangumi": "^0.4.0",
     "valaxy-addon-components": "^0.1.0",
     "valaxy-addon-face": "^0.2.0",
     "valaxy-addon-lightgallery": "^0.0.4",
     "valaxy-addon-waline": "^0.2.1",
-    "valaxy-theme-yun": "0.28.5"
+    "valaxy-theme-yun": "1.0.0-rc.3"
   },
   "devDependencies": {
-    "@iconify-json/arcticons": "^1.2.51",
+    "@iconify-json/arcticons": "^1.2.56",
     "@iconify-json/ri": "^1.2.10",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "packageManager": "pnpm@10.13.1"
 }

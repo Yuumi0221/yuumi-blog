@@ -7,7 +7,7 @@ tags:
   - C++
   - QT
   - 加密算法
-categories: 小作业
+categories: 小工程
 cover: https://cdn.yuumi.link/images/ADFGVXCypher/image-20221104162849897.png
 excerpt: 课堂小作业，实现古老的ADFGVX加密算法
 ---

@@ -42,3 +42,16 @@ iframe.bilibili-video {
   max-width: 800px;
   aspect-ratio: 16/9;
 }
+
+// 分类小按钮背景色
+.post-category {
+  &:hover {
+    background-color: var(--va-c-primary);
+  }
+}
+// 标签小按钮背景色
+.post-tag {
+  &:hover {
+    background-color: var(--va-c-primary);
+  }
+}

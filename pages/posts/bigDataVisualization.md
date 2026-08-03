@@ -8,7 +8,7 @@ tags:
   - 数据可视化
   - ECharts
   - python
-categories: 小作业
+categories: 小工程
 ---
 
 又是课堂小作业！这回的作业要求竟然只有一个主题？！没办法了，只好乱做一通了！
