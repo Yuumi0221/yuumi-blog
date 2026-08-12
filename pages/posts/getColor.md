@@ -9,6 +9,7 @@ tags:
   - ECharts
 categories: 小工程
 excerpt: 课堂小作业。又是妄想一夜学会JS和HTML的一天
+hide: index
 ---
 
 ## 课程作业

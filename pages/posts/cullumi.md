@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 从 AI 辅助脚本，到照片整理应用 Cullumi
-date: 2026-08-03 22:43:04
-updated: 2026-08-03 22:43:04
+date: 2026-08-12
+updated: 2026-08-12
 tags: 
   - codex
   - python

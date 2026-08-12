@@ -9,6 +9,7 @@ tags:
   - 韩语
   - 日语
 categories: 小歌曲
+cover: https://cdn.yuumi.link/images/GEZONE/gezone.png
 aplayer: true
 ---
 
