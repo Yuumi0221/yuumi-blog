@@ -7,7 +7,7 @@ tags:
   - codex
   - python
 categories: 小工程
-cover: https://cdn.yuumi.link/images/cullumi/cullumi-homepage.png
+cover: https://cdn.yuumi.link/images/cullumi/cullumiHomepage.png
 excerpt: 算法驱动的照片整理助手，帮助你从大量照片中快速找到值得保留的瞬间。支持质量分析、相似照片分组和智能筛选，让照片整理更加轻松。
 hide: false
 ---
@@ -38,7 +38,7 @@ hide: false
 
 用户可以直接按“建议移除”和“人工复查”筛选照片，不必再根据文件名逐张查找；在放大预览中，也可以通过方向键或 `W/A/S/D` 切换照片、标记保留或移除，做到完全单手操作。新增的首页入口则让用户能随时返回项目主页，重新选择项目或进入其他功能。
 
-![放大预览](https://cdn.yuumi.link/images/cullumi/open-photo.png)
+![放大预览](https://cdn.yuumi.link/images/cullumi/openPhoto.png)
 
 ## v0.0.1：从功能工具走向桌面应用
 
@@ -48,7 +48,7 @@ hide: false
     
 首页加入最近项目列表，用户不再需要每次重新选择照片文件夹，也可以直接打开项目目录或从列表中移除项目。这里的“移除”不会删除照片，但是会让用户选择只隐藏首页记录，还是删除缓存、筛选结果与历史数据。
 
-![首页第一版](https://cdn.yuumi.link/images/cullumi/old-home.png)
+![首页第一版](https://cdn.yuumi.link/images/cullumi/oldHome.png)
     
 #### 更直观地理解照片状态
     
@@ -58,7 +58,7 @@ hide: false
     
 相似照片比较界面减少了无关信息，让用户能够直接对照推荐保留与可考虑移除的照片。图片预览也增加了缩放、拖动和快速恢复等操作，方便检查对焦、表情、曝光与画面细节。
 
-![相似照片第一版](https://cdn.yuumi.link/images/cullumi/old-similar.png)
+![相似照片第一版](https://cdn.yuumi.link/images/cullumi/oldSimilar.png)
     
 此外，版本信息、项目入口和版权信息也在这一阶段补齐，照片筛选器开始具备一款独立桌面应用应有的基本形态。
 
@@ -70,7 +70,7 @@ hide: false
 
 这一结构还能处理更复杂的相似关系：即使 A 与 C 不直接相似，只要它们通过 B 形成连续关联，也可以被归入同一组。相较简单的两两对照，它更符合真实照片整理的方式。
 
-![相似照片第二版+夜间模式](https://cdn.yuumi.link/images/cullumi/new-similar.png)
+![相似照片第二版+夜间模式](https://cdn.yuumi.link/images/cullumi/newSimilar.png)
 
 ## v0.2.0：统一照片库与筛选逻辑
 
@@ -86,7 +86,7 @@ hide: false
 
 侧边栏中的“AI 建议”“待决定”“已保留”等入口，也不再对应彼此独立的页面，而是照片库中的预设筛选条件。这样既保留了快捷访问方式，也避免了功能重复。
 
-![侧边栏第二版](https://cdn.yuumi.link/images/cullumi/new-sidebar.png)
+![侧边栏第二版](https://cdn.yuumi.link/images/cullumi/newSidebar.png)
 
 统一照片库还为后续扩展留下了空间。未来加入闭眼检测、模糊检测或构图分析时，只需增加筛选条件，无需继续创建新的页面。
 
@@ -96,7 +96,7 @@ hide: false
 
 经过前几个版本对核心流程、相似照片管理和信息架构的持续调整，应用经历了照片筛选器→photo culler，终于在 v1.0.0 正式定名为 **Cullumi** (Cull+Yuumi)。新的应用图标与首页背景也让它拥有了更完整、统一的产品形象。
 
-![图标设计](https://cdn.yuumi.link/images/cullumi/icon-design.png)
+![图标设计](https://cdn.yuumi.link/images/cullumi/iconDesign.png)
 
 #### 更高效地完成筛选
 
@@ -106,13 +106,13 @@ hide: false
 
 首页经过重新设计：Banner 与照片文件夹入口集中在左侧，最近项目陈列在右侧、展示缩略图，并以约 0.618 的比例划分空间。新增的项目搜索框让用户在项目较多时也能快速定位目标。
 
-![首页设计](https://cdn.yuumi.link/images/cullumi/home-design.png)
+![首页设计](https://cdn.yuumi.link/images/cullumi/homeDesign.png)
 
 此外，本版本统一优化了界面视觉与交互细节，包括滚动条、筛选按钮图标、控件对齐和整体样式，使不同页面之间的体验更加一致。
 
 <figure style="display:flex; justify-content:center; gap:20px; width:100%">
-    <img src="https://cdn.yuumi.link/images/cullumi/new-home.png" width=50% />
-	<img src="https://cdn.yuumi.link/images/cullumi/new-body.png" width=50% />
+    <img src="https://cdn.yuumi.link/images/cullumi/newHome.png" width=50% />
+	<img src="https://cdn.yuumi.link/images/cullumi/newBody.png" width=50% />
 </figure>
 
 ## 小结与展望
