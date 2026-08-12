@@ -6,6 +6,7 @@ import { addonWaline } from "valaxy-addon-waline"
 import { addonLightGallery } from 'valaxy-addon-lightgallery'
 import { addonBangumi } from 'valaxy-addon-bangumi'
 import { addonFace } from 'valaxy-addon-face'
+import { addonMeting } from 'valaxy-addon-meting'
 
 // add icons what you will need
 const safelist = [
@@ -143,6 +144,9 @@ export default defineValaxyConfig<UserThemeConfig>({
     }),
     addonFace({
       path: 'https://cdn.yuumi.link/emotes/',
+    }),
+    addonMeting({
+      global: false,
     }),
   ],
   

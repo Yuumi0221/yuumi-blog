@@ -55,12 +55,11 @@ SIF我从初中玩到高中，后来有了电脑之后就几乎不玩了。为�
 
 最初知道 LoveLive 是因为 [BILIBILI MACRO LINK](https://www.bilibili.com/bangumi/play/ss32830)。当时暑假在家里看直播，有个节目一上场，弹幕就开始刷“LL大法好！”。这是几位唱见和舞见一同表演歌曲，叫 *Snow halation*。
 
-<meting-js
+<MetingJs
  id="28768036"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 初次听就觉得这首歌好好听，而且一开始弹幕都在刷白色的雪花，演到副歌部分的时候齐刷刷地变成了橙色的字！当时的我不懂这是什么意思，直到后来看了动画，看了 Live。
 
@@ -76,30 +75,27 @@ SIF我从初中玩到高中，后来有了电脑之后就几乎不玩了。为�
 
 > 总有一天我要让台下座无虚席。
 
-<meting-js
+<MetingJs
  id="26218887"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 上了高中后没有找到一起玩 SIF 的同学，动漫社的大家也没有跳 LL 的意思。但是没想到到了大学之后收到了邀请，居然能有机会在舞台上跳 *SUNNY DAY SONG* ！表演录像其实也有上传 b 站，不过为了人身安全（？）还是不放在这里了x
 
-<meting-js
+<MetingJs
  id="33004433"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 就在写这篇文章的时候，ff14的一支肥肥小乐队举办了一场 μ's 演奏会，而最后一首自然是 *僕たちはひとつの光* 
 
-<meting-js
+<MetingJs
  id="33111737"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 > 今が最高！
 
@@ -111,11 +107,10 @@ SIF我从初中玩到高中，后来有了电脑之后就几乎不玩了。为�
 
 μ'sic forever！！！ *愛してるばんざーい！* 再见了！LLSIF！
 
-<meting-js
+<MetingJs
  id="28993131"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ![拜拜！](https://cdn.yuumi.link/images/LLsif/155739.jpg)

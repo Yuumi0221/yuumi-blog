@@ -59,12 +59,11 @@ aplayer: true
 - Vocal: 奶茶Miruky & Yuumi
 - Mix: 阳绫Themis
 
-<meting-js
+<MetingJs
  id="3332746720"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[箱庭のコラル](https://www.bilibili.com/video/BV1LDWGzgECa)
@@ -77,12 +76,11 @@ aplayer: true
 - Mix: 章宛枫
 - Video: Yuumi
 
-<meting-js
+<MetingJs
  id="2748418716"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[溶梦](https://www.bilibili.com/video/BV1gDpFzZEFH)
@@ -97,12 +95,11 @@ aplayer: true
 - Live2D：Yuumi
 - PV：电宝
 
-<meting-js
+<MetingJs
  id="2746283943"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[星月夜の調べ](https://www.bilibili.com/video/BV1qtbWzpEC4)
@@ -114,12 +111,11 @@ aplayer: true
 - Vocal: Yuumi & 奶茶Miruky
 - Mix：樱庭落
 
-<meting-js
+<MetingJs
  id="2736749406"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[深昏睡](https://www.bilibili.com/video/BV1e2JBzPEqa)
@@ -131,12 +127,11 @@ aplayer: true
 - Vocal&Mix: Yuumi
 - Special thanks: 章宛枫
 
-<meting-js
+<MetingJs
  id="2707096680"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2024（共3首）
@@ -164,12 +159,11 @@ aplayer: true
 - PV：Yuumi
 - Cover：https://picrew.me/ja/image_maker/165901
 
-<meting-js
+<MetingJs
  id="2620706903"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[春、恋、花以外の](https://www.bilibili.com/video/BV1fZ421i7rb)
@@ -182,12 +176,11 @@ aplayer: true
 - Mix：樱庭落
 - PV：Yuumi
 
-<meting-js
+<MetingJs
  id="2141379565"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2023（共4首）
@@ -226,12 +219,11 @@ aplayer: true
 - Vocal：Yuumi
 - Mix：果屋OFFICE
 
-<meting-js
+<MetingJs
  id="2028052742"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[黙劇](https://www.bilibili.com/video/BV1Ds4y1j7yE/)
@@ -245,12 +237,11 @@ aplayer: true
 - Illust：清水近
 - PV：电宝
 
-<meting-js
+<MetingJs
  id="2028044343"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2022（共15首）
@@ -319,12 +310,11 @@ aplayer: true
 - 翻唱：夜夕 卡波特 温彻思墨 雪球儿Yukiki 葵葵 陈德乐Chandelier 孔方 Minto薄荷糖 幻星影  Yuumi 秋灵 相对省略 卜聆 梦幻 耀Akaru 艾欧OwO 泉残方 小亨 千夜栖 洛弗 斯伊乔 漆诺 布酱 无乐添影 墨恒纾 风羽翼 心海未散
 - 后期：迟色
 
-<meting-js
+<MetingJs
  id="1974881460"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[光るなら](https://www.bilibili.com/video/BV19t4y1g79U/)
@@ -383,12 +373,11 @@ aplayer: true
 - Vocal：Yuumi 奶茶 柠檬
 - Mix/Movie：AmeAkane
 
-<meting-js
+<MetingJs
  id="1952489949"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2021（共14首）
@@ -443,12 +432,11 @@ aplayer: true
 <audio src="https://cdn.yuumi.link/audio/祝福のメシアとアイの塔/爱之塔(念白版).mp3" controls="controls" controlsList="nodownload" oncontextmenu="return false"></audio>
 
 无念白版：
-<meting-js
+<MetingJs
  id="1880246715"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 纯人声版：
 <audio src="https://cdn.yuumi.link/audio/祝福のメシアとアイの塔/爱之塔(纯人声).mp3" controls="controls" controlsList="nodownload" oncontextmenu="return false"></audio>
@@ -504,12 +492,11 @@ aplayer: true
 - Original：IZ*ONE
 - Vocal / Mix：Yuumi
 
-<meting-js
+<MetingJs
  id="1830550969"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[春泥棒](https://www.bilibili.com/video/BV1dU4y1p7Cj/)
@@ -532,12 +519,11 @@ aplayer: true
 - Vocal：Yuumi & 奶茶Miruky
 - Mix：Anyar暗鸦
 
-<meting-js
+<MetingJs
  id="1890928832"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[怪物](https://www.bilibili.com/video/BV1yX4y1G7Av/)
@@ -549,12 +535,11 @@ aplayer: true
 - Vocal：Yuumi
 - Mix：雨点雨点
 
-<meting-js
+<MetingJs
  id="1822497234"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2020（共10首）
@@ -580,20 +565,18 @@ aplayer: true
 - 完整版Mix：雨点雨点
 
 TV size：
-<meting-js
+<MetingJs
  id="1499027682"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 完整版：
-<meting-js
+<MetingJs
  id="1820102120"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵再会
@@ -703,12 +686,11 @@ TV size：
 - Mix：Yuumi
 - Special Thanks：AmeAkane、Tsubaki椿
 
-<meting-js
+<MetingJs
  id="1459987391"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[不可思議のカルテ](https://www.bilibili.com/video/BV15g4y1B7az/)
@@ -729,12 +711,11 @@ TV size：
 - Mix：贼恩
 
 完整版：
-<meting-js
+<MetingJs
  id="1449567038"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 纯人声版：
 <audio src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5a726780-47f4-401d-99c3-7eb9851eb479/20.5.8_%E5%85%94%E5%A5%B3%E9%83%8Eed_%E7%BA%AF%E4%BA%BA%E5%A3%B0.wav?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220831%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220831T055424Z&X-Amz-Expires=86400&X-Amz-Signature=dfcdfdbe459c188a1cc2c9bef1e9ded16e2318969f136f5530f7ce701f93d071&X-Amz-SignedHeaders=host&x-id=GetObject" controls="controls" controlsList="nodownload" oncontextmenu="return false"></audio>
@@ -750,12 +731,11 @@ TV size：
 - Mix/PV：Yuumi
 - Special Thanks：Tsubaki椿
 
-<meting-js
+<MetingJs
  id="1425137033"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[ワタシノテンシ](https://www.bilibili.com/video/BV1n7411Y71H/)
@@ -769,12 +749,11 @@ TV size：
 - Mix：萨摩灰
 - Special thanks：TSUBAKI椿
 
-<meting-js
+<MetingJs
  id="1418443669"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2019（共7首）
@@ -794,20 +773,18 @@ TV size：
 - 念白原稿：太二 Akito 筱翼
 
 无念白版：
-<meting-js
+<MetingJs
  id="1398084190"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 有念白版：
-<meting-js
+<MetingJs
  id="1450585202"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[八月のif](https://www.bilibili.com/video/BV1K4411B7pG/)
@@ -820,12 +797,11 @@ TV size：
 - Mix：Yuumi
 - PV：Yuumi
 
-<meting-js
+<MetingJs
  id="1488064820"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵アディショナルメモリー
@@ -851,12 +827,11 @@ TV size：
 - Vocal：Yuumi & 奶茶Miruky
 - Mix：萨摩灰
 
-<meting-js
+<MetingJs
  id="1358529276"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[センチメンタルクライシス](https://www.bilibili.com/video/BV17b411g7ir/)
@@ -869,12 +844,11 @@ TV size：
 - Mix：三星堆后期组
 - Movie：DD
 
-<meting-js
+<MetingJs
  id="1356593985"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[紫陽花の夜](https://www.bilibili.com/video/BV1fb411i7jT/)
@@ -886,12 +860,11 @@ TV size：
 - Vocal：Miruky&Yuumi
 - Mix：花見Mix
 
-<meting-js
+<MetingJs
  id="1350160636"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2018（共5首）
@@ -907,12 +880,11 @@ TV size：
 - Illust：Yukari(线稿) & 3bs(上色)
 - Movie：词典
 
-<meting-js
+<MetingJs
  id="1335425954"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[水星](https://www.bilibili.com/video/BV1aE411E73f/)
@@ -926,12 +898,11 @@ TV size：
 - Illust：奶茶Miruky
 - PV：Yuumi
 
-<meting-js
+<MetingJs
  id="1318582879"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[Secret Answer](https://www.bilibili.com/video/BV1dW411K7cW/)
@@ -945,12 +916,11 @@ TV size：
 - Mix：朽爷
 - Movie：吐♂槽
 
-<meting-js
+<MetingJs
  id="552093469"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ### 🎵[ロミオとシンデレラ](https://www.bilibili.com/video/BV17W411776e/)
@@ -964,12 +934,11 @@ TV size：
 - Illust：阿鸠
 - Movie：词典
 
-<meting-js
+<MetingJs
  id="1318484995"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 
 ## 2017（共1首）
@@ -985,9 +954,8 @@ TV size：
 - Mix：临暗 
 - Encode：黑
 
-<meting-js
+<MetingJs
  id="1318310879"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>

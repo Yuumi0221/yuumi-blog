@@ -202,6 +202,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/posts/cullumi': RouteRecordInfo<
+      '/posts/cullumi',
+      '/posts/cullumi',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/posts/ffhouse': RouteRecordInfo<
       '/posts/ffhouse',
       '/posts/ffhouse',
@@ -247,13 +254,6 @@ declare module 'vue-router/auto-routes' {
     '/posts/pageBuilding': RouteRecordInfo<
       '/posts/pageBuilding',
       '/posts/pageBuilding',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
-    '/posts/photo-culler': RouteRecordInfo<
-      '/posts/photo-culler',
-      '/posts/photo-culler',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -334,13 +334,13 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.3_magicast@0.5.4_vue@3.5.40_typescript@7.0.2_/node_modules/valaxy-theme-yun/pages/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy@1.0.0-rc.3_@babel+parser@7.29.8_@nuxt+kit@3.21.10_magicast@0.5.4__@types+markdow_9f8a240d24842947d6b436df45dc9506/node_modules/valaxy/client/pages/[...path].vue': {
+    'node_modules/.pnpm/valaxy@1.0.0-rc.4_@babel+parser@7.29.8_@nuxt+kit@3.21.11_magicast@0.5.4__@types+markdow_844107398010600c695d57734ae0c93a/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -454,13 +454,13 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.3_magicast@0.5.4_vue@3.5.40_typescript@7.0.2_/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
       routes:
         | '/page/[page]'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.3_magicast@0.5.4_vue@3.5.40_typescript@7.0.2_/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
       routes:
         | '/posts/'
       views:
@@ -481,6 +481,12 @@ declare module 'vue-router/auto-routes' {
     'pages/posts/booksSearch.md': {
       routes:
         | '/posts/booksSearch'
+      views:
+        | never
+    }
+    'pages/posts/cullumi.md': {
+      routes:
+        | '/posts/cullumi'
       views:
         | never
     }
@@ -523,12 +529,6 @@ declare module 'vue-router/auto-routes' {
     'pages/posts/pageBuilding.md': {
       routes:
         | '/posts/pageBuilding'
-      views:
-        | never
-    }
-    'pages/posts/photo-culler.md': {
-      routes:
-        | '/posts/photo-culler'
       views:
         | never
     }

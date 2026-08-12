@@ -44,12 +44,7 @@ aplayer: true
 - Illust：奶茶
 - Video：律律子
 
-<meting-js
- id="1972056338"
- server="netease"
- type="song"
- theme="#D69B54">
-</meting-js>
+<MetingJs id="1972056338" server="netease" type="song" theme="#D69B54"/>
 
 ### 🎵[AYAYAYA](https://www.bilibili.com/video/BV163411E7om/)
 
@@ -61,12 +56,11 @@ aplayer: true
 - Mix/Movie：AmeAkane
 - Illust：https://www.neka.cc/composer/11215
 
-<meting-js
+<MetingJs
  id="1939771143"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Queendom (IZ\*ONE flip)](https://www.bilibili.com/video/BV1YL4y1q7H1/)
 
@@ -78,12 +72,11 @@ aplayer: true
 - Instrumental：dylonmaycel
 - Mix/Background Vocals：AmeAkane
 
-<meting-js
+<MetingJs
  id="1891144891"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Hey. Bae. Like It](https://www.bilibili.com/video/BV1rf4y1F77V/)
 
@@ -94,12 +87,11 @@ aplayer: true
 - Vocal：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬
 - Mix：AmeAkane
 
-<meting-js
+<MetingJs
  id="1886536249"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Sequence](https://www.bilibili.com/video/BV1mP4y1a7xt/)
 
@@ -111,12 +103,11 @@ aplayer: true
 - Mix：AmeAkane
 - Illust：https://www.neka.cc/composer/10007
 
-<meting-js
+<MetingJs
  id="1875180510"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Secret Story of the Swan](https://www.bilibili.com/video/BV1bb4y167XT/)
 
@@ -128,12 +119,11 @@ aplayer: true
 - Mix：AmeAkane
 - Illust：https://picrew.me/image_maker/336819
 
-<meting-js
+<MetingJs
  id="1862866719"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Panorama](https://www.bilibili.com/video/BV1JU4y137Kn/)
 
@@ -145,12 +135,11 @@ aplayer: true
 - Mix/Movie：AmeAkane
 - Illust：https://picrew.me/image_maker/43267
 
-<meting-js
+<MetingJs
  id="1858990391"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Merry-Go-Round (Japanese Ver.)](https://www.bilibili.com/video/BV1uo4y1m7wG/)
 
@@ -161,12 +150,11 @@ aplayer: true
 - Vocal：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬
 - Mix/Movie：AmeAkane
 
-<meting-js
+<MetingJs
  id="1848388714"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[FIESTA](https://www.bilibili.com/video/BV1V54y1s7Jh?p=3)
 
@@ -177,12 +165,11 @@ aplayer: true
 - Vocal：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬
 - Mix & PV：AmeAkane
 
-<meting-js
+<MetingJs
  id="1441660831"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[Violeta](https://www.bilibili.com/video/BV1V54y1s7Jh?p=2)
 
@@ -193,12 +180,11 @@ aplayer: true
 - Vocal：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬 
 - Mix & PV：AmeAkane
 
-<meting-js
+<MetingJs
  id="1426977284"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ### 🎵[La Vie en Rose](https://www.bilibili.com/video/BV1V54y1s7Jh?p=1)
 
@@ -209,12 +195,11 @@ aplayer: true
 - Vocal：AmeAkane Yuumi 奶茶 律律子 ひかり 柠檬 
 - Mix & PV：AmeAkane
 
-<meting-js
+<MetingJs
  id="1335473324"
  server="netease"
  type="song"
- theme="#D69B54">
-</meting-js>
+ theme="#D69B54"/>
 
 ## [鸽团卡面传送门](https://www.yuumi.link/albums/GEZONE)
 

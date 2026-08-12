@@ -15,12 +15,7 @@ aplayer: true
 
 <!-- more -->
 
-<meting-js
- id="1423038384"
- server="netease"
- type="song"
- theme="#D69B54">
-</meting-js>
+<MetingJs id="1423038384" server="netease" type="song" theme='#D69B54'/>
 
 ---
 
@@ -105,4 +100,3 @@ aplayer: true
 ![星轨](https://cdn.yuumi.link/images/stars/星轨水印4k.png)
 
 写下这篇博客的今天是七夕节，应是欣赏夏季大三角最好的日子。若是没有这狂风暴雨，想必在城市里也能看到那最亮的星。
-
