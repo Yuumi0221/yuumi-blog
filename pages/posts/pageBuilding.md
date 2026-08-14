@@ -6,7 +6,7 @@ updated: 2023-03-30
 tags: 
   - Hexo
   - Blog
-categories: 小日记
+categories: 小工程
 cover: https://yun.yunyoujun.cn/logo.gif
 excerpt: 心血来潮地肝出了自己的博客主页！（是废话连篇的日记，慎看！！）
 ---

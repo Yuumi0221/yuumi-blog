@@ -1,4 +1,4 @@
-import { $t, defineValaxyConfig } from 'valaxy'
+import { defineValaxyConfig } from 'valaxy'
 // import { defineConfig } from 'valaxy'
 import type { UserThemeConfig } from 'valaxy-theme-yun'
 import { addonWaline } from "valaxy-addon-waline"
@@ -20,86 +20,6 @@ export default defineValaxyConfig<UserThemeConfig>({
   // site config see site.config.ts
 
   theme: 'yun',
-
-  themeConfig: {
-    banner: {
-      enable: true,
-      title: ['Yuumi', '的', '烟', '波', '之', '路'],
-      cloud: {
-        enable: true,
-      },
-    },
-
-    pages: [
-      {
-        name: $t('menu.projects'),
-        url: '/projects/',
-        icon: 'i-ri-code-s-slash-line',
-        color: '#ff6cb1b9',
-      },
-      {
-        name: $t('menu.anime'),
-        url: '/anime/',
-        icon: 'i-ri-movie-line',
-        color: '#737de5',
-      },
-      {
-        name: $t('menu.albums'),
-        url: '/albums/',
-        icon: 'i-ri-gallery-line',
-        color: '#43abee',
-      },
-      {
-        name: $t('menu.links'),
-        url: '/links/',
-        icon: 'i-ri-open-arm-line',
-        color: '#4bbea4',
-      },
-    ],
-    
-    bg_image: {
-      enable: true,
-      url: "https://cdn.yuumi.link/images/settings/background.png",
-      dark: "https://cdn.yuumi.link/images/settings/bgdark.jpg",
-      opacity: 1
-    },
-
-    say: {
-      enable: true,
-      api: "https://el-bot-api.vercel.app/api/words/young",
-      hitokoto: {
-        enable: true,
-        api: "https://v1.hitokoto.cn/?c=k&c=d&c=i",
-      },
-    },
-
-    colors: {
-      primary: "#D69B54",
-    },
-
-    fireworks: {
-      enable: true,
-      colors: ['#FFE57D', '#FFCD88', '#E6F4AD']
-    },
-
-    footer: {
-      since: 2021,
-      icon: {
-        enable: true,
-        name: 'i-ri-heart-line',
-        animated: true,
-        color: '#d69b54',
-        url: 'https://yuumi.link',
-        title: '回到首页'
-      },
-      powered: true,
-      beian: {
-        enable: true,
-        icp: '沪ICP备2026002379号',
-        police:'沪公网安备31010502007663号',
-      },
-    },
-  },
 
   groupIcons: {
     customIcon:{

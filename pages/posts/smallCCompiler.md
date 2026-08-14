@@ -7,7 +7,7 @@ tags:
   - C
   - QT
   - 编译器
-categories: 小作业
+categories: 小工程
 cover: https://cdn.yuumi.link/images/smallCCompiler/image-20221111165005827.png
 excerpt: 一个 SmallC 语言的编译器
 ---

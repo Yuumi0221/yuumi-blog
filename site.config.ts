@@ -35,36 +35,18 @@ export default defineSiteConfig({
       icon: 'i-ri-bilibili-line',
       color: '#fa97b3ff',
     },
+    // {
+    //   name: $t('siteConfig.social.youtube'),
+    //   link: 'https://www.youtube.com/@yuumihoshino1836',
+    //   icon: 'i-ri-youtube-line',
+    //   color: '#e03759ff',
+    // },
     {
-      name: $t('siteConfig.social.youtube'),
-      link: 'https://www.youtube.com/@yuumihoshino1836',
-      icon: 'i-ri-youtube-line',
-      color: '#e03759ff',
+      name: 'GitHub',
+      link: 'https://github.com/Yuumi0221',
+      icon: 'i-ri-github-line',
+      color: '#9b9b9b',
     },
-    // {
-    //   name: $t('siteConfig.social.twitter'),
-    //   link: 'https://x.com/Yuumi12118924',
-    //   icon: 'i-ri-twitter-x-line',
-    //   color: '#405b6dff',
-    // },
-    // {
-    //   name: 'steam',
-    //   link: 'https://steamcommunity.com/id/yuumi0221/',
-    //   icon: 'i-ri-steam-line',
-    //   color: '#32769bff',
-    // },
-    // {
-    //   name: 'GitHub',
-    //   link: 'https://github.com/Yuumi0221',
-    //   icon: 'i-ri-github-line',
-    //   color: '#9b9b9b',
-    // },
-    // {
-    //   name: 'Notion',
-    //   link: 'https://yuumis.notion.site',
-    //   icon: 'i-ri-notion-fill',
-    //   color: '#717171',
-    // },
     {
       name: $t('siteConfig.social.email'),
       link: 'mailto:mail@yuumi.link',
@@ -77,29 +59,11 @@ export default defineSiteConfig({
       icon: 'i-ri-rss-line',
       color: 'orange',
     },
-    // {
-    //   name: $t('siteConfig.social.weibo'),
-    //   link: 'https://weibo.com/u/3075122387',
-    //   icon: 'i-ri-weibo-line',
-    //   color: '#E6162D',
-    // },
-    // {
-    //   name: 'Pixiv',
-    //   link: 'https://www.pixiv.net/users/10168567',
-    //   icon: 'i-arcticons:pixiv',
-    //   color: '#0096FA',
-    // },
-    // {
-    //   name: $t('siteConfig.social.zhihu'),
-    //   link: 'https://www.zhihu.com/people/yuumi-81',
-    //   icon: 'i-ri-zhihu-line',
-    //   color: '#0084FF',
-    // },
   ],
 
   search: {
     enable: true,
-    type: 'fuse'
+    provider: 'fuse'
   },
 
   fuse: {
