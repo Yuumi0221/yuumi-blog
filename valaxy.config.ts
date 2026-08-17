@@ -7,6 +7,7 @@ import { addonLightGallery } from 'valaxy-addon-lightgallery'
 import { addonBangumi } from 'valaxy-addon-bangumi'
 import { addonFace } from 'valaxy-addon-face'
 import { addonMeting } from 'valaxy-addon-meting'
+import { addonMoments } from 'valaxy-addon-moments'
 
 // add icons what you will need
 const safelist = [
@@ -67,6 +68,16 @@ export default defineValaxyConfig<UserThemeConfig>({
     }),
     addonMeting({
       global: false,
+    }),
+    addonMoments({
+      title: '小随想',
+      description: '记录生活里的小事',
+      initialCount: 10,
+      batchSize: 10,
+      likes: {
+        enabled: true,
+        endpoint: '/api/moments-like',
+      },
     }),
   ],
   

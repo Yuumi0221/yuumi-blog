@@ -109,6 +109,22 @@
         "blog": "風干鱼",
         "desc": "你好？",
         "color": "#751917"
+    },
+    {
+        "url": "https://yakoo.cloud/",
+        "avatar": "https://cdn.yuumi.link/images/friendLinks/recto.jpg",
+        "name": "Recto",
+        "blog": "Recto's Blog",
+        "desc": "「愛とかノンフィクション。」",
+        "color": "#ff5d8c"
+    },
+    {
+        "url": "https://takuyamafuru.github.io/",
+        "avatar": "https://cdn.yuumi.link/images/friendLinks/tkym.jpg",
+        "name": "タクヤマ",
+        "blog": "タクヤマ",
+        "desc": "ノゾミある未来を取り戻せ！tkym",
+        "color": "#FFE212"
     }
 ]
   

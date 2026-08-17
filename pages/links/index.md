@@ -18,7 +18,7 @@ links: /links.json
 
 ```json
 {
-    "url": "https://yuumi.link",
+    "url": "https://www.yuumi.link",
     "avatar": "https://cdn.yuumi.link/images/settings/favicon.png",
     "name": "Yuumi",
     "blog": "-Yuumi's Blog-",

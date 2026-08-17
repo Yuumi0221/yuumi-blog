@@ -16,17 +16,18 @@
     "aplayer": "^1.10.1",
     "fuse.js": "^7.5.0",
     "markdown": "^0.5.0",
-    "valaxy": "1.0.0-rc.4",
+    "valaxy": "1.0.0-rc.6",
     "valaxy-addon-bangumi": "^0.4.0",
     "valaxy-addon-components": "^0.1.0",
     "valaxy-addon-face": "^0.2.0",
     "valaxy-addon-lightgallery": "^0.0.4",
     "valaxy-addon-meting": "^0.2.0",
+    "valaxy-addon-moments": "^0.1.2",
     "valaxy-addon-waline": "^0.2.1",
-    "valaxy-theme-yun": "1.0.0-rc.4"
+    "valaxy-theme-yun": "1.0.0-rc.6"
   },
   "devDependencies": {
-    "@iconify-json/arcticons": "^1.2.56",
+    "@iconify-json/arcticons": "^1.2.57",
     "@iconify-json/ri": "^1.2.10",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },

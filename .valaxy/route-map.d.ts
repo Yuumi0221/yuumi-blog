@@ -167,6 +167,20 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/moments/': RouteRecordInfo<
+      '/moments/',
+      '/moments',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/moments/2026-08-17-moments': RouteRecordInfo<
+      '/moments/2026-08-17-moments',
+      '/moments/2026-08-17-moments',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/page/[page]': RouteRecordInfo<
       '/page/[page]',
       '/page/:page',
@@ -334,13 +348,13 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy@1.0.0-rc.4_@babel+parser@7.29.8_@nuxt+kit@3.21.11_magicast@0.5.4__@types+markdow_844107398010600c695d57734ae0c93a/node_modules/valaxy/client/pages/[...path].vue': {
+    'node_modules/.pnpm/valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt+kit@3.21.11_magicast@0.5.4__@types+markdow_955e6c5d3abc90546023bc36f40777bd/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -454,13 +468,25 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
+    'node_modules/.pnpm/valaxy-addon-moments@0.1.2_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt+kit@3.21.11_mag_27efbe7463b7410b6c702c1101e2f703/node_modules/valaxy-addon-moments/pages/moments/index.vue': {
+      routes:
+        | '/moments/'
+      views:
+        | never
+    }
+    'pages/moments/2026-08-17-moments.md': {
+      routes:
+        | '/moments/2026-08-17-moments'
+      views:
+        | never
+    }
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
       routes:
         | '/page/[page]'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.4_magicast@0.5.4_vue@3.5.41_@typescript+typescript6@6.0.2_/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
       routes:
         | '/posts/'
       views:
