@@ -76,7 +76,7 @@ export default defineValaxyConfig<UserThemeConfig>({
       batchSize: 10,
       likes: {
         enabled: true,
-        endpoint: '/api/moments_like',
+        endpoint: '/api/moments-like',
       },
     }),
   ],
