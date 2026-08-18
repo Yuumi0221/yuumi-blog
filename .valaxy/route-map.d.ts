@@ -181,6 +181,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/moments/2026-08-19-cullumi-video': RouteRecordInfo<
+      '/moments/2026-08-19-cullumi-video',
+      '/moments/2026-08-19-cullumi-video',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/page/[page]': RouteRecordInfo<
       '/page/[page]',
       '/page/:page',
@@ -348,13 +355,13 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.7_magicast@0.5.4_valaxy@1.0.0-rc.7_@babel+parser@7.29.8_@nuxt_ee540f82f2da8d8546cbd23aa232367c/node_modules/valaxy-theme-yun/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt+kit@3.21.11_magicast@0.5.4__@types+markdow_955e6c5d3abc90546023bc36f40777bd/node_modules/valaxy/client/pages/[...path].vue': {
+    'node_modules/.pnpm/valaxy@1.0.0-rc.7_@babel+parser@7.29.8_@nuxt+kit@3.21.11_magicast@0.5.4__@types+markdow_7fc98d31060c2e013b5e75d4a8fe9282/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -468,7 +475,7 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-addon-moments@0.1.2_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt+kit@3.21.11_mag_27efbe7463b7410b6c702c1101e2f703/node_modules/valaxy-addon-moments/pages/moments/index.vue': {
+    'node_modules/.pnpm/valaxy-addon-moments@0.1.4_valaxy@1.0.0-rc.7_@babel+parser@7.29.8_@nuxt+kit@3.21.11_mag_157a8fabfa9bc96ee935235c7d1c7e9f/node_modules/valaxy-addon-moments/pages/moments/index.vue': {
       routes:
         | '/moments/'
       views:
@@ -480,13 +487,19 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
+    'pages/moments/2026-08-19-cullumi-video.md': {
+      routes:
+        | '/moments/2026-08-19-cullumi-video'
+      views:
+        | never
+    }
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.7_magicast@0.5.4_valaxy@1.0.0-rc.7_@babel+parser@7.29.8_@nuxt_ee540f82f2da8d8546cbd23aa232367c/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
       routes:
         | '/page/[page]'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.6_magicast@0.5.4_valaxy@1.0.0-rc.6_@babel+parser@7.29.8_@nuxt_a2deee5b448e1e20cafeb866b8d70396/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.7_magicast@0.5.4_valaxy@1.0.0-rc.7_@babel+parser@7.29.8_@nuxt_ee540f82f2da8d8546cbd23aa232367c/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
       routes:
         | '/posts/'
       views:

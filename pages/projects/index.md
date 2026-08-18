@@ -6,27 +6,46 @@ categories:
   - 项目
 icon: i-ri-code-s-slash-line
 date: 2025-07-15
-updated: 2025-07-15
 layout: projects
 projects:
+  applets:
+    title: 应用
+    emoji: 📱
+    collection:
+      - name: Cullumi
+        emoji: 📷
+        color: '#ff5a91'
+        desc: 照片筛选应用
+      #   gradient: false
+        textColor: black
+        github: Yuumi0221/Cullumi
+        url: https://github.com/Yuumi0221/Cullumi/releases
+        
+
+  plugins:
+    title: 插件
+    emoji: 🔌
+    collection:
+      - name: valaxy-addon-moments
+        emoji: 💭
+        desc: Valaxy Markdown 小动态时间线插件
+        color: '#b246ff'
+        github: YunYouJun/valaxy/tree/main/packages/valaxy-addon-moments
+        url: https://www.npmjs.com/package/valaxy-addon-moments
+
+
   slides:
     title: 幻灯片
     emoji: 🖥️
     collection:
       - name: Slidev Test
         emoji: 🖥️
-        color: '#b2ffffff'
+        color: '#b2ffff'
         desc: slidev启动测试
         textColor: black
-        # github: YunYouJun/air-conditioner
+        github: Yuumi0221/slides
         url: https://slides.yuumi.link/slidev-test/
-      # - name: Data Visualization Project
-      #   emoji: 🐵
-      #   color: '#dfa3dcff'
-      #   desc: 数据可视化课程项目Pre
-      #   textColor: black
-      #   # github: YunYouJun/air-conditioner
-      #   url: https://slides.yuumi.link/DVPPT/
+        
       # - name: Computer-Aided Manufacturing Final
       #   emoji: 🐵
       #   color: '#413b58ff'
@@ -51,18 +70,6 @@ projects:
 #         url: https://ac.yunyoujun.cn
 #         docs: https://www.yunyoujun.cn/air-conditioner-room/
 
-#   applets:
-#     title: 应用
-#     emoji: 📱
-#     collection:
-#       - name: ai-sfc
-#         emoji: 🧧
-#         desc: AI 春联
-#         color: '#ff4444'
-#         textColor: white
-#         gradient: false
-#         github: YunYouJun/ai-sfc
-#         url: https://ai-sfc.yunyoujun.cn
 
 #   tools:
 #     title: 工具
@@ -88,17 +95,6 @@ projects:
 #         docs: https://yun.yunyoujun.cn
 #         # 转为 valaxy-theme-yun
 #         status: maintained
-
-#   plugins:
-#     title: 插件
-#     emoji: 🔌
-#     collection:
-#       - name: unplugin-glsl
-#         emoji: 🎨
-#         desc: Unplugin 插件，加载 GLSL 语法，支持 Webpack/Vite/Rollup/Rspack
-#         color: '#2b7489'
-#         github: YunYouJun/unplugin-glsl
-#         url: https://unplugin-glsl.pages.dev
 
 #   lab:
 #     title: 实验
