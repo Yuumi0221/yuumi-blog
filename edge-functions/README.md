@@ -25,3 +25,21 @@ lightweight counter rather than a transactionally exact counter.
 Other hosting providers can implement the same endpoint contract with their own
 serverless function and storage. Sites without a server-side storage option
 should leave `moments.likes.enabled` disabled.
+
+## Music metadata proxy
+
+`api/music-metadata.js` exposes `/api/music-metadata` for the songs archive. It
+loads cover and lyric metadata in this order: NetEase Cloud Music, Bilibili,
+then the client-side CDN fallback configured for each song. No credentials or
+storage binding are required. Responses are cached at the edge.
+
+The Vite middleware in `dev-server.ts` mounts both music endpoints during
+`pnpm dev`, so local development uses the same handlers as EdgeOne. For another
+hosting provider, set `VITE_MUSIC_METADATA_API` to an endpoint implementing the
+same GET contract, or port these stateless functions to that provider.
+
+`api/bilibili-audio.js` is the same-origin streaming bridge used only for songs
+that have no configured NetEase or self-hosted audio. It forwards HTTP range
+requests to Bilibili's audio-only stream, so the deployment provider will carry
+that audio bandwidth. If the provider has strict bandwidth limits, disable this
+fallback or move the endpoint to a media-capable service.

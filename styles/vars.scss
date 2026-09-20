@@ -7,6 +7,66 @@
     // --yun-sidebar-bg-color: rgba(255, 255, 255, 0);
 }
 
+// 全局播放器在首次实际播放后出现，并在切换页面后继续工作。
+html:not(.yuumi-global-player-active) .aplayer.aplayer-fixed {
+    display: none !important;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed {
+    z-index: 40;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed .aplayer-info {
+    display: block !important;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed .aplayer-played,
+html.yuumi-global-player-active .aplayer.aplayer-fixed .aplayer-thumb {
+    background-color: var(--va-c-primary) !important;
+}
+
+// 主题切换时让音乐库使用独立的右上至左下圆形揭示动画。
+html.theme-reveal .music-library {
+    view-transition-name: yuumi-music-library;
+}
+
+::view-transition-old(yuumi-music-library) {
+    opacity: 1;
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-new(yuumi-music-library) {
+    opacity: 1;
+    animation: yuumi-music-theme-reveal 450ms ease-out both;
+    mix-blend-mode: normal;
+}
+
+::view-transition-group(yuumi-music-library) {
+    animation: none;
+}
+
+@keyframes yuumi-music-theme-reveal {
+    from { clip-path: circle(0 at 100% 0); }
+    to { clip-path: circle(150% at 100% 0); }
+}
+
+html.dark .aplayer.aplayer-fixed .aplayer-body,
+html.dark .aplayer.aplayer-fixed .aplayer-info {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--va-c-text);
+    background: var(--va-c-bg-soft);
+}
+
+html.dark .aplayer.aplayer-fixed .aplayer-author,
+html.dark .aplayer.aplayer-fixed .aplayer-time {
+    color: var(--va-c-text-2) !important;
+}
+
+html.dark .aplayer.aplayer-fixed .aplayer-miniswitcher {
+    background: color-mix(in srgb, var(--va-c-bg-soft) 82%, white);
+}
+
 // 页眉页脚渐变色
 .yun-page-header-gradient {
     background: linear-gradient(to right,rgba(255, 237, 170, 0.2) 0,rgba(255, 254, 173, 0.2) 100%);

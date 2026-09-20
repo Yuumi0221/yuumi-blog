@@ -7,6 +7,9 @@ import { addonBangumi } from 'valaxy-addon-bangumi'
 import { addonFace } from 'valaxy-addon-face'
 import { addonMeting } from 'valaxy-addon-meting'
 import { addonMoments } from 'valaxy-addon-moments'
+import { musicApiDevPlugin } from './edge-functions/dev-server'
+
+const metingApi = process.env.VITE_METING_API
 
 // add icons what you will need
 const safelist = [
@@ -66,7 +69,24 @@ export default defineValaxyConfig<UserThemeConfig>({
       path: 'https://cdn.yuumi.link/emotes/',
     }),
     addonMeting({
-      global: false,
+      global: true,
+      props: {
+        id: '3332746720',
+        server: 'netease',
+        type: 'song',
+        fixed: true,
+        mutex: true,
+        loop: 'none',
+        order: 'list',
+        preload: 'metadata',
+        'lrc-type': 0,
+        'list-folded': true,
+        'storage-name': 'yuumi-global-music-player',
+        ...(metingApi ? { api: metingApi } : {}),
+      },
+      options: {
+        lyricHidden: true,
+      },
     }),
     addonMoments({
       title: '小随想',
@@ -85,6 +105,10 @@ export default defineValaxyConfig<UserThemeConfig>({
   },
 
   unocss: { safelist },
+
+  vite: {
+    plugins: [musicApiDevPlugin()],
+  },
 
   
 })
