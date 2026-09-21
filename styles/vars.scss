@@ -16,7 +16,44 @@ html.yuumi-global-player-active .aplayer.aplayer-fixed {
     z-index: 40;
 }
 
-html.yuumi-global-player-active .aplayer.aplayer-fixed .aplayer-info {
+html.yuumi-global-player-active .aplayer.aplayer-fixed:not(.aplayer-narrow) .aplayer-info {
+    display: block !important;
+}
+
+// APlayer 收起后保留封面和展开开关，不让整条播放器一起消失。
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow {
+    display: block !important;
+    width: 84px !important;
+    max-width: 84px !important;
+    height: 66px !important;
+    opacity: 1;
+    visibility: visible;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+    display: block !important;
+    left: 0 !important;
+    width: 66px !important;
+    max-width: none !important;
+    height: 66px !important;
+    padding-right: 18px;
+    opacity: 1;
+    visibility: visible;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-pic {
+    display: block !important;
+    width: 66px !important;
+    height: 66px !important;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-info,
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-list,
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-lrc {
+    display: none !important;
+}
+
+html.yuumi-global-player-active .aplayer.aplayer-fixed.aplayer-narrow .aplayer-miniswitcher {
     display: block !important;
 }
 
@@ -65,6 +102,21 @@ html.dark .aplayer.aplayer-fixed .aplayer-time {
 
 html.dark .aplayer.aplayer-fixed .aplayer-miniswitcher {
     background: color-mix(in srgb, var(--va-c-bg-soft) 82%, white);
+}
+
+@media (width < 768px) {
+    // 播放前避开页面底部播放器；播放后避开 66px 高的全局 APlayer。
+    html.yuumi-music-library-page:not(.yuumi-global-player-active) .back-to-top.yun-icon-btn {
+        bottom: calc(5.25rem + env(safe-area-inset-bottom));
+    }
+
+    html.yuumi-music-library-page.yuumi-global-player-active .music-library .mobile-player {
+        display: none;
+    }
+
+    html.yuumi-music-library-page.yuumi-global-player-active .back-to-top.yun-icon-btn {
+        bottom: calc(66px + 1rem + env(safe-area-inset-bottom));
+    }
 }
 
 // 页眉页脚渐变色

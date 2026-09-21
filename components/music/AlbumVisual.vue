@@ -250,7 +250,7 @@ watch(() => props.activeLyricIndex, async (index) => {
 @media (width < 768px) {
   .album-visual {
     height: auto;
-    grid-template-rows: auto minmax(15rem, 23rem);
+    grid-template-rows: auto clamp(5rem, 32vh, 10rem);
   }
 
   .visual-area {

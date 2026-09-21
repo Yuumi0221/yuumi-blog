@@ -490,6 +490,15 @@ time {
   transition: opacity 150ms ease, transform 150ms ease;
 }
 
+.volume-popover::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0.55rem;
+  content: '';
+}
+
 .volume-control:hover .volume-popover,
 .volume-control:focus-within .volume-popover {
   opacity: 1;

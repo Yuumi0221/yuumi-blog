@@ -11,7 +11,7 @@ import { musicProfileLinks, songs } from '../../pages/posts/songs.config'
 import { getSongSearchText, getSongYear, validateSongs } from './music'
 import { useMusicPlayer } from './useMusicPlayer'
 import { useSongMetadata } from './useSongMetadata'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -109,6 +109,8 @@ watch(() => player.currentSong.value.id, (id) => {
 })
 
 onMounted(() => {
+  document.documentElement.classList.add('yuumi-music-library-page')
+
   const errors = validateSongs(songs)
   if (errors.length)
     console.warn('[Yuumi Music Library] 数据检查失败：', errors)
@@ -116,6 +118,10 @@ onMounted(() => {
   if (route.query.song !== player.currentSong.value.id)
     void router.replace({ query: { ...route.query, song: player.currentSong.value.id } })
   rememberSelectedSong(player.currentSong.value.id)
+})
+
+onBeforeUnmount(() => {
+  document.documentElement.classList.remove('yuumi-music-library-page')
 })
 </script>
 
@@ -396,6 +402,10 @@ onMounted(() => {
   .library-grid > :first-child {
     grid-row: 1 / 3;
   }
+
+  .library-grid > .now-playing {
+    margin-top: clamp(1.3rem, 14vw, 2.5rem);
+  }
 }
 
 @media (width < 768px) {
@@ -447,6 +457,10 @@ onMounted(() => {
   .library-grid > :nth-child(1) { order: 3; }
   .library-grid > :nth-child(2) { order: 1; }
   .library-grid > :nth-child(3) { order: 2; }
+
+  .library-grid > .now-playing {
+    margin-top: clamp(1rem, 14vw, 2rem);
+  }
 
   .mobile-player {
     position: fixed;
@@ -516,6 +530,7 @@ onMounted(() => {
   .mobile-loading {
     animation: mobile-spin 0.8s linear infinite;
   }
+
 }
 
 @keyframes mobile-spin {
