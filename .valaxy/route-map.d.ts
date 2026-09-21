@@ -272,13 +272,6 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/posts/GEZONE': RouteRecordInfo<
-      '/posts/GEZONE',
-      '/posts/GEZONE',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
     '/posts/LLsif': RouteRecordInfo<
       '/posts/LLsif',
       '/posts/LLsif',
@@ -583,12 +576,6 @@ declare module 'vue-router/auto-routes' {
     'pages/posts/getColor.md': {
       routes:
         | '/posts/getColor'
-      views:
-        | never
-    }
-    'pages/posts/GEZONE.md': {
-      routes:
-        | '/posts/GEZONE'
       views:
         | never
     }

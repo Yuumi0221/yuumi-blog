@@ -147,6 +147,16 @@ export const songs: Song[] = [
     links: [bilibili('https://www.bilibili.com/video/BV18e411F7WY/')],
   },
   {
+    id: '2022-10-12-ssfwl', title: '第五季节 (SSFWL)', date: '2022-10-12',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('OH MY GIRL', 'https://www.youtube.com/watch?v=udGwca1HBM4')),
+      credit('Vocal', '琴川归人', 'ひかり', '律律子', 'AmeAkane', '奶茶Miruky', '柠檬', 'Yuumi'),
+      credit('Mix / Background Vocals', 'AmeAkane'), credit('Video', '律律子'),
+    ],
+    links: [bilibili('https://www.bilibili.com/video/BV1TR4y1R7Jr/')],
+  },
+  {
     id: '2022-10-07-nagareyuku-kumo', title: '流れ行く云 (指弹)', date: '2022-10-07',
     artists: ['Yuumi'], kind: 'instrumental',
     credits: [credit('Original', '岸部眞明')],
@@ -165,6 +175,17 @@ export const songs: Song[] = [
     credits: [credit('Original', value('Goose house', 'https://www.youtube.com/watch?v=SnXkhkEvNIM')), credit('Vocal', '七草动漫社宅舞翻唱部、阿荨、阿鱼、初玖、D少、陌北凉、秦玖、时织、水丸子、雁、依久、亿碗饭、Yuumi'), credit('Mix', '亿碗饭'), credit('策划、视频', '玉子')],
     links: [bilibili('https://www.bilibili.com/video/BV19t4y1g79U/')],
     notes: ['真诚建议，千万别听！！'],
+  },
+  {
+    id: '2022-06-25-tsubame', title: 'ツバメ', date: '2022-06-25',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('YOASOBI「ツバメ」feat. ミドリーズ', 'https://www.youtube.com/watch?v=qDL3zhB8-MM')),
+      credit('Vocal', '律律子', 'ひかり', 'Yuumi', 'AmeAkane', '奶茶', '柠檬'),
+      credit('Mix', 'AmeAkane'), credit('Illust', '奶茶'), credit('Video', '律律子'),
+    ],
+    audioSources: [netease('1972056338')],
+    links: [bilibili('https://www.bilibili.com/video/BV1PP411j7DQ/'), neteaseLink('1972056338')],
   },
   {
     id: '2022-06-04-romance-no-yakusoku', title: 'ロマンスの約束', date: '2022-06-04',
@@ -192,6 +213,17 @@ export const songs: Song[] = [
     links: [bilibili('https://www.bilibili.com/video/BV1WZ4y147Mu/'), neteaseLink('1952489949')],
   },
   {
+    id: '2022-01-29-ayayaya', title: 'AYAYAYA', date: '2022-01-29',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=-whFS-HwiHc&list=OLAK5uy_ktKLOeo5nABPmdxrQadWCkRHHUhqlEkrk&index=4')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
+      credit('Mix / Movie', 'AmeAkane'), credit('Illust', value('NEKA', 'https://www.neka.cc/composer/11215')),
+    ],
+    audioSources: [netease('1939771143')],
+    links: [bilibili('https://www.bilibili.com/video/BV163411E7om/'), neteaseLink('1939771143')],
+  },
+  {
     id: '2021-10-31-dancing-stars-on-me', title: 'Dancing stars on me!', date: '2021-10-31',
     artists: ['音乃木坂幼稚園'], kind: 'collaboration',
     credits: [
@@ -200,6 +232,27 @@ export const songs: Song[] = [
       credit('Tune', '小裙边', '麻美子', '花守织'), credit('Mix', '猫又猫猫又'),
     ],
     links: [bilibili('https://www.bilibili.com/video/BV1b3411k7a3/')],
+  },
+  {
+    id: '2021-10-11-queendom-izone-flip', title: 'Queendom (IZ*ONE flip)', date: '2021-10-11',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('Red Velvet', 'https://www.youtube.com/watch?v=c9RzZpV460k')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
+      credit('Instrumental', 'dylonmaycel'), credit('Mix / Background Vocals', 'AmeAkane'),
+    ],
+    audioSources: [netease('1891144891')],
+    links: [bilibili('https://www.bilibili.com/video/BV1YL4y1q7H1/'), neteaseLink('1891144891')],
+  },
+  {
+    id: '2021-08-31-hey-bae-like-it', title: 'Hey. Bae. Like It', date: '2021-08-31',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=prNNjpvGjCY')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'), credit('Mix', 'AmeAkane'),
+    ],
+    audioSources: [netease('1886536249')],
+    links: [bilibili('https://www.bilibili.com/video/BV1rf4y1F77V/'), neteaseLink('1886536249')],
   },
   {
     id: '2021-08-26-blessing-messiah', title: '祝福のメシアとアイの塔', date: '2021-08-26',
@@ -219,10 +272,53 @@ export const songs: Song[] = [
     notes: ['系 Ito 已经毕业停止活动，这里仅作为存档保留。'],
   },
   {
+    id: '2021-08-07-sequence', title: 'Sequence', date: '2021-08-07',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=eW-61oOanMw&list=PLU5NFMWc0k7niv85CWD9aOw6rgE9RsX2R&index=7')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
+      credit('Mix', 'AmeAkane'), credit('Illust', value('NEKA', 'https://www.neka.cc/composer/10007')),
+    ],
+    audioSources: [netease('1875180510')],
+    links: [bilibili('https://www.bilibili.com/video/BV1mP4y1a7xt/'), neteaseLink('1875180510')],
+  },
+  {
+    id: '2021-07-21-secret-story-of-the-swan', title: 'Secret Story of the Swan', date: '2021-07-21',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=nnVjsos40qk&list=PLU5NFMWc0k7n2O5CZ3xw7jraVYugDqnoP')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
+      credit('Mix', 'AmeAkane'), credit('Illust', value('Picrew', 'https://picrew.me/image_maker/336819')),
+    ],
+    audioSources: [netease('1862866719')],
+    links: [bilibili('https://www.bilibili.com/video/BV1bb4y167XT/'), neteaseLink('1862866719')],
+  },
+  {
+    id: '2021-07-01-panorama', title: 'Panorama', date: '2021-07-01',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=G8GaQdW2wHc&list=PLU5NFMWc0k7niv85CWD9aOw6rgE9RsX2R')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
+      credit('Mix / Movie', 'AmeAkane'), credit('Illust', value('Picrew', 'https://picrew.me/image_maker/43267')),
+    ],
+    audioSources: [netease('1858990391')],
+    links: [bilibili('https://www.bilibili.com/video/BV1JU4y137Kn/'), neteaseLink('1858990391')],
+  },
+  {
     id: '2021-06-05-blessing', title: 'Blessing', date: '2021-06-05',
     artists: ['Yuumi', '初玖', '凛默', '天南', '小可', '羲和'], kind: 'collaboration',
     credits: [credit('Original', value('sm23304692', 'https://acg.tv/sm23304692')), credit('参考', value('BV1As41127tH', 'https://www.bilibili.com/video/BV1As41127tH')), credit('中文填词', 'Yuriko'), credit('联合制作', '华东师范大学七草动漫社', '南京大学CAC动漫社', '中国科学技术大学LEO动漫协会'), credit('策划', '羲和'), credit('Vocal', 'Yuumi', '初玖', '凛默', '天南', '小可', '羲和'), credit('Mix', '樱庭落')],
     links: [bilibili('https://www.bilibili.com/video/BV1tg411G7Pj/')],
+  },
+  {
+    id: '2021-05-16-merry-go-round-japanese', title: 'Merry-Go-Round (Japanese Ver.)', date: '2021-05-16',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=MzGCoEfsYxg&list=OLAK5uy_maOz6eEVL1KVxjj5e5Iab8fisyaCVYSLs&index=8')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'), credit('Mix / Movie', 'AmeAkane'),
+    ],
+    audioSources: [netease('1848388714')],
+    links: [bilibili('https://www.bilibili.com/video/BV1uo4y1m7wG/'), neteaseLink('1848388714')],
   },
   {
     id: '2021-05-07-sing-and-smile', title: 'Sing&Smile!!', date: '2021-05-07',
@@ -316,6 +412,16 @@ export const songs: Song[] = [
     links: [bilibili('https://www.bilibili.com/video/BV15g4y1B7az/'), neteaseLink('1449567038')],
   },
   {
+    id: '2020-04-19-fiesta', title: 'FIESTA', date: '2020-04-19',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=eDEFolvLn0A&list=PLU5NFMWc0k7neT2m6HheW1GDa7f0mUY-O')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'), credit('Mix / PV', 'AmeAkane'),
+    ],
+    audioSources: [netease('1441660831')],
+    links: [bilibili('https://www.bilibili.com/video/BV1V54y1s7Jh?p=3'), neteaseLink('1441660831')],
+  },
+  {
     id: '2020-02-21-tiny-light', title: 'Tiny Light (TV size)', date: '2020-02-21',
     artists: ['Yuumi'], kind: 'solo',
     credits: [credit('Original', value('八尋寧々（CV：鬼頭明里）', 'https://www.youtube.com/watch?v=7wOD-9jwbJQ&list=TLGGrP8XFxvpPmUzMDAxMjAyMA')), credit('Vocal', 'Yuumi'), credit('Mix / PV', 'Yuumi'), credit('Special Thanks', 'Tsubaki椿')],
@@ -351,6 +457,16 @@ export const songs: Song[] = [
     notes: ['因为两个人都觉得不是很满意，所以没有在任何地方投稿。'],
   },
   {
+    id: '2019-08-03-violeta', title: 'Violeta', date: '2019-08-03',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=6eEZ7DJMzuk&list=PLU5NFMWc0k7lm1J2unGxqTHZZ_U-5jWFI')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'), credit('Mix / PV', 'AmeAkane'),
+    ],
+    audioSources: [netease('1426977284')],
+    links: [bilibili('https://www.bilibili.com/video/BV1V54y1s7Jh?p=2'), neteaseLink('1426977284')],
+  },
+  {
     id: '2019-04-13-sakura-ryuseigun', title: '桜流星群', date: '2019-04-13',
     artists: ['Yuumi', '奶茶Miruky'], kind: 'collaboration',
     credits: [credit('Original', value('H△G', 'https://youtu.be/WaTodq2Y3dw')), credit('Vocal', 'Yuumi', '奶茶Miruky'), credit('Mix', '萨摩灰')],
@@ -377,6 +493,16 @@ export const songs: Song[] = [
     credits: [credit('Original', 'BoA'), credit('Vocal', 'Yuumi', '奶茶Miruky'), credit('Mix', '花見Mix'), credit('Illust', 'Yukari（线稿）', '3bs（上色）'), credit('Movie', '词典')],
     audioSources: [netease('1335425954')],
     links: [bilibili('https://www.bilibili.com/video/BV1Qt411k7SL/'), neteaseLink('1335425954')],
+  },
+  {
+    id: '2018-12-23-la-vie-en-rose', title: 'La Vie en Rose', date: '2018-12-23',
+    artists: ['GE*ZONE'], kind: 'collaboration',
+    credits: [
+      credit('Original', value('IZ*ONE', 'https://www.youtube.com/watch?v=E-T1gEeUqwA&list=PLU5NFMWc0k7mYG71DOEMX21AOStDwpOXk')),
+      credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'), credit('Mix / PV', 'AmeAkane'),
+    ],
+    audioSources: [netease('1335473324')],
+    links: [bilibili('https://www.bilibili.com/video/BV1V54y1s7Jh?p=1'), neteaseLink('1335473324')],
   },
   {
     id: '2018-10-18-suisei', title: '水星', date: '2018-10-18',
