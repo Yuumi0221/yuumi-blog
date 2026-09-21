@@ -107,7 +107,7 @@ onBeforeUnmount(clearTimers)
     type="song"
     :id="songId"
     :api="api || undefined"
-    preload="metadata"
+    preload="none"
     autoplay="false"
     mutex="true"
     lrc-type="3"

@@ -47,9 +47,10 @@ export interface Song {
   id: string
   title: string
   date: string
-  /** CDN fallback used until remote metadata has loaded. */
-  cover: string
-  thumbnail?: string
+  /** Legacy cover retained as a migration and load-error fallback. */
+  cover?: string
+  /** Bump this value when a generated CDN cover must be refreshed. */
+  coverRevision?: number
   artists: string[]
   kind: SongKind
   credits: SongCredit[]
@@ -66,15 +67,11 @@ export interface LyricLine {
   text: string
 }
 
-export type RemoteMediaSource = 'netease' | 'bilibili' | 'fallback' | 'none'
+export type LyricSource = 'netease' | 'bilibili' | 'none'
 
-export interface SongMetadata {
-  cover: string | null
-  coverSource: RemoteMediaSource
+export interface SongDetail {
   lyrics: LyricLine[]
-  lyricSource: RemoteMediaSource
-  audioUrl: string | null
-  audioSource: RemoteMediaSource
+  lyricSource: LyricSource
 }
 
 type CreditInput = string | CreditValue

@@ -56,108 +56,66 @@ function parseLrc(value) {
   return lines.sort((a, b) => a.start - b.start)
 }
 
-async function getNeteaseMetadata(songId, includeLyrics) {
-  const encodedIds = encodeURIComponent(`[${songId}]`)
-  const [detail, lyric] = await Promise.allSettled([
-    fetchJson(`https://music.163.com/api/song/detail/?id=${songId}&ids=${encodedIds}`),
-    includeLyrics
-      ? fetchJson(`https://music.163.com/api/song/lyric?id=${songId}&lv=1&kv=1&tv=-1`)
-      : Promise.resolve(null),
-  ])
-
-  const song = detail.status === 'fulfilled' ? detail.value?.songs?.[0] : null
-  const picUrl = withHttps(song?.album?.picUrl || song?.al?.picUrl)
-  const lyricText = lyric.status === 'fulfilled' ? lyric.value?.lrc?.lyric : null
-  return {
-    cover: picUrl ? `${picUrl}?param=900y900` : null,
-    lyrics: parseLrc(lyricText),
-  }
+async function getNeteaseLyrics(songId) {
+  const lyric = await fetchJson(`https://music.163.com/api/song/lyric?id=${songId}&lv=1&kv=1&tv=-1`)
+  return parseLrc(lyric?.lrc?.lyric)
 }
 
-async function getBilibiliMetadata(bvid, includeLyrics) {
+async function getBilibiliLyrics(bvid) {
   const view = await fetchJson(`https://api.bilibili.com/x/web-interface/view?bvid=${bvid}`)
   if (view?.code !== 0 || !view?.data)
-    return { cover: null, lyrics: [] }
+    return []
 
-  const cover = withHttps(view.data.pic)
   const cid = view.data.cid || view.data.pages?.[0]?.cid
-  if (!includeLyrics || !cid)
-    return { cover, lyrics: [] }
+  if (!cid)
+    return []
 
   const player = await fetchJson(`https://api.bilibili.com/x/player/v2?bvid=${bvid}&cid=${cid}`)
   const subtitles = player?.data?.subtitle?.subtitles || []
   const preferred = subtitles.find(item => /zh|ai-zh|cn/i.test(item.lan || '')) || subtitles[0]
   const subtitleUrl = withHttps(preferred?.subtitle_url)
   if (!subtitleUrl)
-    return { cover, lyrics: [] }
+    return []
 
   const subtitle = await fetchJson(subtitleUrl)
-  const lyrics = (subtitle?.body || [])
+  return (subtitle?.body || [])
     .filter(item => Number.isFinite(item.from) && typeof item.content === 'string' && item.content.trim())
     .map(item => ({ start: item.from, end: item.to, text: item.content.trim() }))
-
-  return { cover, lyrics }
 }
 
 export async function onRequestGet({ request }) {
   const params = new URL(request.url).searchParams
   const neteaseId = params.get('neteaseId')
   const bvid = params.get('bvid')
-  const coverOnly = params.get('coverOnly') === '1'
 
   if (neteaseId && !/^\d{5,16}$/.test(neteaseId))
     return json({ error: 'Invalid neteaseId' }, 400)
   if (bvid && !/^BV[A-Za-z0-9]{10}$/.test(bvid))
     return json({ error: 'Invalid bvid' }, 400)
   if (!neteaseId && !bvid)
-    return json({ cover: null, coverSource: 'none', lyrics: [], lyricSource: 'none', audioUrl: null, audioSource: 'none' })
-
-  let cover = null
-  let coverSource = 'none'
-  let lyrics = []
-  let lyricSource = 'none'
-  let audioUrl = null
-  let audioSource = 'none'
+    return json({ lyrics: [], lyricSource: 'none' })
 
   if (neteaseId) {
     try {
-      const netease = await getNeteaseMetadata(neteaseId, !coverOnly)
-      if (netease.cover) {
-        cover = netease.cover
-        coverSource = 'netease'
-      }
-      if (netease.lyrics.length) {
-        lyrics = netease.lyrics
-        lyricSource = 'netease'
-      }
+      const lyrics = await getNeteaseLyrics(neteaseId)
+      if (lyrics.length)
+        return json({ lyrics, lyricSource: 'netease' })
     }
     catch {
-      // Bilibili and the local CDN remain available as fallbacks.
+      // Bilibili subtitles remain available as a fallback.
     }
   }
 
-  if (bvid && (!cover || (!coverOnly && !lyrics.length))) {
+  if (bvid) {
     try {
-      const bilibili = await getBilibiliMetadata(bvid, !coverOnly && !lyrics.length)
-      if (!cover && bilibili.cover) {
-        cover = bilibili.cover
-        coverSource = 'bilibili'
-      }
-      if (!lyrics.length && bilibili.lyrics.length) {
-        lyrics = bilibili.lyrics
-        lyricSource = 'bilibili'
-      }
-      if (!neteaseId && !coverOnly) {
-        const proxyUrl = new URL('/api/bilibili-audio', request.url)
-        proxyUrl.searchParams.set('bvid', bvid)
-        audioUrl = proxyUrl.toString()
-        audioSource = 'bilibili'
-      }
+      const lyrics = await getBilibiliLyrics(bvid)
+      if (lyrics.length)
+        return json({ lyrics, lyricSource: 'bilibili' })
     }
     catch {
-      // The client shows its explicit fallback when both providers fail.
+      // The client displays its empty-lyrics state when both providers fail.
     }
   }
 
-  return json({ cover, coverSource, lyrics, lyricSource, audioUrl, audioSource })
+  return json({ lyrics: [], lyricSource: 'none' })
 }

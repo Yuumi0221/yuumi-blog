@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "build": "npm run fuse && npm run build:ssg && npm run rss",
+    "build:edgeone": "pnpm run sync:music-covers && pnpm run build",
     "build:spa": "valaxy build",
     "build:ssg": "valaxy build --ssg",
     "fuse": "valaxy fuse",
     "dev": "NODE_USE_ENV_PROXY=1 valaxy",
     "new": "valaxy new",
     "rss": "valaxy rss",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "sync:music-covers": "jiti edge-functions/sync-music-covers.ts"
   },
   "dependencies": {
     "aplayer": "^1.10.1",
@@ -29,6 +31,9 @@
   "devDependencies": {
     "@iconify-json/arcticons": "^1.2.58",
     "@iconify-json/ri": "^1.2.10",
+    "cos-nodejs-sdk-v5": "^2.15.4",
+    "jiti": "2.7.0",
+    "sharp": "^0.34.4",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "packageManager": "pnpm@10.13.1"

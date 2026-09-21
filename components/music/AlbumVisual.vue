@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LyricLine, Song } from './music'
+import { handleSongCoverError } from './covers'
 import { nextTick, ref, watch } from 'vue'
 
 const props = defineProps<{
@@ -52,6 +53,7 @@ watch(() => props.activeLyricIndex, async (index) => {
           height="520"
           decoding="async"
           referrerpolicy="no-referrer"
+          @error="handleSongCoverError($event, song)"
         >
       </div>
     </div>

@@ -1,6 +1,7 @@
 import type { ComputedRef } from 'vue'
 import type { Song, SongAudioSource, UrlAudioSource } from './music'
-import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
+import { getSongCoverUrl } from './covers'
 import { getBilibiliVideoId } from './music'
 
 export type PlaybackMode = 'list' | 'one' | 'random' | 'stop'
@@ -53,8 +54,20 @@ interface PersistentSession {
 let persistentAPlayer: APlayerLike | null = null
 let persistentSession: PersistentSession | null = null
 
-export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, initialSong?: Song) {
-  const restoredSong = persistentSession
+export function useMusicPlayer(
+  allSongs: Song[],
+  queue: ComputedRef<Song[]>,
+  initialSong?: Song,
+  preferInitialSong = false,
+) {
+  const persistentTrack = persistentAPlayer?.list?.audios[persistentAPlayer.list.index]
+  const shouldRestorePlayingSong = Boolean(
+    persistentSession
+    && persistentAPlayer
+    && !persistentAPlayer.audio.paused
+    && persistentTrack?.archiveSongId === persistentSession.songId,
+  )
+  const restoredSong = persistentSession && (!preferInitialSong || shouldRestorePlayingSong)
     ? allSongs.find(song => song.id === persistentSession?.songId)
     : null
   const currentSong = ref(restoredSong || initialSong || allSongs[0])
@@ -75,32 +88,39 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
   const globalAPlayer = shallowRef<APlayerLike | null>(persistentAPlayer)
   const currentAPlayer = shallowRef<APlayerLike | null>(null)
   const currentMedia = shallowRef<HTMLAudioElement | null>(null)
-  const runtimeSources = ref<Record<string, UrlAudioSource>>({})
-  const runtimeCovers = ref<Record<string, string>>({})
   const unavailableRuntimeSongs = ref(new Set<string>())
-
-  if (restoredSong && persistentSession?.source?.type === 'url' && persistentSession.source.id.startsWith('bilibili-')) {
-    runtimeSources.value[restoredSong.id] = persistentSession.source
-  }
 
   let urlAudio: HTMLAudioElement | null = null
   let removeMediaListeners: (() => void) | null = null
   let resumeAfterLoad = false
   let mounted = false
+  let sourcePrepared = false
   let resolvedNeteaseTrack: APlayerAudio | null = null
   let lastAudibleVolume = 0.7
+
+  function getBilibiliSource(song: Song): UrlAudioSource | null {
+    if (unavailableRuntimeSongs.value.has(song.id))
+      return null
+    const bvid = getBilibiliVideoId(song)
+    if (!bvid)
+      return null
+    return {
+      id: `bilibili-${song.id}`,
+      type: 'url',
+      src: `/api/bilibili-audio?bvid=${encodeURIComponent(bvid)}`,
+      label: 'Bilibili 视频音频',
+      availability: 'available',
+    }
+  }
 
   const currentSource = computed<SongAudioSource | null>(() => {
     const configured = currentSong.value.audioSources?.[currentSourceIndex.value]
     if (configured?.availability !== 'unavailable')
-      return configured || runtimeSources.value[currentSong.value.id] || null
-    return runtimeSources.value[currentSong.value.id] || configured
+      return configured || getBilibiliSource(currentSong.value)
+    return getBilibiliSource(currentSong.value) || configured
   })
 
-  const hasBilibiliFallback = computed(() => Boolean(
-    getBilibiliVideoId(currentSong.value)
-    && !unavailableRuntimeSongs.value.has(currentSong.value.id),
-  ))
+  const hasBilibiliFallback = computed(() => Boolean(getBilibiliSource(currentSong.value)))
 
   const canPlay = computed(() => {
     return Boolean(
@@ -250,9 +270,18 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     const onError = () => {
       isPlaying.value = false
       isLoading.value = false
-      error.value = '当前音源加载失败，请尝试外部平台链接。'
-      if (currentSource.value?.id.startsWith('bilibili-'))
-        reportRuntimeSourceUnavailable(currentSong.value.id, true)
+      const message = '当前音源加载失败，请尝试外部平台链接。'
+      if (currentSource.value?.id.startsWith('bilibili-')) {
+        const failedSongId = currentSong.value.id
+        reportBilibiliUnavailable(failedSongId)
+        void nextTick(() => {
+          if (currentSong.value.id === failedSongId)
+            error.value = message
+        })
+      }
+      else {
+        error.value = message
+      }
     }
     const onEnded = () => void handleEnded()
     const onVolumeChange = () => {
@@ -386,19 +415,18 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     if (!canPlay.value)
       return
 
-    if (!currentMedia.value && backendType.value === 'netease' && error.value) {
-      error.value = null
-      isLoading.value = true
-      resumeAfterLoad = true
-      needsNeteaseResolver.value = true
-      backendKey.value += 1
+    if (isPlaying.value) {
+      pause()
       return
     }
 
-    if (isPlaying.value)
-      pause()
-    else
-      await playActive()
+    if (!sourcePrepared || (!currentMedia.value && error.value)) {
+      resumeAfterLoad = true
+      prepareSource()
+      return
+    }
+
+    await playActive()
   }
 
   function seek(time: number) {
@@ -418,9 +446,11 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     resetTimeline()
     backendKey.value += 1
     resolvedNeteaseTrack = null
+    sourcePrepared = true
 
     const source = currentSource.value
     if (!source || source.availability === 'unavailable') {
+      sourcePrepared = false
       backendType.value = 'none'
       needsNeteaseResolver.value = false
       if (source?.note)
@@ -461,17 +491,16 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
       name: currentSong.value.title,
       artist: currentSong.value.artists.join(' / '),
       url: source.src,
-      cover: runtimeCovers.value[currentSong.value.id] || currentSong.value.cover,
+      cover: getSongCoverUrl(currentSong.value, 'cover'),
     }
     if (loadGlobalTrack(track))
       return
 
     urlAudio = new Audio()
-    urlAudio.preload = 'metadata'
+    urlAudio.preload = 'none'
     urlAudio.src = source.src
     currentMedia.value = urlAudio
     bindMedia(urlAudio)
-    urlAudio.load()
     saveSession()
 
     if (resumeAfterLoad)
@@ -493,10 +522,14 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
       activeTrack?.archiveSongId === currentSong.value.id
       && activeTrack.archiveSourceId === currentSource.value?.id
     ) {
+      sourcePrepared = true
       needsNeteaseResolver.value = false
       bindExistingGlobalPlayer(player)
       return
     }
+
+    if (!sourcePrepared)
+      return
 
     const source = currentSource.value
     if (source?.type === 'url') {
@@ -507,7 +540,7 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
         name: currentSong.value.title,
         artist: currentSong.value.artists.join(' / '),
         url: source.src,
-        cover: runtimeCovers.value[currentSong.value.id] || currentSong.value.cover,
+        cover: getSongCoverUrl(currentSong.value, 'cover'),
       }, position)
     }
     else if (source?.type === 'netease' && resolvedNeteaseTrack) {
@@ -528,6 +561,7 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     const playerList = player.list
     const track = playerList?.audios[playerList.index]
     resolvedNeteaseTrack = track || null
+    sourcePrepared = true
     needsNeteaseResolver.value = false
 
     const globalList = globalAPlayer.value?.list
@@ -569,33 +603,9 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     error.value = message || '网易云音源暂时无法解析，请使用外部平台链接。'
   }
 
-  function setRuntimeSource(songId: string, src: string, cover?: string) {
-    const source: UrlAudioSource = {
-      id: `bilibili-${songId}`,
-      type: 'url',
-      src,
-      label: 'Bilibili 视频音频',
-      availability: 'available',
-    }
-    runtimeSources.value = { ...runtimeSources.value, [songId]: source }
-    if (cover)
-      runtimeCovers.value = { ...runtimeCovers.value, [songId]: cover }
-
-    const nextUnavailable = new Set(unavailableRuntimeSongs.value)
-    nextUnavailable.delete(songId)
-    unavailableRuntimeSongs.value = nextUnavailable
-  }
-
-  function reportRuntimeSourceUnavailable(songId: string, markExisting = false) {
-    const existing = runtimeSources.value[songId]
-    if (existing && !markExisting)
+  function reportBilibiliUnavailable(songId: string) {
+    if (unavailableRuntimeSongs.value.has(songId))
       return
-    if (existing) {
-      runtimeSources.value = {
-        ...runtimeSources.value,
-        [songId]: { ...existing, availability: 'unavailable' },
-      }
-    }
     const nextUnavailable = new Set(unavailableRuntimeSongs.value)
     nextUnavailable.add(songId)
     unavailableRuntimeSongs.value = nextUnavailable
@@ -627,7 +637,6 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
   function hasPlayableSource(song: Song) {
     return Boolean(
       song.audioSources?.some(source => source.availability !== 'unavailable')
-      || (runtimeSources.value[song.id] && runtimeSources.value[song.id].availability !== 'unavailable')
       || (getBilibiliVideoId(song) && !unavailableRuntimeSongs.value.has(song.id)),
     )
   }
@@ -700,20 +709,50 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     isMuted.value = localStorage.getItem('yuumi-music-muted') === 'true'
     if (!restoredSong)
       currentSourceIndex.value = getDefaultSourceIndex(currentSong.value)
-    prepareSource()
+
+    const activePlayer = persistentAPlayer
+    const activeTrack = activePlayer?.list?.audios[activePlayer.list.index]
+    if (
+      activePlayer
+      && activeTrack?.archiveSongId === currentSong.value.id
+      && activeTrack.archiveSourceId === currentSource.value?.id
+    ) {
+      sourcePrepared = true
+      bindExistingGlobalPlayer(activePlayer)
+    }
+    else if (activePlayer && preferInitialSong && activeTrack?.archiveSongId) {
+      activePlayer.pause()
+    }
   })
 
   watch(
-    () => [
-      currentSong.value.id,
-      currentSourceIndex.value,
-      currentSource.value?.id,
-      currentSource.value?.availability,
-      currentSource.value?.type === 'url' ? currentSource.value.src : '',
+    [
+      () => currentSong.value.id,
+      () => currentSourceIndex.value,
+      () => currentSource.value?.id,
+      () => currentSource.value?.availability,
+      () => currentSource.value?.type === 'url' ? currentSource.value.src : '',
     ],
     () => {
-      if (mounted)
+      if (!mounted)
+        return
+
+      const shouldResume = resumeAfterLoad
+      sourcePrepared = false
+      backendType.value = 'none'
+      needsNeteaseResolver.value = false
+      resolvedNeteaseTrack = null
+      cleanupBackend()
+      resetTimeline()
+      saveSession()
+
+      if (shouldResume) {
+        resumeAfterLoad = true
         prepareSource()
+      }
+      else {
+        resumeAfterLoad = false
+      }
     },
   )
 
@@ -755,8 +794,6 @@ export function useMusicPlayer(allSongs: Song[], queue: ComputedRef<Song[]>, ini
     connectGlobalPlayer,
     connectNeteasePlayer,
     reportNeteaseError,
-    setRuntimeSource,
-    reportRuntimeSourceUnavailable,
     hasPlayableSource,
   }
 }

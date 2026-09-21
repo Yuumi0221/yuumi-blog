@@ -6,6 +6,7 @@ import NeteaseMetingHost from './NeteaseMetingHost.vue'
 import NowPlaying from './NowPlaying.vue'
 import TrackList from './TrackList.vue'
 import VideoDialog from './VideoDialog.vue'
+import { getSongCoverUrl, handleSongCoverError } from './covers'
 import { musicProfileLinks, songs } from '../../pages/posts/songs.config'
 import { getSongSearchText, getSongYear, validateSongs } from './music'
 import { useMusicPlayer } from './useMusicPlayer'
@@ -44,11 +45,13 @@ const filteredSongs = computed(() => {
 })
 
 const querySong = Array.isArray(route.query.song) ? route.query.song[0] : route.query.song
-const initialSong = songs[0]
+const requestedSong = songs.find(song => song.id === querySong)
+const initialSong = requestedSong || songs[0]
 
-const player = useMusicPlayer(songs, filteredSongs, initialSong)
+const player = useMusicPlayer(songs, filteredSongs, initialSong, Boolean(requestedSong))
 const songMetadata = useSongMetadata(player.currentSong, player.currentTime, player.currentSource)
 const metingApi = import.meta.env.VITE_METING_API as string | undefined
+const currentCover = computed(() => getSongCoverUrl(player.currentSong.value, 'cover'))
 
 function selectSong(song: Song) {
   player.selectSong(song)
@@ -77,48 +80,15 @@ watch(() => player.currentSong.value.id, (id) => {
   if (route.query.song === id)
     return
   void router.replace({ query: { ...route.query, song: id } })
-
-  if (typeof window === 'undefined')
-    return
-  const index = songs.findIndex(song => song.id === id)
-  const adjacent = [songs[index - 1], songs[index + 1]].filter(Boolean)
-  for (const song of adjacent) {
-    const image = new Image()
-    image.src = song.cover
-  }
 })
-
-watch(
-  () => [
-    player.currentSong.value.id,
-    songMetadata.metadata.value.audioUrl,
-    songMetadata.cover.value,
-    songMetadata.hasLoaded.value,
-  ] as const,
-  ([songId, audioUrl, cover, hasLoaded]) => {
-    if (!hasLoaded)
-      return
-
-    const song = songs.find(item => item.id === songId)
-    if (!song || song.audioSources?.some(source => source.availability !== 'unavailable'))
-      return
-
-    if (audioUrl)
-      player.setRuntimeSource(songId, audioUrl, cover)
-    else
-      player.reportRuntimeSourceUnavailable(songId)
-  },
-  { flush: 'post' },
-)
 
 onMounted(() => {
   const errors = validateSongs(songs)
   if (errors.length)
     console.warn('[Yuumi Music Library] 数据检查失败：', errors)
 
-  const requestedSong = songs.find(song => song.id === querySong)
-  if (requestedSong && requestedSong.id !== player.currentSong.value.id)
-    player.selectSong(requestedSong, false)
+  if (route.query.song !== player.currentSong.value.id)
+    void router.replace({ query: { ...route.query, song: player.currentSong.value.id } })
 })
 </script>
 
@@ -149,11 +119,12 @@ onMounted(() => {
         <img
           :key="player.currentSong.value.id"
           class="atmosphere-cover"
-          :src="songMetadata.cover.value"
+          :src="currentCover"
           alt=""
           aria-hidden="true"
           decoding="async"
           referrerpolicy="no-referrer"
+          @error="handleSongCoverError($event, player.currentSong.value)"
         >
       </Transition>
 
@@ -176,7 +147,7 @@ onMounted(() => {
 
         <AlbumVisual
           :song="player.currentSong.value"
-          :cover="songMetadata.cover.value"
+          :cover="currentCover"
           :is-playing="player.isPlaying.value"
           :is-loading="player.isLoading.value"
           :lyrics="songMetadata.metadata.value.lyrics"
@@ -232,12 +203,13 @@ onMounted(() => {
 
     <div class="mobile-player" aria-label="移动端播放器">
       <img
-        :src="songMetadata.cover.value"
+        :src="currentCover"
         :alt="`${player.currentSong.value.title} 封面`"
         width="44"
         height="44"
         decoding="async"
         referrerpolicy="no-referrer"
+        @error="handleSongCoverError($event, player.currentSong.value)"
       >
       <div>
         <strong>{{ player.currentSong.value.title }}</strong>

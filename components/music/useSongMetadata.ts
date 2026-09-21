@@ -1,70 +1,102 @@
 import type { Ref } from 'vue'
-import type { Song, SongAudioSource, SongMetadata } from './music'
+import type { Song, SongAudioSource, SongDetail } from './music'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { LruCache } from './lru'
 import { getBilibiliVideoId, getNeteaseSongId } from './music'
 
-const metadataCache = new Map<string, SongMetadata>()
-const coverCache = new Map<string, string>()
-const coverRequests = new Map<string, Promise<string>>()
+const DETAIL_CACHE_SIZE = 10
+const detailCache = new LruCache<string, SongDetail>(DETAIL_CACHE_SIZE)
 
-function fallbackMetadata(): SongMetadata {
+interface PendingDetailRequest {
+  songId: string
+  controller: AbortController
+  promise: Promise<SongDetail>
+  consumers: number
+}
+
+interface DetailRequestHandle {
+  songId: string
+  promise: Promise<SongDetail>
+  release: () => void
+}
+
+const pendingRequests = new Map<string, PendingDetailRequest>()
+
+function emptyDetail(): SongDetail {
   return {
-    cover: null,
-    coverSource: 'fallback',
     lyrics: [],
     lyricSource: 'none',
-    audioUrl: null,
-    audioSource: 'none',
   }
 }
 
-function getMetadataUrl(song: Song, coverOnly = false, preferredNeteaseId?: string | null) {
+function getMetadataUrl(song: Song) {
   const endpoint = import.meta.env.VITE_MUSIC_METADATA_API || '/api/music-metadata'
   const url = new URL(endpoint, window.location.origin)
-  const neteaseId = preferredNeteaseId || getNeteaseSongId(song)
+  const neteaseId = getNeteaseSongId(song)
   const bvid = getBilibiliVideoId(song)
   if (neteaseId)
     url.searchParams.set('neteaseId', neteaseId)
   if (bvid)
     url.searchParams.set('bvid', bvid)
-  if (coverOnly)
-    url.searchParams.set('coverOnly', '1')
-  return { url, neteaseId, bvid }
+  return { url, hasRemoteSource: Boolean(neteaseId || bvid) }
 }
 
-export function resolveSongCover(song: Song) {
-  const cached = coverCache.get(song.id)
+function normalizeDetail(result: Partial<SongDetail>): SongDetail {
+  const lyricSource = result.lyricSource
+  return {
+    lyrics: Array.isArray(result.lyrics) ? result.lyrics : [],
+    lyricSource: lyricSource === 'netease' || lyricSource === 'bilibili' ? lyricSource : 'none',
+  }
+}
+
+function acquireSongDetail(song: Song): DetailRequestHandle {
+  const cached = detailCache.get(song.id)
   if (cached)
-    return Promise.resolve(cached)
+    return { songId: song.id, promise: Promise.resolve(cached), release: () => {} }
 
-  const pending = coverRequests.get(song.id)
-  if (pending)
-    return pending
+  let pending = pendingRequests.get(song.id)
+  if (!pending) {
+    const controller = new AbortController()
+    const { url, hasRemoteSource } = getMetadataUrl(song)
+    const promise = (async () => {
+      if (!hasRemoteSource) {
+        const detail = emptyDetail()
+        detailCache.set(song.id, detail)
+        return detail
+      }
 
-  const request = (async () => {
-    const { url, neteaseId, bvid } = getMetadataUrl(song, true)
-    if (!neteaseId && !bvid)
-      return song.cover
-
-    try {
-      const response = await fetch(url)
+      const response = await fetch(url, { signal: controller.signal })
       if (!response.ok)
-        return song.cover
-      const result = await response.json() as Partial<SongMetadata>
-      const cover = typeof result.cover === 'string' ? result.cover : song.cover
-      coverCache.set(song.id, cover)
-      return cover
-    }
-    catch {
-      return song.cover
-    }
-    finally {
-      coverRequests.delete(song.id)
-    }
-  })()
+        throw new Error(`Metadata request failed: ${response.status}`)
 
-  coverRequests.set(song.id, request)
-  return request
+      const detail = normalizeDetail(await response.json() as Partial<SongDetail>)
+      detailCache.set(song.id, detail)
+      return detail
+    })().finally(() => {
+      if (pendingRequests.get(song.id)?.promise === promise)
+        pendingRequests.delete(song.id)
+    })
+
+    pending = { songId: song.id, controller, promise, consumers: 0 }
+    pendingRequests.set(song.id, pending)
+  }
+
+  pending.consumers += 1
+  let released = false
+  return {
+    songId: pending.songId,
+    promise: pending.promise,
+    release: () => {
+      if (released)
+        return
+      released = true
+      pending.consumers -= 1
+      if (pending.consumers === 0 && pendingRequests.get(song.id) === pending) {
+        pendingRequests.delete(song.id)
+        pending.controller.abort()
+      }
+    },
+  }
 }
 
 export function useSongMetadata(
@@ -72,17 +104,13 @@ export function useSongMetadata(
   currentTime: Ref<number>,
   currentSource?: Ref<SongAudioSource | null>,
 ) {
-  const metadata = ref<SongMetadata>(fallbackMetadata())
+  const metadata = ref<SongDetail>(emptyDetail())
   const isLoading = ref(false)
-  const hasLoaded = ref(false)
 
-  let controller: AbortController | null = null
+  let activeRequest: DetailRequestHandle | null = null
   let stopWatch: (() => void) | null = null
-  let metingSourceId: string | null = null
-  let resolvedMetingCover: string | null = null
-  let resolvedMetingLyrics: SongMetadata['lyrics'] = []
+  let requestVersion = 0
 
-  const cover = computed(() => metadata.value.cover || song.value.cover)
   const activeLyricIndex = computed(() => {
     const lines = metadata.value.lyrics
     if (!lines.length)
@@ -96,124 +124,71 @@ export function useSongMetadata(
   })
 
   async function loadMetadata(currentSong: Song) {
-    controller?.abort()
-    controller = null
-    hasLoaded.value = false
-
-    const preferredNeteaseId = currentSource?.value?.type === 'netease'
-      ? currentSource.value.songId
-      : null
-    const { url, neteaseId, bvid } = getMetadataUrl(currentSong, false, preferredNeteaseId)
-    const cacheKey = `${neteaseId || '-'}:${bvid || '-'}`
-
-    const applyMetingOverlay = (base: SongMetadata): SongMetadata => {
-      if (!currentSource?.value || currentSource.value.id !== metingSourceId)
-        return base
-      return {
-        ...base,
-        cover: resolvedMetingCover || base.cover,
-        coverSource: resolvedMetingCover ? 'netease' : base.coverSource,
-        lyrics: resolvedMetingLyrics.length ? resolvedMetingLyrics : base.lyrics,
-        lyricSource: resolvedMetingLyrics.length ? 'netease' : base.lyricSource,
-      }
+    const version = ++requestVersion
+    if (activeRequest && activeRequest.songId !== currentSong.id) {
+      activeRequest.release()
+      activeRequest = null
     }
 
-    metadata.value = applyMetingOverlay(fallbackMetadata())
-    if (!neteaseId && !bvid) {
-      hasLoaded.value = true
-      return
-    }
-
-    const cached = metadataCache.get(cacheKey)
+    metadata.value = emptyDetail()
+    const cached = detailCache.get(currentSong.id)
     if (cached) {
-      metadata.value = applyMetingOverlay(cached)
-      hasLoaded.value = true
+      metadata.value = cached
+      isLoading.value = false
+      activeRequest = null
       return
     }
 
+    const request = acquireSongDetail(currentSong)
+    activeRequest = request
     isLoading.value = true
-    const activeController = new AbortController()
-    controller = activeController
 
     try {
-      const response = await fetch(url, { signal: activeController.signal })
-      if (!response.ok)
-        throw new Error(`Metadata request failed: ${response.status}`)
-
-      const result = await response.json() as Partial<SongMetadata>
-      const resolved: SongMetadata = {
-        cover: typeof result.cover === 'string' ? result.cover : null,
-        coverSource: result.coverSource || 'fallback',
-        lyrics: Array.isArray(result.lyrics) ? result.lyrics : [],
-        lyricSource: result.lyricSource || 'none',
-        audioUrl: typeof result.audioUrl === 'string' ? result.audioUrl : null,
-        audioSource: result.audioSource || 'none',
-      }
-      metadataCache.set(cacheKey, resolved)
-      if (resolved.cover)
-        coverCache.set(currentSong.id, resolved.cover)
-
-      if (song.value.id === currentSong.id) {
-        metadata.value = applyMetingOverlay(resolved)
-      }
+      const detail = await request.promise
+      if (version === requestVersion && song.value.id === currentSong.id)
+        metadata.value = detail
     }
     catch (error) {
-      if (!(error instanceof DOMException && error.name === 'AbortError') && song.value.id === currentSong.id)
-        metadata.value = applyMetingOverlay(fallbackMetadata())
+      if (!(error instanceof DOMException && error.name === 'AbortError') && version === requestVersion)
+        metadata.value = emptyDetail()
     }
     finally {
-      if (controller === activeController) {
-        controller = null
+      request.release()
+      if (version === requestVersion) {
+        activeRequest = null
         isLoading.value = false
-        hasLoaded.value = true
       }
     }
   }
 
-  function applyMetingMetadata(sourceId: string, metingCover: string | null, lyrics: SongMetadata['lyrics']) {
-    if (currentSource?.value?.id !== sourceId)
+  function applyMetingMetadata(sourceId: string, _cover: string | null, lyrics: SongDetail['lyrics']) {
+    if (currentSource?.value?.id !== sourceId || !lyrics.length)
       return
 
-    if (metingSourceId !== sourceId) {
-      resolvedMetingCover = null
-      resolvedMetingLyrics = []
-    }
-    metingSourceId = sourceId
-    if (metingCover)
-      resolvedMetingCover = metingCover
-    if (lyrics.length)
-      resolvedMetingLyrics = lyrics
-
-    metadata.value = {
-      ...metadata.value,
-      cover: metingCover || metadata.value.cover,
-      coverSource: metingCover ? 'netease' : metadata.value.coverSource,
-      lyrics: lyrics.length ? lyrics : metadata.value.lyrics,
-      lyricSource: lyrics.length ? 'netease' : metadata.value.lyricSource,
-    }
-    if (metingCover)
-      coverCache.set(song.value.id, metingCover)
+    const detail: SongDetail = { lyrics, lyricSource: 'netease' }
+    metadata.value = detail
+    detailCache.set(song.value.id, detail)
   }
 
   onMounted(() => {
     stopWatch = watch(
-      () => [song.value.id, currentSource?.value?.id],
+      () => song.value.id,
       () => void loadMetadata(song.value),
       { immediate: true },
     )
   })
 
   onBeforeUnmount(() => {
-    controller?.abort()
+    requestVersion += 1
+    activeRequest?.release()
+    activeRequest = null
     stopWatch?.()
   })
 
   return {
     metadata,
-    cover,
     activeLyricIndex,
     isLoading,
-    hasLoaded,
     applyMetingMetadata,
   }
 }

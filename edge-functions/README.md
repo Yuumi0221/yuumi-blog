@@ -29,9 +29,11 @@ should leave `moments.likes.enabled` disabled.
 ## Music metadata proxy
 
 `api/music-metadata.js` exposes `/api/music-metadata` for the songs archive. It
-loads cover and lyric metadata in this order: NetEase Cloud Music, Bilibili,
-then the client-side CDN fallback configured for each song. No credentials or
-storage binding are required. Responses are cached at the edge.
+loads lyrics in this order: NetEase Cloud Music, then Bilibili subtitles. Cover
+images are generated during the EdgeOne build and served from COS/CDN, while
+audio is resolved only after the visitor presses play. No credentials or
+storage binding are required by this runtime endpoint. Responses are cached at
+the edge.
 
 The Vite middleware in `dev-server.ts` mounts both music endpoints during
 `pnpm dev`, so local development uses the same handlers as EdgeOne. For another
@@ -43,3 +45,28 @@ that have no configured NetEase or self-hosted audio. It forwards HTTP range
 requests to Bilibili's audio-only stream, so the deployment provider will carry
 that audio bandwidth. If the provider has strict bandwidth limits, disable this
 fallback or move the endpoint to a media-capable service.
+
+## Build-time music covers
+
+`pnpm run sync:music-covers` reads `pages/posts/songs.config.ts`, generates a
+160px thumbnail and an 800px cover, and uploads missing versions below
+`music/covers/` in Tencent COS. `pnpm run build:edgeone` runs that sync before
+the existing full build. A normal local `pnpm run build` does not require COS.
+
+Configure these EdgeOne build environment variables:
+
+```text
+MUSIC_COS_SECRET_ID
+MUSIC_COS_SECRET_KEY
+TENCENT_COS_BUCKET
+TENCENT_COS_REGION
+VITE_MUSIC_COVER_BASE_URL=https://cdn.yuumi.link/music/covers
+```
+
+Keep the existing Vite preset, root directory, `dist` output, install command,
+and Node.js setting. Change only the EdgeOne build command to
+`pnpm run build:edgeone`.
+
+The secret variables avoid Tencent's reserved `TENCENTCLOUD_` prefix and must
+never use the `VITE_` prefix. Use a dedicated CAM identity limited to reading
+object metadata and uploading objects under `music/covers/*`.
