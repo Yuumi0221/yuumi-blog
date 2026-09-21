@@ -53,7 +53,7 @@ watch(() => props.activeLyricIndex, async (index) => {
           height="520"
           decoding="async"
           referrerpolicy="no-referrer"
-          @error="handleSongCoverError($event, song)"
+          @error="handleSongCoverError"
         >
       </div>
     </div>

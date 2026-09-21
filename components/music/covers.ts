@@ -19,16 +19,9 @@ export function getSongCoverUrl(song: Song, size: SongCoverSize) {
   return `${coverBaseUrl()}/${encodeURIComponent(song.id)}/v${revision}/${size}.webp`
 }
 
-export function handleSongCoverError(event: Event, song: Song) {
+export function handleSongCoverError(event: Event) {
   const image = event.currentTarget as HTMLImageElement
   const currentSource = image.currentSrc || image.src
-  const legacyCover = song.cover
-  const legacySource = legacyCover ? new URL(legacyCover, window.location.href).href : null
-
-  if (legacyCover && legacySource && currentSource !== legacySource) {
-    image.src = legacyCover
-    return
-  }
 
   if (currentSource !== MUSIC_COVER_PLACEHOLDER)
     image.src = MUSIC_COVER_PLACEHOLDER

@@ -52,6 +52,9 @@ fallback or move the endpoint to a media-capable service.
 160px thumbnail and an 800px cover, and uploads missing versions below
 `music/covers/` in Tencent COS. `pnpm run build:edgeone` runs that sync before
 the existing full build. A normal local `pnpm run build` does not require COS.
+Song data no longer contains legacy cover URLs. Five archive-only songs are
+migrated from their existing `images/songs/` files by the sync task; browsers
+only request the generated `music/covers/` images.
 
 Configure these EdgeOne build environment variables:
 

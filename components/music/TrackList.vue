@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Song, SongKind } from './music'
 import MusicCover from './MusicCover.vue'
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 
 export interface YearOption {
   year: number
@@ -12,7 +12,6 @@ const props = defineProps<{
   songs: Song[]
   total: number
   currentId: string
-  isPlaying: boolean
   search: string
   kind: SongKind | 'all'
   year: number | null
@@ -28,8 +27,9 @@ const emit = defineEmits<{
 }>()
 
 const list = ref<HTMLElement | null>(null)
+const hasMounted = ref(false)
 
-watch(() => props.currentId, async (id) => {
+async function revealCurrentTrack(id: string) {
   await nextTick()
   const scroller = list.value
   const target = scroller?.querySelector<HTMLElement>(`[data-track-id="${id}"]`)
@@ -44,6 +44,13 @@ watch(() => props.currentId, async (id) => {
   else if (targetRect.bottom > scrollerRect.bottom) {
     scroller.scrollTop += targetRect.bottom - scrollerRect.bottom
   }
+}
+
+watch(() => props.currentId, revealCurrentTrack)
+
+onMounted(() => {
+  hasMounted.value = true
+  void revealCurrentTrack(props.currentId)
 })
 
 function onSearch(event: Event) {
@@ -62,6 +69,7 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
   { value: 'all', label: '全部' },
   { value: 'solo', label: '独唱' },
   { value: 'collaboration', label: '合作' },
+  { value: 'band', label: '乐队' },
   { value: 'instrumental', label: '演奏' },
 ]
 </script>
@@ -157,21 +165,15 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
         type="button"
         role="listitem"
         class="track-item"
-        :class="{ active: currentId === song.id }"
+        :class="{ active: hasMounted && currentId === song.id }"
         :data-track-id="song.id"
-        :aria-current="currentId === song.id ? 'true' : undefined"
+        :aria-current="hasMounted && currentId === song.id ? 'true' : undefined"
         @click="emit('select', song)"
       >
         <span class="track-cover-wrap">
           <MusicCover
             class="track-cover"
             :song="song"
-          />
-          <span
-            v-if="currentId === song.id"
-            class="track-status"
-            :class="isPlaying ? 'i-ri-volume-up-line' : 'i-ri-pause-mini-fill'"
-            aria-hidden="true"
           />
         </span>
         <span class="track-copy">
@@ -480,17 +482,6 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
   border-radius: 0.58rem;
   object-fit: cover;
   background: var(--va-c-bg-soft);
-}
-
-.track-status {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 0.58rem;
-  color: white;
-  background: rgb(0 0 0 / 0.48);
-  font-size: 1.05rem;
 }
 
 .track-copy {

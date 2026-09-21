@@ -1,4 +1,4 @@
-export type SongKind = 'solo' | 'collaboration' | 'instrumental'
+export type SongKind = 'solo' | 'collaboration' | 'band' | 'instrumental'
 export type AudioAvailability = 'available' | 'unverified' | 'unavailable'
 export type LinkPlatform = 'bilibili' | 'netease' | 'youtube' | 'nicovideo' | 'acfun' | 'qqmusic' | 'other'
 
@@ -47,8 +47,6 @@ export interface Song {
   id: string
   title: string
   date: string
-  /** Legacy cover retained as a migration and load-error fallback. */
-  cover?: string
   /** Bump this value when a generated CDN cover must be refreshed. */
   coverRevision?: number
   artists: string[]

@@ -21,6 +21,7 @@ const search = ref('')
 const kind = ref<SongKind | 'all'>('all')
 const year = ref<number | null>(null)
 const videoOpen = ref(false)
+const selectedSongStorageKey = 'yuumi-music-selected-song'
 
 const years = computed(() => {
   const counts = new Map<number, number>()
@@ -44,9 +45,22 @@ const filteredSongs = computed(() => {
   })
 })
 
-const querySong = Array.isArray(route.query.song) ? route.query.song[0] : route.query.song
+const routeSong = Array.isArray(route.query.song) ? route.query.song[0] : route.query.song
+const querySong = routeSong || (typeof window !== 'undefined'
+  ? new URLSearchParams(window.location.search).get('song') || undefined
+  : undefined)
 const requestedSong = songs.find(song => song.id === querySong)
-const initialSong = requestedSong || songs[0]
+let rememberedSong: Song | undefined
+if (!requestedSong && typeof window !== 'undefined') {
+  try {
+    const rememberedSongId = window.sessionStorage.getItem(selectedSongStorageKey)
+    rememberedSong = songs.find(song => song.id === rememberedSongId)
+  }
+  catch {
+    // Some privacy modes disable session storage; the first song remains the fallback.
+  }
+}
+const initialSong = requestedSong || rememberedSong || songs[0]
 
 const player = useMusicPlayer(songs, filteredSongs, initialSong, Boolean(requestedSong))
 const songMetadata = useSongMetadata(player.currentSong, player.currentTime, player.currentSource)
@@ -60,6 +74,17 @@ function selectSong(song: Song) {
 function openVideo() {
   player.pause()
   videoOpen.value = true
+}
+
+function rememberSelectedSong(id: string) {
+  if (typeof window === 'undefined')
+    return
+  try {
+    window.sessionStorage.setItem(selectedSongStorageKey, id)
+  }
+  catch {
+    // Selection still works when session storage is unavailable.
+  }
 }
 
 function profileIcon(platform: string) {
@@ -77,6 +102,7 @@ function profileIcon(platform: string) {
 }
 
 watch(() => player.currentSong.value.id, (id) => {
+  rememberSelectedSong(id)
   if (route.query.song === id)
     return
   void router.replace({ query: { ...route.query, song: id } })
@@ -89,6 +115,7 @@ onMounted(() => {
 
   if (route.query.song !== player.currentSong.value.id)
     void router.replace({ query: { ...route.query, song: player.currentSong.value.id } })
+  rememberSelectedSong(player.currentSong.value.id)
 })
 </script>
 
@@ -124,7 +151,7 @@ onMounted(() => {
           aria-hidden="true"
           decoding="async"
           referrerpolicy="no-referrer"
-          @error="handleSongCoverError($event, player.currentSong.value)"
+          @error="handleSongCoverError"
         >
       </Transition>
 
@@ -133,7 +160,6 @@ onMounted(() => {
           :songs="filteredSongs"
           :total="songs.length"
           :current-id="player.currentSong.value.id"
-          :is-playing="player.isPlaying.value"
           :search="search"
           :kind="kind"
           :year="year"
@@ -209,7 +235,7 @@ onMounted(() => {
         height="44"
         decoding="async"
         referrerpolicy="no-referrer"
-        @error="handleSongCoverError($event, player.currentSong.value)"
+        @error="handleSongCoverError"
       >
       <div>
         <strong>{{ player.currentSong.value.title }}</strong>

@@ -16,6 +16,6 @@ defineProps<{
     loading="lazy"
     decoding="async"
     referrerpolicy="no-referrer"
-    @error="handleSongCoverError($event, song)"
+    @error="handleSongCoverError"
   >
 </template>
