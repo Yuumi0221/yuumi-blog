@@ -34,6 +34,8 @@ function getMetadataUrl(song: Song) {
   const url = new URL(endpoint, window.location.origin)
   const neteaseId = getNeteaseSongId(song)
   const bvid = getBilibiliVideoId(song)
+  // Keep the CDN cache separate from the older incomplete lyric lookup.
+  url.searchParams.set('lyrics', 'full')
   if (neteaseId)
     url.searchParams.set('neteaseId', neteaseId)
   if (bvid)

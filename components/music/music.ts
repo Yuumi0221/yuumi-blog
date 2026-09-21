@@ -47,8 +47,6 @@ export interface Song {
   id: string
   title: string
   date: string
-  /** Bump this value when a generated CDN cover must be refreshed. */
-  coverRevision?: number
   artists: string[]
   kind: SongKind
   credits: SongCredit[]

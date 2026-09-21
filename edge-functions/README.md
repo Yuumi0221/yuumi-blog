@@ -49,12 +49,24 @@ fallback or move the endpoint to a media-capable service.
 ## Build-time music covers
 
 `pnpm run sync:music-covers` reads `pages/posts/songs.config.ts`, generates a
-160px thumbnail and an 800px cover, and uploads missing versions below
+160px thumbnail and an 800px cover, and uploads missing images below
 `music/covers/` in Tencent COS. `pnpm run build:edgeone` runs that sync before
 the existing full build. A normal local `pnpm run build` does not require COS.
 Song data no longer contains legacy cover URLs. Five archive-only songs are
 migrated from their existing `images/songs/` files by the sync task; browsers
-only request the generated `music/covers/` images.
+only request these flat object paths:
+
+```text
+music/covers/{songId}/thumb.webp
+music/covers/{songId}/cover.webp
+```
+
+For Bilibili-only songs, the sync task creates an anonymous Bilibili device
+session, signs the WBI video-info request, and downloads the returned cover as
+WebP. The unsigned video-info endpoint and the page `og:image` remain fallbacks.
+No Bilibili account or login cookie is required. Stable covers use a one-day
+browser/CDN cache because these object paths are overwritten in place; temporary
+fallback covers use a five-minute cache and are retried by the next deployment.
 
 Configure these EdgeOne build environment variables:
 

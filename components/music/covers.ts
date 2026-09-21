@@ -15,8 +15,7 @@ function coverBaseUrl() {
 }
 
 export function getSongCoverUrl(song: Song, size: SongCoverSize) {
-  const revision = song.coverRevision || 1
-  return `${coverBaseUrl()}/${encodeURIComponent(song.id)}/v${revision}/${size}.webp`
+  return `${coverBaseUrl()}/${encodeURIComponent(song.id)}/${size}.webp`
 }
 
 export function handleSongCoverError(event: Event) {

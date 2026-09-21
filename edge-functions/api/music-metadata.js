@@ -57,8 +57,15 @@ function parseLrc(value) {
 }
 
 async function getNeteaseLyrics(songId) {
-  const lyric = await fetchJson(`https://music.163.com/api/song/lyric?id=${songId}&lv=1&kv=1&tv=-1`)
-  return parseLrc(lyric?.lrc?.lyric)
+  const lyric = await fetchJson(`https://music.163.com/api/song/lyric?os=pc&id=${songId}&lv=-1&kv=-1&tv=-1&rv=-1`)
+  const lines = parseLrc(lyric?.lrc?.lyric)
+  if (lines.length)
+    return lines
+
+  // Some newer or user-uploaded songs only expose their LRC through this
+  // older public endpoint even though /api/song/lyric returns an empty value.
+  const media = await fetchJson(`https://music.163.com/api/song/media?id=${songId}`)
+  return parseLrc(media?.lyric)
 }
 
 async function getBilibiliLyrics(bvid) {
