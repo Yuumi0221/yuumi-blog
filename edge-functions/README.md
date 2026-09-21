@@ -53,8 +53,10 @@ fallback or move the endpoint to a media-capable service.
 `music/covers/` in Tencent COS. `pnpm run build:edgeone` runs that sync before
 the existing full build. A normal local `pnpm run build` does not require COS.
 Song data no longer contains legacy cover URLs. Five archive-only songs are
-migrated from their existing `images/songs/` files by the sync task; browsers
-only request these flat object paths:
+migrated from their existing `images/songs/` files as their primary source.
+The previous `images/songs/` and `images/GEZONE/` URLs are also retained inside
+the build task as last-resort migration fallbacks; browsers only request these
+flat object paths:
 
 ```text
 music/covers/{songId}/thumb.webp
@@ -64,9 +66,19 @@ music/covers/{songId}/cover.webp
 For Bilibili-only songs, the sync task creates an anonymous Bilibili device
 session, signs the WBI video-info request, and downloads the returned cover as
 WebP. The unsigned video-info endpoint and the page `og:image` remain fallbacks.
-No Bilibili account or login cookie is required. Stable covers use a one-day
-browser/CDN cache because these object paths are overwritten in place; temporary
-fallback covers use a five-minute cache and are retried by the next deployment.
+Known Bilibili-only songs also keep their resolved public image URL so a build
+does not depend on the video-info API being reachable. NetEase images whose
+declared JPEG content is actually an uncompressed BMP are normalized before
+Sharp processes them. No Bilibili account or login cookie is required.
+
+Platform downloads use deployment-friendly timeouts and IPv4-first DNS. A
+temporary platform failure falls back to the song's previous CDN cover and is
+retried on the next deployment. A song with a configured platform source can
+never overwrite a real cover with the generic placeholder; if every source is
+unavailable, the cover sync fails the build. Stable covers use a one-day cache,
+while temporary fallback covers use a five-minute cache. Browser URLs include a
+stable `pipeline=platform` query so this migration bypasses the previously cached
+placeholder objects without creating another COS folder or duplicate object.
 
 Configure these EdgeOne build environment variables:
 
