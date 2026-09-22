@@ -65,6 +65,16 @@ export interface LyricLine {
 
 export type LyricSource = 'netease' | 'bilibili' | 'none'
 
+const PLATFORM_ICONS: Record<LinkPlatform, string> = {
+  bilibili: 'i-ri-bilibili-line',
+  netease: 'i-ri-netease-cloud-music-line',
+  youtube: 'i-ri-youtube-line',
+  qqmusic: 'i-ri-qq-line',
+  acfun: 'i-ri-music-2-line',
+  nicovideo: 'i-ri-external-link-line',
+  other: 'i-ri-external-link-line',
+}
+
 export interface SongDetail {
   lyrics: LyricLine[]
   lyricSource: LyricSource
@@ -105,6 +115,10 @@ export const neteaseLink = (songId: string, label = '网易云音乐'): SongLink
 
 export function getSongYear(song: Song) {
   return Number(song.date.slice(0, 4))
+}
+
+export function getPlatformIcon(platform: LinkPlatform) {
+  return PLATFORM_ICONS[platform]
 }
 
 export function getSongSearchText(song: Song) {

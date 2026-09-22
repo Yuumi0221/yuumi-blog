@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Song, SongAudioSource } from './music'
 import type { PlaybackMode } from './useMusicPlayer'
+import { getPlatformIcon } from './music'
 import { computed } from 'vue'
 
 const props = defineProps<{
   song: Song
   source: SongAudioSource | null
-  sourceIndex: number
   isPlaying: boolean
   isLoading: boolean
   currentTime: number
@@ -36,10 +36,10 @@ const progressPercent = computed(() => props.duration > 0
   : 0)
 
 const playbackModeMeta = computed(() => ({
-  list: { label: '列表循环', icon: 'i-ri-repeat-2-line' },
+  list: { label: '列表循环', icon: '' },
   one: { label: '单曲循环', icon: 'i-ri-repeat-one-line' },
   random: { label: '随机播放', icon: 'i-ri-shuffle-line' },
-  stop: { label: '播完暂停', icon: 'i-ri-stop-circle-line' },
+  stop: { label: '播完暂停', icon: '' },
 })[props.playbackMode])
 
 const volumeIcon = computed(() => {
@@ -49,6 +49,13 @@ const volumeIcon = computed(() => {
     return 'i-ri-volume-down-line'
   return 'i-ri-volume-up-line'
 })
+
+const displayLinks = computed(() => (props.song.links || []).map(link => ({
+  ...link,
+  displayLabel: link.label
+    .replace(/^(?:Bilibili|网易云音乐|网易云|QQ\s*音乐|AcFun|YouTube)(?:\s*[·｜|/—-]\s*)?/i, '')
+    .trim(),
+})))
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0)
@@ -66,26 +73,11 @@ function onVolumeInput(event: Event) {
   emit('set-volume', Number((event.target as HTMLInputElement).value))
 }
 
-function linkIcon(platform: string) {
-  if (platform === 'bilibili')
-    return 'i-ri-bilibili-line'
-  if (platform === 'netease')
-    return 'i-ri-netease-cloud-music-line'
-  if (platform === 'youtube')
-    return 'i-ri-youtube-line'
-  return 'i-ri-external-link-line'
-}
-
-function linkDisplayLabel(label: string) {
-  return label.replace(/^(?:Bilibili|网易云音乐|网易云|QQ\s*音乐|AcFun|YouTube)(?:\s*[·｜|/—-]\s*)?/i, '').trim()
-}
-
 </script>
 
 <template>
   <section class="now-playing" aria-label="当前歌曲详情">
     <div class="now-playing__scroll">
-      <p class="eyebrow"></p>
       <h2>{{ song.title }}</h2>
       <p class="artists">{{ song.artists.join(' / ') }}</p>
       <time :datetime="song.date">{{ song.date.replaceAll('-', '.') }}</time>
@@ -97,8 +89,8 @@ function linkDisplayLabel(label: string) {
             v-for="(item, index) in song.audioSources"
             :key="item.id"
             type="button"
-            :class="{ active: sourceIndex === index }"
-            :aria-pressed="sourceIndex === index"
+            :class="{ active: source?.id === item.id }"
+            :aria-pressed="source?.id === item.id"
             :disabled="item.availability === 'unavailable'"
             :title="item.note"
             @click="emit('select-source', index)"
@@ -135,7 +127,40 @@ function linkDisplayLabel(label: string) {
             :title="playbackModeMeta.label"
             @click="emit('cycle-mode')"
           >
-            <span :class="playbackModeMeta.icon" aria-hidden="true" />
+            <svg
+              v-if="playbackMode === 'list' || playbackMode === 'stop'"
+              class="mode-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <defs v-if="playbackMode === 'stop'">
+                <mask id="music-stop-slash-mask">
+                  <rect width="24" height="24" fill="white" />
+                  <path
+                    d="M3 1 23 21"
+                    stroke="black"
+                    stroke-width="3"
+                    stroke-linecap="butt"
+                  />
+                </mask>
+              </defs>
+              <path
+                fill="currentColor"
+                :mask="playbackMode === 'stop' ? 'url(#music-stop-slash-mask)' : undefined"
+                d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4z"
+              />
+              <path
+                v-if="playbackMode === 'stop'"
+                d="M2 2 22 22"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="butt"
+              />
+            </svg>
+            <span v-else :class="playbackModeMeta.icon" aria-hidden="true" />
           </button>
           <button type="button" class="skip-button" aria-label="上一首" @click="emit('previous')">
             <span class="i-ri-skip-back-mini-fill" aria-hidden="true" />
@@ -180,24 +205,23 @@ function linkDisplayLabel(label: string) {
           </div>
         </div>
 
-        <p v-if="!source && canPlay" class="player-message">正在解析 Bilibili 音频…</p>
-        <p v-else-if="!canPlay" class="player-message">这首作品目前仅作档案展示</p>
+        <p v-if="!canPlay" class="player-message">这首作品目前仅作档案展示</p>
         <p v-if="error" class="player-message player-message--error" role="status">{{ error }}</p>
       </div>
 
-      <div v-if="song.links?.length || song.videos?.length" class="action-row">
+      <div v-if="displayLinks.length || song.videos?.length" class="action-row">
         <a
-          v-for="link in song.links"
+          v-for="link in displayLinks"
           :key="`${link.platform}-${link.url}`"
           :href="link.url"
           target="_blank"
           rel="noopener noreferrer"
           :title="link.label"
           :aria-label="link.label"
-          :class="{ 'icon-only': !linkDisplayLabel(link.label) }"
+          :class="{ 'icon-only': !link.displayLabel }"
         >
-          <span :class="linkIcon(link.platform)" aria-hidden="true" />
-          <span v-if="linkDisplayLabel(link.label)">{{ linkDisplayLabel(link.label) }}</span>
+          <span :class="getPlatformIcon(link.platform)" aria-hidden="true" />
+          <span v-if="link.displayLabel">{{ link.displayLabel }}</span>
         </a>
         <button v-if="song.videos?.length" type="button" @click="emit('open-video')">
           <span class="i-ri-movie-2-line" aria-hidden="true" />
@@ -267,16 +291,8 @@ function linkDisplayLabel(label: string) {
   --details-scroll-thumb: rgb(var(--va-c-primary-rgb), 0.55);
 }
 
-.eyebrow {
-  margin: 0 0 1.5rem;
-  color: var(--va-c-primary);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-}
-
 h2 {
-  margin: 0;
+  margin: 1.5rem 0 0;
   overflow-wrap: anywhere;
   color: var(--va-c-text);
   font-family: var(--va-font-serif);
@@ -445,6 +461,11 @@ time {
   color: var(--va-c-primary) !important;
   background: rgb(var(--va-c-primary-rgb), 0.09) !important;
   font-size: 1.15rem;
+}
+
+.mode-icon {
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 .mode-button:hover {

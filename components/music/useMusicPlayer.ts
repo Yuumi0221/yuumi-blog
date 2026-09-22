@@ -6,6 +6,8 @@ import { getBilibiliVideoId } from './music'
 
 export type PlaybackMode = 'list' | 'one' | 'random' | 'stop'
 
+const PLAYBACK_MODES: PlaybackMode[] = ['list', 'one', 'random', 'stop']
+
 export interface APlayerAudio {
   name?: string
   artist?: string
@@ -48,11 +50,11 @@ type BackendType = 'none' | 'url' | 'netease'
 interface PersistentSession {
   songId: string
   sourceIndex: number
-  source: SongAudioSource | null
 }
 
 let persistentAPlayer: APlayerLike | null = null
 let persistentSession: PersistentSession | null = null
+const persistentFailedNeteaseSources = new Set<string>()
 
 export function useMusicPlayer(
   allSongs: Song[],
@@ -89,6 +91,7 @@ export function useMusicPlayer(
   const currentAPlayer = shallowRef<APlayerLike | null>(null)
   const currentMedia = shallowRef<HTMLAudioElement | null>(null)
   const unavailableRuntimeSongs = ref(new Set<string>())
+  const failedNeteaseSources = ref(new Set(persistentFailedNeteaseSources))
 
   let urlAudio: HTMLAudioElement | null = null
   let removeMediaListeners: (() => void) | null = null
@@ -113,8 +116,18 @@ export function useMusicPlayer(
     }
   }
 
+  function runtimeSourceKey(song: Song, sourceId: string) {
+    return `${song.id}:${sourceId}`
+  }
+
   const currentSource = computed<SongAudioSource | null>(() => {
     const configured = currentSong.value.audioSources?.[currentSourceIndex.value]
+    if (
+      configured?.type === 'netease'
+      && failedNeteaseSources.value.has(runtimeSourceKey(currentSong.value, configured.id))
+    ) {
+      return getBilibiliSource(currentSong.value)
+    }
     if (configured?.availability !== 'unavailable')
       return configured || getBilibiliSource(currentSong.value)
     return getBilibiliSource(currentSong.value) || configured
@@ -138,7 +151,6 @@ export function useMusicPlayer(
     persistentSession = {
       songId: currentSong.value.id,
       sourceIndex: currentSourceIndex.value,
-      source: currentSource.value,
     }
   }
 
@@ -206,6 +218,32 @@ export function useMusicPlayer(
       player.template.info.style.display = 'block'
   }
 
+  function configureGlobalPlayer(player: APlayerLike) {
+    revealGlobalPlayer(player)
+    if (player.options) {
+      player.options.loop = 'none'
+      player.options.order = 'list'
+    }
+  }
+
+  function releaseUrlAudio() {
+    if (!urlAudio)
+      return
+    urlAudio.pause()
+    urlAudio.removeAttribute('src')
+    urlAudio.load()
+    urlAudio = null
+  }
+
+  function createUrlTrack(source: UrlAudioSource): APlayerAudio {
+    return {
+      name: currentSong.value.title,
+      artist: currentSong.value.artists.join(' / '),
+      url: source.src,
+      cover: getSongCoverUrl(currentSong.value, 'cover'),
+    }
+  }
+
   function cleanupBackend(pauseBackend = true) {
     removeMediaListeners?.()
     removeMediaListeners = null
@@ -221,12 +259,7 @@ export function useMusicPlayer(
       }
     }
 
-    if (urlAudio) {
-      urlAudio.pause()
-      urlAudio.removeAttribute('src')
-      urlAudio.load()
-      urlAudio = null
-    }
+    releaseUrlAudio()
 
     currentAPlayer.value = null
     currentMedia.value = null
@@ -268,10 +301,18 @@ export function useMusicPlayer(
       updateDuration()
     }
     const onError = () => {
+      const failedSource = currentSource.value
+      const shouldResume = isPlaying.value || resumeAfterLoad
       isPlaying.value = false
       isLoading.value = false
       const message = '当前音源加载失败，请尝试外部平台链接。'
-      if (currentSource.value?.id.startsWith('bilibili-')) {
+      if (
+        failedSource?.type === 'netease'
+        && activateBilibiliFallback(failedSource.id, shouldResume)
+      ) {
+        return
+      }
+      if (failedSource?.id.startsWith('bilibili-')) {
         const failedSongId = currentSong.value.id
         reportBilibiliUnavailable(failedSongId)
         void nextTick(() => {
@@ -341,19 +382,10 @@ export function useMusicPlayer(
 
     removeMediaListeners?.()
     removeMediaListeners = null
-    if (urlAudio) {
-      urlAudio.pause()
-      urlAudio.removeAttribute('src')
-      urlAudio.load()
-      urlAudio = null
-    }
+    releaseUrlAudio()
 
     player.pause()
-    revealGlobalPlayer(player)
-    if (player.options) {
-      player.options.loop = 'none'
-      player.options.order = 'list'
-    }
+    configureGlobalPlayer(player)
     player.list.clear()
     player.list.add({
       ...track,
@@ -487,12 +519,7 @@ export function useMusicPlayer(
 
     backendType.value = 'url'
     needsNeteaseResolver.value = false
-    const track: APlayerAudio = {
-      name: currentSong.value.title,
-      artist: currentSong.value.artists.join(' / '),
-      url: source.src,
-      cover: getSongCoverUrl(currentSong.value, 'cover'),
-    }
+    const track = createUrlTrack(source)
     if (loadGlobalTrack(track))
       return
 
@@ -510,11 +537,7 @@ export function useMusicPlayer(
   function connectGlobalPlayer(player: APlayerLike) {
     persistentAPlayer = player
     globalAPlayer.value = player
-    revealGlobalPlayer(player)
-    if (player.options) {
-      player.options.loop = 'none'
-      player.options.order = 'list'
-    }
+    configureGlobalPlayer(player)
 
     const playerList = player.list
     const activeTrack = playerList?.audios[playerList.index]
@@ -536,12 +559,7 @@ export function useMusicPlayer(
       const wasPlaying = isPlaying.value
       const position = currentTime.value
       resumeAfterLoad = wasPlaying
-      loadGlobalTrack({
-        name: currentSong.value.title,
-        artist: currentSong.value.artists.join(' / '),
-        url: source.src,
-        cover: getSongCoverUrl(currentSong.value, 'cover'),
-      }, position)
+      loadGlobalTrack(createUrlTrack(source), position)
     }
     else if (source?.type === 'netease' && resolvedNeteaseTrack) {
       const wasPlaying = isPlaying.value
@@ -596,11 +614,29 @@ export function useMusicPlayer(
     if (currentSource.value?.id !== sourceId || !needsNeteaseResolver.value)
       return
 
+    if (activateBilibiliFallback(sourceId, resumeAfterLoad || isPlaying.value))
+      return
+
     cleanupBackend()
     resumeAfterLoad = false
     isPlaying.value = false
     isLoading.value = false
     error.value = message || '网易云音源暂时无法解析，请使用外部平台链接。'
+  }
+
+  function activateBilibiliFallback(sourceId: string, shouldResume: boolean) {
+    const source = currentSource.value
+    if (source?.type !== 'netease' || source.id !== sourceId || !getBilibiliSource(currentSong.value))
+      return false
+
+    const nextFailedSources = new Set(failedNeteaseSources.value)
+    const sourceKey = runtimeSourceKey(currentSong.value, sourceId)
+    nextFailedSources.add(sourceKey)
+    persistentFailedNeteaseSources.add(sourceKey)
+    resumeAfterLoad = shouldResume
+    error.value = null
+    failedNeteaseSources.value = nextFailedSources
+    return true
   }
 
   function reportBilibiliUnavailable(songId: string) {
@@ -626,17 +662,34 @@ export function useMusicPlayer(
   }
 
   function selectSource(index: number) {
-    if (index === currentSourceIndex.value || !currentSong.value.audioSources?.[index])
+    const source = currentSong.value.audioSources?.[index]
+    if (!source)
+      return
+
+    const sourceKey = runtimeSourceKey(currentSong.value, source.id)
+    const retryFailedNetease = source.type === 'netease' && failedNeteaseSources.value.has(sourceKey)
+    if (index === currentSourceIndex.value && !retryFailedNetease)
       return
 
     resumeAfterLoad = isPlaying.value
-    currentSourceIndex.value = index
+    if (retryFailedNetease) {
+      const nextFailedSources = new Set(failedNeteaseSources.value)
+      nextFailedSources.delete(sourceKey)
+      persistentFailedNeteaseSources.delete(sourceKey)
+      failedNeteaseSources.value = nextFailedSources
+    }
+    else {
+      currentSourceIndex.value = index
+    }
     saveSession()
   }
 
   function hasPlayableSource(song: Song) {
     return Boolean(
-      song.audioSources?.some(source => source.availability !== 'unavailable')
+      song.audioSources?.some(source => (
+        source.availability !== 'unavailable'
+        && !(source.type === 'netease' && failedNeteaseSources.value.has(runtimeSourceKey(song, source.id)))
+      ))
       || (getBilibiliVideoId(song) && !unavailableRuntimeSongs.value.has(song.id)),
     )
   }
@@ -689,15 +742,14 @@ export function useMusicPlayer(
   }
 
   function cyclePlaybackMode() {
-    const modes: PlaybackMode[] = ['list', 'one', 'random', 'stop']
-    playbackMode.value = modes[(modes.indexOf(playbackMode.value) + 1) % modes.length]
+    playbackMode.value = PLAYBACK_MODES[(PLAYBACK_MODES.indexOf(playbackMode.value) + 1) % PLAYBACK_MODES.length]
     localStorage.setItem('yuumi-music-playback-mode', playbackMode.value)
   }
 
   onMounted(() => {
     mounted = true
     const savedMode = localStorage.getItem('yuumi-music-playback-mode') as PlaybackMode | null
-    if (savedMode && ['list', 'one', 'random', 'stop'].includes(savedMode))
+    if (savedMode && PLAYBACK_MODES.includes(savedMode))
       playbackMode.value = savedMode
     const savedVolumeValue = localStorage.getItem('yuumi-music-volume')
     const savedVolume = savedVolumeValue === null ? Number.NaN : Number(savedVolumeValue)
@@ -771,7 +823,6 @@ export function useMusicPlayer(
     currentSourceIndex,
     backendType,
     backendKey,
-    needsNeteaseResolver,
     playbackMode,
     volume,
     isMuted,

@@ -8,7 +8,7 @@ import TrackList from './TrackList.vue'
 import VideoDialog from './VideoDialog.vue'
 import { getSongCoverUrl, handleSongCoverError } from './covers'
 import { musicProfileLinks, songs } from '../../pages/posts/songs.config'
-import { getSongSearchText, getSongYear, validateSongs } from './music'
+import { getPlatformIcon, getSongSearchText, getSongYear, validateSongs } from './music'
 import { useMusicPlayer } from './useMusicPlayer'
 import { useSongMetadata } from './useSongMetadata'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
@@ -87,20 +87,6 @@ function rememberSelectedSong(id: string) {
   }
 }
 
-function profileIcon(platform: string) {
-  if (platform === 'bilibili')
-    return 'i-ri-bilibili-line'
-  if (platform === 'netease')
-    return 'i-ri-netease-cloud-music-line'
-  if (platform === 'youtube')
-    return 'i-ri-youtube-line'
-  if (platform === 'qqmusic')
-    return 'i-ri-qq-line'
-  if (platform === 'acfun')
-    return 'i-ri-music-2-line'
-  return 'i-ri-external-link-line'
-}
-
 watch(() => player.currentSong.value.id, (id) => {
   rememberSelectedSong(id)
   if (route.query.song === id)
@@ -141,7 +127,7 @@ onBeforeUnmount(() => {
           :title="link.label"
           :data-platform="link.platform"
         >
-          <span :class="profileIcon(link.platform)" aria-hidden="true" />
+          <span :class="getPlatformIcon(link.platform)" aria-hidden="true" />
           <span>{{ link.label }}</span>
         </a>
       </nav>
@@ -190,7 +176,6 @@ onBeforeUnmount(() => {
         <NowPlaying
           :song="player.currentSong.value"
           :source="player.currentSource.value"
-          :source-index="player.currentSourceIndex.value"
           :is-playing="player.isPlaying.value"
           :is-loading="player.isLoading.value"
           :current-time="player.currentTime.value"
