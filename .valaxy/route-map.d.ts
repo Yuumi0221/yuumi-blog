@@ -369,13 +369,13 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.12_462dd9856aef4191dc1e8a708bffe9ad/node_modules/valaxy-theme-yun/pages/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.15_ce312e42ddc995fab42e1e6af0a3fb9c/node_modules/valaxy-theme-yun/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy@1.0.0-rc.12_@babel+parser@7.29.9_@devframes+agentic@1.0.0_crossws@0.4.12_srvx@1._d34bcc757bbb228ce1b586b24a5e934a/node_modules/valaxy/client/pages/[...path].vue': {
+    'node_modules/.pnpm/valaxy@1.0.0-rc.15_@babel+parser@7.29.9_@devframes+agentic@1.0.0_crossws@0.4.12_srvx@1._34307d0c25e0a91fb1665629f38d7d7d/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -489,7 +489,7 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-addon-moments@0.1.4_0b935ee4e19d029918dbb685d9238904/node_modules/valaxy-addon-moments/pages/moments/index.vue': {
+    'node_modules/.pnpm/valaxy-addon-moments@0.1.4_f8b4ca93b9862aacc94e2e7112686415/node_modules/valaxy-addon-moments/pages/moments/index.vue': {
       routes:
         | '/moments/'
       views:
@@ -525,13 +525,13 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.12_462dd9856aef4191dc1e8a708bffe9ad/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.15_ce312e42ddc995fab42e1e6af0a3fb9c/node_modules/valaxy-theme-yun/pages/page/[page].vue': {
       routes:
         | '/page/[page]'
       views:
         | never
     }
-    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.12_462dd9856aef4191dc1e8a708bffe9ad/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
+    'node_modules/.pnpm/valaxy-theme-yun@1.0.0-rc.15_ce312e42ddc995fab42e1e6af0a3fb9c/node_modules/valaxy-theme-yun/pages/posts/index.vue': {
       routes:
         | '/posts/'
       views:
