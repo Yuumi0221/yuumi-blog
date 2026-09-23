@@ -548,15 +548,16 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
 
 @media (width < 768px) {
   .track-panel {
+    height: auto;
     border-top: 1px solid var(--music-border);
     border-right: 0;
   }
 
   .track-list {
-    height: auto;
-    max-height: none;
-    flex-basis: auto;
-    overflow: visible;
+    height: 28rem;
+    max-height: 28rem;
+    flex: 0 0 28rem;
+    overflow-y: auto;
   }
 
 }

@@ -1,123 +1,122 @@
 import type { Ref } from 'vue'
-import type { Song, SongAudioSource, SongDetail } from './music'
+import type { MetadataSource, PlayableTrack, SongVersion, TrackMetadata } from './music'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { LruCache } from './lru'
-import { getBilibiliVideoId, getNeteaseSongId } from './music'
 
-const DETAIL_CACHE_SIZE = 10
-const detailCache = new LruCache<string, SongDetail>(DETAIL_CACHE_SIZE)
+const METADATA_CACHE_SIZE = 32
 
-interface PendingDetailRequest {
-  songId: string
-  controller: AbortController
-  promise: Promise<SongDetail>
-  consumers: number
+interface CachedMetadata {
+  value: TrackMetadata
+  lyricsLoaded: boolean
 }
 
-interface DetailRequestHandle {
-  songId: string
-  promise: Promise<SongDetail>
-  release: () => void
+const metadataCache = new LruCache<string, CachedMetadata>(METADATA_CACHE_SIZE)
+const pendingRequests = new Map<string, Promise<TrackMetadata>>()
+
+export function emptyTrackMetadata(): TrackMetadata {
+  return { lyrics: [] }
 }
 
-const pendingRequests = new Map<string, PendingDetailRequest>()
-
-function emptyDetail(): SongDetail {
-  return {
-    lyrics: [],
-    lyricSource: 'none',
-  }
+export function getVersionMetadataKey(item: SongVersion) {
+  const sources = item.metadataSources.map(metadataSourceKey).join('|')
+  const lyricSource = item.lyricSource ? metadataSourceKey(item.lyricSource) : ''
+  return `${item.id}|${sources}|lyrics:${lyricSource}`
 }
 
-function getMetadataUrl(song: Song) {
+function metadataSourceKey(source: MetadataSource) {
+  return source.type === 'netease'
+    ? `n:${source.songId}`
+    : `b:${source.bvid}:p${source.page || 1}`
+}
+
+function metadataUrl(sources: MetadataSource[], includeLyrics: boolean) {
   const endpoint = import.meta.env.VITE_MUSIC_METADATA_API || '/api/music-metadata'
   const url = new URL(endpoint, window.location.origin)
-  const neteaseId = getNeteaseSongId(song)
-  const bvid = getBilibiliVideoId(song)
-  // Keep the CDN cache separate from the older incomplete lyric lookup.
-  url.searchParams.set('lyrics', 'full')
-  if (neteaseId)
-    url.searchParams.set('neteaseId', neteaseId)
-  if (bvid)
-    url.searchParams.set('bvid', bvid)
-  return { url, hasRemoteSource: Boolean(neteaseId || bvid) }
+  const netease = sources.find(source => source.type === 'netease')
+  const bilibili = sources.find(source => source.type === 'bilibili')
+  if (netease?.type === 'netease')
+    url.searchParams.set('neteaseId', netease.songId)
+  if (bilibili?.type === 'bilibili') {
+    url.searchParams.set('bvid', bilibili.bvid)
+    url.searchParams.set('page', String(bilibili.page || 1))
+  }
+  if (!includeLyrics)
+    url.searchParams.set('lyrics', '0')
+  return url
 }
 
-function normalizeDetail(result: Partial<SongDetail>): SongDetail {
-  const lyricSource = result.lyricSource
+async function requestMetadata(sources: MetadataSource[], includeLyrics: boolean) {
+  const response = await fetch(metadataUrl(sources, includeLyrics))
+  if (!response.ok)
+    throw new Error(`Metadata request failed: ${response.status}`)
+  return normalizeMetadata(await response.json() as Partial<TrackMetadata>)
+}
+
+function normalizeMetadata(value: Partial<TrackMetadata>): TrackMetadata {
   return {
-    lyrics: Array.isArray(result.lyrics) ? result.lyrics : [],
-    lyricSource: lyricSource === 'netease' || lyricSource === 'bilibili' ? lyricSource : 'none',
+    ...(typeof value.title === 'string' && value.title.trim() ? { title: value.title.trim() } : {}),
+    ...(typeof value.artist === 'string' && value.artist.trim() ? { artist: value.artist.trim() } : {}),
+    ...(typeof value.cover === 'string' && value.cover.trim() ? { cover: value.cover.trim() } : {}),
+    lyrics: Array.isArray(value.lyrics) ? value.lyrics : [],
   }
 }
 
-function acquireSongDetail(song: Song): DetailRequestHandle {
-  const cached = detailCache.get(song.id)
-  if (cached)
-    return { songId: song.id, promise: Promise.resolve(cached), release: () => {} }
+export async function loadVersionMetadata(item: SongVersion, includeLyrics = false) {
+  const key = getVersionMetadataKey(item)
+  const cached = metadataCache.get(key)
+  if (cached && (!includeLyrics || cached.lyricsLoaded))
+    return cached.value
 
-  let pending = pendingRequests.get(song.id)
+  if (!item.metadataSources.length && (!includeLyrics || !item.lyricSource)) {
+    const empty = emptyTrackMetadata()
+    metadataCache.set(key, { value: empty, lyricsLoaded: includeLyrics })
+    return empty
+  }
+
+  const requestKey = `${key}|lyrics:${includeLyrics ? '1' : '0'}`
+  let pending = pendingRequests.get(requestKey)
   if (!pending) {
-    const controller = new AbortController()
-    const { url, hasRemoteSource } = getMetadataUrl(song)
-    const promise = (async () => {
-      if (!hasRemoteSource) {
-        const detail = emptyDetail()
-        detailCache.set(song.id, detail)
-        return detail
+    pending = (async () => {
+      const [incoming, customLyrics] = await Promise.all([
+        item.metadataSources.length
+          ? requestMetadata(item.metadataSources, includeLyrics && !item.lyricSource)
+          : Promise.resolve(emptyTrackMetadata()),
+        includeLyrics && item.lyricSource
+          ? requestMetadata([item.lyricSource], true)
+          : Promise.resolve(null),
+      ])
+      const previous = metadataCache.get(key)
+      const value: TrackMetadata = {
+        ...previous?.value,
+        ...incoming,
+        lyrics: includeLyrics
+          ? (customLyrics?.lyrics || incoming.lyrics)
+          : (previous?.value.lyrics || []),
       }
-
-      const response = await fetch(url, { signal: controller.signal })
-      if (!response.ok)
-        throw new Error(`Metadata request failed: ${response.status}`)
-
-      const detail = normalizeDetail(await response.json() as Partial<SongDetail>)
-      detailCache.set(song.id, detail)
-      return detail
-    })().finally(() => {
-      if (pendingRequests.get(song.id)?.promise === promise)
-        pendingRequests.delete(song.id)
-    })
-
-    pending = { songId: song.id, controller, promise, consumers: 0 }
-    pendingRequests.set(song.id, pending)
+      metadataCache.set(key, {
+        value,
+        lyricsLoaded: includeLyrics || Boolean(previous?.lyricsLoaded),
+      })
+      return value
+    })().finally(() => pendingRequests.delete(requestKey))
+    pendingRequests.set(requestKey, pending)
   }
-
-  pending.consumers += 1
-  let released = false
-  return {
-    songId: pending.songId,
-    promise: pending.promise,
-    release: () => {
-      if (released)
-        return
-      released = true
-      pending.consumers -= 1
-      if (pending.consumers === 0 && pendingRequests.get(song.id) === pending) {
-        pendingRequests.delete(song.id)
-        pending.controller.abort()
-      }
-    },
-  }
+  return await pending
 }
 
 export function useSongMetadata(
-  song: Ref<Song>,
+  track: Ref<PlayableTrack | null>,
+  item: Ref<SongVersion | null>,
   currentTime: Ref<number>,
-  currentSource?: Ref<SongAudioSource | null>,
+  enabled?: Ref<boolean>,
 ) {
-  const metadata = ref<SongDetail>(emptyDetail())
+  const metadata = ref<TrackMetadata>(emptyTrackMetadata())
   const isLoading = ref(false)
-
-  let activeRequest: DetailRequestHandle | null = null
-  let stopWatch: (() => void) | null = null
   let requestVersion = 0
+  let stopWatch: (() => void) | null = null
 
   const activeLyricIndex = computed(() => {
     const lines = metadata.value.lyrics
-    if (!lines.length)
-      return -1
-
     for (let index = lines.length - 1; index >= 0; index -= 1) {
       if (currentTime.value >= lines[index].start)
         return index
@@ -125,72 +124,55 @@ export function useSongMetadata(
     return -1
   })
 
-  async function loadMetadata(currentSong: Song) {
-    const version = ++requestVersion
-    if (activeRequest && activeRequest.songId !== currentSong.id) {
-      activeRequest.release()
-      activeRequest = null
-    }
+  const currentLyric = computed(() => {
+    if (isLoading.value)
+      return '歌词加载中…'
+    if (metadata.value.lyrics.length && activeLyricIndex.value < 0)
+      return ''
+    return metadata.value.lyrics[activeLyricIndex.value]?.text || '暂无歌词'
+  })
 
-    metadata.value = emptyDetail()
-    const cached = detailCache.get(currentSong.id)
-    if (cached) {
-      metadata.value = cached
+  async function load() {
+    const request = ++requestVersion
+    const currentTrack = track.value
+    const currentVersion = item.value
+    if (!currentTrack || !currentVersion || enabled?.value === false) {
+      metadata.value = emptyTrackMetadata()
       isLoading.value = false
-      activeRequest = null
       return
     }
 
-    const request = acquireSongDetail(currentSong)
-    activeRequest = request
     isLoading.value = true
-
+    metadata.value = emptyTrackMetadata()
     try {
-      const detail = await request.promise
-      if (version === requestVersion && song.value.id === currentSong.id)
-        metadata.value = detail
+      const result = await loadVersionMetadata(currentVersion, true)
+      if (request === requestVersion && track.value?.id === currentTrack.id && item.value?.id === currentVersion.id)
+        metadata.value = result
     }
     catch (error) {
-      if (!(error instanceof DOMException && error.name === 'AbortError') && version === requestVersion)
-        metadata.value = emptyDetail()
-    }
-    finally {
-      request.release()
-      if (version === requestVersion) {
-        activeRequest = null
-        isLoading.value = false
+      if (request === requestVersion) {
+        console.warn('[music-metadata] failed to load track metadata', error)
+        metadata.value = emptyTrackMetadata()
       }
     }
-  }
-
-  function applyMetingMetadata(sourceId: string, _cover: string | null, lyrics: SongDetail['lyrics']) {
-    if (currentSource?.value?.id !== sourceId || !lyrics.length)
-      return
-
-    const detail: SongDetail = { lyrics, lyricSource: 'netease' }
-    metadata.value = detail
-    detailCache.set(song.value.id, detail)
+    finally {
+      if (request === requestVersion)
+        isLoading.value = false
+    }
   }
 
   onMounted(() => {
     stopWatch = watch(
-      () => song.value.id,
-      () => void loadMetadata(song.value),
+      () => [track.value?.id, item.value?.id, enabled?.value] as const,
+      () => void load(),
       { immediate: true },
     )
   })
 
   onBeforeUnmount(() => {
     requestVersion += 1
-    activeRequest?.release()
-    activeRequest = null
     stopWatch?.()
   })
 
-  return {
-    metadata,
-    activeLyricIndex,
-    isLoading,
-    applyMetingMetadata,
-  }
+  return { metadata, activeLyricIndex, currentLyric, isLoading }
 }

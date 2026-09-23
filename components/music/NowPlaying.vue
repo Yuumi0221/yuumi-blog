@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { Song, SongAudioSource } from './music'
-import type { PlaybackMode } from './useMusicPlayer'
+import type { Song } from './music'
+import type { PlaybackMode } from './useGlobalMusicPlayer'
 import { getPlatformIcon } from './music'
 import { computed } from 'vue'
 
 const props = defineProps<{
   song: Song
-  source: SongAudioSource | null
+  versionIndex: number
+  isActive: boolean
   isPlaying: boolean
   isLoading: boolean
   currentTime: number
@@ -26,7 +27,7 @@ const emit = defineEmits<{
   'set-volume': [volume: number]
   'toggle-mute': []
   seek: [time: number]
-  'select-source': [index: number]
+  'select-version': [index: number]
   'open-video': []
 }>()
 
@@ -39,7 +40,7 @@ const playbackModeMeta = computed(() => ({
   list: { label: '列表循环', icon: '' },
   one: { label: '单曲循环', icon: 'i-ri-repeat-one-line' },
   random: { label: '随机播放', icon: 'i-ri-shuffle-line' },
-  stop: { label: '播完暂停', icon: '' },
+  stop: { label: '播完停止', icon: '' },
 })[props.playbackMode])
 
 const volumeIcon = computed(() => {
@@ -82,18 +83,16 @@ function onVolumeInput(event: Event) {
       <p class="artists">{{ song.artists.join(' / ') }}</p>
       <time :datetime="song.date">{{ song.date.replaceAll('-', '.') }}</time>
 
-      <div v-if="song.audioSources && song.audioSources.length > 1" class="source-picker">
-        <p>音源版本</p>
+      <div v-if="song.versions.length > 1" class="version-picker">
+        <p>版本</p>
         <div>
           <button
-            v-for="(item, index) in song.audioSources"
+            v-for="(item, index) in song.versions"
             :key="item.id"
             type="button"
-            :class="{ active: source?.id === item.id }"
-            :aria-pressed="source?.id === item.id"
-            :disabled="item.availability === 'unavailable'"
-            :title="item.note"
-            @click="emit('select-source', index)"
+            :class="{ active: versionIndex === index }"
+            :aria-pressed="versionIndex === index"
+            @click="emit('select-version', index)"
           >
             {{ item.label }}
           </button>
@@ -108,7 +107,7 @@ function onVolumeInput(event: Event) {
             :max="progressMax"
             :value="Math.min(currentTime, progressMax)"
             step="0.1"
-            :disabled="!canPlay || !duration"
+            :disabled="!isActive || !canPlay || !duration"
             :style="{ '--music-progress': `${progressPercent}%` }"
             aria-label="播放进度"
             @input="onSeek"
@@ -125,6 +124,7 @@ function onVolumeInput(event: Event) {
             class="mode-button"
             :aria-label="`播放顺序：${playbackModeMeta.label}。点击切换`"
             :title="playbackModeMeta.label"
+            :disabled="!isActive"
             @click="emit('cycle-mode')"
           >
             <svg
@@ -162,20 +162,20 @@ function onVolumeInput(event: Event) {
             </svg>
             <span v-else :class="playbackModeMeta.icon" aria-hidden="true" />
           </button>
-          <button type="button" class="skip-button" aria-label="上一首" @click="emit('previous')">
+          <button type="button" class="skip-button" :disabled="!isActive" aria-label="上一首" @click="emit('previous')">
             <span class="i-ri-skip-back-mini-fill" aria-hidden="true" />
           </button>
           <button
             type="button"
             class="play-button"
-            :disabled="!canPlay"
+            :disabled="!canPlay || (isLoading && !duration)"
             :aria-label="isPlaying ? '暂停' : '播放'"
             @click="emit('toggle')"
           >
             <span v-if="isLoading" class="i-ri-loader-4-line loading-icon" aria-hidden="true" />
             <span v-else :class="isPlaying ? 'i-ri-pause-fill' : 'i-ri-play-fill'" aria-hidden="true" />
           </button>
-          <button type="button" class="skip-button" aria-label="下一首" @click="emit('next')">
+          <button type="button" class="skip-button" :disabled="!isActive" aria-label="下一首" @click="emit('next')">
             <span class="i-ri-skip-forward-mini-fill" aria-hidden="true" />
           </button>
           <div class="volume-control">
@@ -251,6 +251,7 @@ function onVolumeInput(event: Event) {
 <style scoped>
 .now-playing {
   --details-scroll-thumb: rgb(var(--va-c-primary-rgb), 0);
+  --music-control-color: #171717;
 
   height: 100%;
   min-width: 0;
@@ -258,6 +259,10 @@ function onVolumeInput(event: Event) {
   overflow: hidden;
   border-left: 1px solid var(--music-border);
   background: var(--music-panel);
+}
+
+:global(html.dark .now-playing) {
+  --music-control-color: #fff;
 }
 
 .now-playing__scroll {
@@ -311,11 +316,11 @@ time {
   font-size: 0.78rem;
 }
 
-.source-picker {
+.version-picker {
   margin-top: 1.4rem;
 }
 
-.source-picker p {
+.version-picker p {
   margin: 0 0 0.5rem;
   color: var(--va-c-text-2);
   font-size: 0.7rem;
@@ -323,13 +328,13 @@ time {
   letter-spacing: 0.08em;
 }
 
-.source-picker > div {
+.version-picker > div {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-.source-picker button {
+.version-picker button {
   border: 1px solid var(--music-border);
   border-radius: 999px;
   padding: 0.35rem 0.62rem;
@@ -339,13 +344,13 @@ time {
   cursor: pointer;
 }
 
-.source-picker button.active {
+.version-picker button.active {
   border-color: var(--va-c-primary);
   color: var(--va-c-primary);
   background: rgb(var(--va-c-primary-rgb), 0.1);
 }
 
-.source-picker button:disabled {
+.version-picker button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
   text-decoration: line-through;
@@ -359,7 +364,7 @@ time {
   --music-progress-thumb-shadow: 0 0 0.55rem rgba(182, 82, 0, 0.5);
 }
 
-:global(html.dark) .progress-wrap {
+:global(html.dark .now-playing .progress-wrap) {
   --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
 }
 
@@ -444,9 +449,10 @@ time {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  color: var(--va-c-text);
+  color: var(--music-control-color);
   background: transparent;
   cursor: pointer;
+  transition: color var(--va-transition-duration-fast), background-color var(--va-transition-duration-fast), filter var(--va-transition-duration-fast);
 }
 
 .skip-button {
@@ -458,18 +464,12 @@ time {
 .mode-button {
   width: 2.35rem;
   height: 2.35rem;
-  color: var(--va-c-primary) !important;
-  background: rgb(var(--va-c-primary-rgb), 0.09) !important;
   font-size: 1.15rem;
 }
 
 .mode-icon {
   width: 1.3rem;
   height: 1.3rem;
-}
-
-.mode-button:hover {
-  background: rgb(var(--va-c-primary-rgb), 0.16) !important;
 }
 
 .volume-control {
@@ -484,9 +484,10 @@ time {
   font-size: 1.2rem;
 }
 
-.volume-button:hover,
+.volume-button:not(:disabled):hover,
 .volume-control:focus-within .volume-button {
-  background: rgb(var(--va-c-primary-rgb), 0.09) !important;
+  color: var(--va-c-primary);
+  background: rgb(var(--va-c-primary-rgb), 0.11);
 }
 
 .volume-popover {
@@ -583,8 +584,19 @@ time {
   box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
 }
 
-.skip-button:hover {
-  background: rgb(var(--va-c-primary-rgb), 0.09);
+.mode-button:not(:disabled):hover,
+.mode-button:focus-visible,
+.skip-button:not(:disabled):hover,
+.skip-button:focus-visible {
+  color: var(--va-c-primary);
+  background: rgb(var(--va-c-primary-rgb), 0.11);
+  outline: none;
+}
+
+.mode-button:focus-visible,
+.skip-button:focus-visible,
+.volume-button:focus-visible {
+  box-shadow: 0 0 0 3px rgb(var(--va-c-primary-rgb), 0.18);
 }
 
 .play-button {
@@ -592,11 +604,22 @@ time {
   width: 3.35rem;
   height: 3.35rem;
   padding: 0;
-  color: var(--va-c-bg) !important;
+  color: #fff !important;
   background: var(--va-c-primary) !important;
   box-shadow: 0 0 1.5rem rgb(var(--va-c-primary-rgb), 0.25);
   font-size: 1.6rem;
   line-height: 1;
+}
+
+.play-button:not(:disabled):hover,
+.play-button:focus-visible {
+  color: #fff !important;
+  filter: brightness(1.1);
+  outline: none;
+}
+
+.play-button:focus-visible {
+  box-shadow: 0 0 0 3px rgb(var(--va-c-primary-rgb), 0.18), 0 0 1.5rem rgb(var(--va-c-primary-rgb), 0.25);
 }
 
 .play-button > span {
@@ -613,6 +636,19 @@ time {
   cursor: not-allowed;
   filter: grayscale(0.65);
   opacity: 0.45;
+}
+
+:global(html.dark .now-playing .control-row button:not(.play-button)) {
+  color: #fff !important;
+}
+
+:global(html.dark .now-playing .control-row .mode-button:not(:disabled):hover),
+:global(html.dark .now-playing .control-row .mode-button:focus-visible),
+:global(html.dark .now-playing .control-row .skip-button:not(:disabled):hover),
+:global(html.dark .now-playing .control-row .skip-button:focus-visible),
+:global(html.dark .now-playing .volume-button:not(:disabled):hover),
+:global(html.dark .now-playing .volume-control:focus-within .volume-button) {
+  color: var(--va-c-primary) !important;
 }
 
 .loading-icon {

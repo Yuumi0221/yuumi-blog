@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      aplayer:
-        specifier: ^1.10.1
-        version: 1.10.1
       fuse.js:
         specifier: ^7.5.0
         version: 7.5.0
@@ -32,9 +29,6 @@ importers:
       valaxy-addon-lightgallery:
         specifier: ^0.0.4
         version: 0.0.4(valaxy@1.0.0-rc.12(@babel/parser@7.29.9)(@devframes/agentic@1.0.0(crossws@0.4.12(srvx@1.0.5))(devframe@1.0.0))(@devframes/json-render@1.0.0(@devframes/hub@1.0.0(@devframes/agentic@1.0.0)(crossws@0.4.12(srvx@1.0.5))(devframe@1.0.0))(devframe@1.0.0))(@nuxt/kit@3.21.11(magicast@0.5.5))(@oxc-project/types@0.150.0)(@types/markdown-it@14.2.0)(@types/node@24.13.6)(@typescript/typescript6@6.0.2)(@vue/compiler-dom@3.5.43)(@vue/devtools-api@8.2.1)(axios@1.20.0)(cac@7.0.0)(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(eslint@9.31.0(jiti@2.7.0))(lightningcss@1.33.0)(oxc-parser@0.150.0)(rolldown@1.2.9)(rollup@4.60.1)(srvx@1.0.5)(terser@5.46.1)(tsx@4.20.5)(vue-router@5.0.4(@vue/compiler-sfc@3.5.43)(esbuild@0.28.2)(pinia@3.0.4(@typescript/typescript6@6.0.2)(vue@3.5.41(@typescript/typescript6@6.0.2)))(rolldown@1.2.9)(rollup@4.60.1)(vite@8.3.0)(vue@3.5.41(@typescript/typescript6@6.0.2)))(vue@3.5.41(@typescript/typescript6@6.0.2))(yaml@2.9.1))
-      valaxy-addon-meting:
-        specifier: ^0.2.0
-        version: 0.2.0
       valaxy-addon-moments:
         specifier: ^0.1.4
         version: 0.1.4(0b935ee4e19d029918dbb685d9238904)
@@ -2144,9 +2138,6 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  aplayer@1.10.1:
-    resolution: {integrity: sha512-HAfyxgCUTLAqtYlxzzK9Fyqg6y+kZ9CqT1WfeWE8FSzwspT6oBqWOZHANPHF3RGTtC33IsyEgrfthPDzU5r9kQ==}
-
   argparse@1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
 
@@ -2204,9 +2195,6 @@ packages:
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
-
-  balloon-css@0.5.2:
-    resolution: {integrity: sha512-zheJpzwyNrG4t39vusA67v3BYg1HTVXOF8cErPEHzWK88PEOFwgo6Ea9VHOgOWNMgeuOtFVtB73NE2NWl9uDyQ==}
 
   baseline-browser-mapping@2.11.25:
     resolution: {integrity: sha512-gMmEShwwq7FJqMwvfRwvCl00v4kN+KOfJqXn+f4nrufak5gNHJOksd/60Dvjuz7sI8Y5WiSFBa8FEYr+zoyqCw==}
@@ -3890,9 +3878,6 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  promise-polyfill@7.1.0:
-    resolution: {integrity: sha512-P6NJ2wU/8fac44ENORsuqT8TiolKGB2u0fEClPtXezn7w5cmLIjM/7mhPlTebke2EPr6tmqZbXvnX0TxwykGrg==}
-
   property-information@7.2.0:
     resolution: {integrity: sha512-IAtzIB6sUiWaJYrX9smp3V46pBGbBeLFRGdh25kg1334VcBlD8HzhPeNIWQH9zhGmo2itIe25EHt9dQP7G5hmg==}
 
@@ -4095,9 +4080,6 @@ packages:
   slice-ansi@4.0.0:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
-
-  smoothscroll@0.4.0:
-    resolution: {integrity: sha512-sggQ3U2Un38b3+q/j1P4Y4fCboCtoUIaBYoge+Lb6Xg1H8RTIif/hugVr+ErMtIDpvBbhQfTjtiTeYAfbw1ZGQ==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -4425,9 +4407,6 @@ packages:
     resolution: {integrity: sha512-+pQJUBCPXff5Isd5ZfNrgkEqh+oKPvzNvgw74vAxmPEeWKvW8786lftVgkoWByFrNsn92iN7q7h5jt3evmQFDg==}
     peerDependencies:
       valaxy: latest
-
-  valaxy-addon-meting@0.2.0:
-    resolution: {integrity: sha512-K1xvX3YqlydDWRj58pmvTh5rjL4ydvJxDtHF7KuTjjxHTH4I/kFJ7YQjxmsIYZxj7VyiB23D8eganF1q/109vg==}
 
   valaxy-addon-moments@0.1.4:
     resolution: {integrity: sha512-tTD/jxnph8/mt2NPlLb6gRyI3pFMGPKIOE4UjDeI8ipa1gH8Gs1v2orbMkrKiN2y1/Vz5ku7yM3x2VIH0zXeVQ==}
@@ -6714,12 +6693,6 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  aplayer@1.10.1:
-    dependencies:
-      balloon-css: 0.5.2
-      promise-polyfill: 7.1.0
-      smoothscroll: 0.4.0
-
   argparse@1.0.10:
     dependencies:
       sprintf-js: 1.0.3
@@ -6774,8 +6747,6 @@ snapshots:
   balanced-match@1.0.2: {}
 
   balanced-match@4.0.4: {}
-
-  balloon-css@0.5.2: {}
 
   baseline-browser-mapping@2.11.25: {}
 
@@ -8507,8 +8478,6 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  promise-polyfill@7.1.0: {}
-
   property-information@7.2.0: {}
 
   proxy-from-env@2.1.0:
@@ -8792,8 +8761,6 @@ snapshots:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
-
-  smoothscroll@0.4.0: {}
 
   source-map-js@1.2.1: {}
 
@@ -9157,8 +9124,6 @@ snapshots:
     dependencies:
       lightgallery: 2.7.2
       valaxy: 1.0.0-rc.12(@babel/parser@7.29.9)(@devframes/agentic@1.0.0(crossws@0.4.12(srvx@1.0.5))(devframe@1.0.0))(@devframes/json-render@1.0.0(@devframes/hub@1.0.0(@devframes/agentic@1.0.0)(crossws@0.4.12(srvx@1.0.5))(devframe@1.0.0))(devframe@1.0.0))(@nuxt/kit@3.21.11(magicast@0.5.5))(@oxc-project/types@0.150.0)(@types/markdown-it@14.2.0)(@types/node@24.13.6)(@typescript/typescript6@6.0.2)(@vue/compiler-dom@3.5.43)(@vue/devtools-api@8.2.1)(axios@1.20.0)(cac@7.0.0)(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(eslint@9.31.0(jiti@2.7.0))(lightningcss@1.33.0)(oxc-parser@0.150.0)(rolldown@1.2.9)(rollup@4.60.1)(srvx@1.0.5)(terser@5.46.1)(tsx@4.20.5)(vue-router@5.0.4(@vue/compiler-sfc@3.5.43)(esbuild@0.28.2)(pinia@3.0.4(@typescript/typescript6@6.0.2)(vue@3.5.41(@typescript/typescript6@6.0.2)))(rolldown@1.2.9)(rollup@4.60.1)(vite@8.3.0)(vue@3.5.41(@typescript/typescript6@6.0.2)))(vue@3.5.41(@typescript/typescript6@6.0.2))(yaml@2.9.1)
-
-  valaxy-addon-meting@0.2.0: {}
 
   valaxy-addon-moments@0.1.4(0b935ee4e19d029918dbb685d9238904):
     dependencies:

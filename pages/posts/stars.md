@@ -8,14 +8,19 @@ tags:
   - 生活
 categories: 小摄影
 cover: https://cdn.yuumi.link/images/stars/星轨水印4k.png
-aplayer: true
 ---
 
 我永远不会忘记，静谧夏夜那满天繁星。
 
 <!-- more -->
 
-<MetingJs id="1423038384" server="netease" type="song" theme='#D69B54'/>
+<MusicTrack
+  track-id="yozora"
+  fallback-title="夜空"
+  fallback-artist="鈴木みのり"
+  fallback-cover="https://cdn.yuumi.link/images/stars/星轨水印4k.png"
+  netease-id="1423038384"
+/>
 
 ---
 

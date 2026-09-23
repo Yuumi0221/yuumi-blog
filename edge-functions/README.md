@@ -28,23 +28,26 @@ should leave `moments.likes.enabled` disabled.
 
 ## Music metadata proxy
 
-`api/music-metadata.js` exposes `/api/music-metadata` for the songs archive. It
-loads lyrics in this order: NetEase Cloud Music, then Bilibili subtitles. Cover
-images are generated during the EdgeOne build and served from COS/CDN, while
-audio is resolved only after the visitor presses play. No credentials or
-storage binding are required by this runtime endpoint. Responses are cached at
-the edge.
+`api/music-metadata.js` exposes `/api/music-metadata` for the songs archive and
+article `MusicTrack` components. It accepts `neteaseId`, or `bvid` with an
+optional one-based `page`, and returns title, artist, cover, and lyrics. NetEase
+metadata is preferred when both matching sources are supplied; Bilibili fills
+missing values and subtitles. `lyrics=0` supports lazy article-cover loading.
+Archive covers are still generated during the EdgeOne build and served from
+COS/CDN. No credentials or storage binding are required, and responses are
+cached at the edge.
 
-The Vite middleware in `dev-server.ts` mounts both music endpoints during
+The Vite middleware in `dev-server.ts` mounts the music endpoints during
 `pnpm dev`, so local development uses the same handlers as EdgeOne. For another
 hosting provider, set `VITE_MUSIC_METADATA_API` to an endpoint implementing the
 same GET contract, or port these stateless functions to that provider.
 
-`api/bilibili-audio.js` is the same-origin streaming bridge used only for songs
-that have no configured NetEase or self-hosted audio. It forwards HTTP range
-requests to Bilibili's audio-only stream, so the deployment provider will carry
-that audio bandwidth. If the provider has strict bandwidth limits, disable this
-fallback or move the endpoint to a media-capable service.
+`api/bilibili-audio.js` is the same-origin streaming bridge for explicitly
+configured Bilibili playback candidates. It accepts `bvid` and a one-based
+`page`, resolves the matching page CID, rejects out-of-range pages, and forwards
+HTTP range requests to the audio-only stream. The deployment provider carries
+that audio bandwidth, so deployments with strict limits should move the bridge
+to a media-capable service.
 
 ## Build-time music covers
 

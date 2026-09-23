@@ -7,6 +7,7 @@
     "build:edgeone": "pnpm run sync:music-covers && pnpm run build",
     "build:spa": "valaxy build",
     "build:ssg": "valaxy build --ssg",
+    "check:music": "jiti edge-functions/check-music-architecture.ts",
     "fuse": "valaxy fuse",
     "dev": "NODE_USE_ENV_PROXY=1 valaxy",
     "new": "valaxy new",
@@ -15,7 +16,6 @@
     "sync:music-covers": "jiti edge-functions/sync-music-covers.ts"
   },
   "dependencies": {
-    "aplayer": "^1.10.1",
     "fuse.js": "^7.5.0",
     "markdown": "^0.5.0",
     "valaxy": "1.0.0-rc.12",
@@ -23,7 +23,6 @@
     "valaxy-addon-components": "^0.1.0",
     "valaxy-addon-face": "^0.2.0",
     "valaxy-addon-lightgallery": "^0.0.4",
-    "valaxy-addon-meting": "^0.2.0",
     "valaxy-addon-moments": "^0.1.4",
     "valaxy-addon-waline": "^0.2.1",
     "valaxy-theme-yun": "1.0.0-rc.12"

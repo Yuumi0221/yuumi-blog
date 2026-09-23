@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import type { Song, SongKind } from './music'
+import type { PlayableTrack, Song, SongKind, SongVersion } from './music'
 import AlbumVisual from './AlbumVisual.vue'
-import GlobalMetingBridge from './GlobalMetingBridge.vue'
-import NeteaseMetingHost from './NeteaseMetingHost.vue'
 import NowPlaying from './NowPlaying.vue'
 import TrackList from './TrackList.vue'
 import VideoDialog from './VideoDialog.vue'
 import { getSongCoverUrl, handleSongCoverError } from './covers'
 import { musicProfileLinks, songs } from '../../pages/posts/songs.config'
-import { getPlatformIcon, getSongSearchText, getSongYear, validateSongs } from './music'
-import { useMusicPlayer } from './useMusicPlayer'
+import { getPlatformIcon, getSongSearchText, getSongYear, isPlayableTrack, validateSongs } from './music'
+import { useGlobalMusicPlayer } from './useGlobalMusicPlayer'
 import { useSongMetadata } from './useSongMetadata'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -22,6 +20,8 @@ const kind = ref<SongKind | 'all'>('all')
 const year = ref<number | null>(null)
 const videoOpen = ref(false)
 const selectedSongStorageKey = 'yuumi-music-selected-song'
+const libraryContext = 'library:/posts/songs'
+const player = useGlobalMusicPlayer()
 
 const years = computed(() => {
   const counts = new Map<number, number>()
@@ -61,19 +61,50 @@ if (!requestedSong && typeof window !== 'undefined') {
   }
 }
 const initialSong = requestedSong || rememberedSong || songs[0]
-
-const player = useMusicPlayer(songs, filteredSongs, initialSong, Boolean(requestedSong))
-const songMetadata = useSongMetadata(player.currentSong, player.currentTime, player.currentSource)
-const metingApi = import.meta.env.VITE_METING_API as string | undefined
-const currentCover = computed(() => getSongCoverUrl(player.currentSong.value, 'cover'))
+const selectedSong = ref(initialSong)
+const isLibraryActive = computed(() => player.contextId.value === libraryContext)
+const displayedSong = computed<Song>(() => (
+  isLibraryActive.value && player.currentTrack.value
+    ? player.currentTrack.value as Song
+    : selectedSong.value
+))
+const displayedVersionIndex = computed(() => isLibraryActive.value ? player.currentVersionIndex.value : 0)
+const metadataTrack = computed<PlayableTrack | null>(() => isLibraryActive.value ? player.currentTrack.value : null)
+const metadataVersion = computed<SongVersion | null>(() => isLibraryActive.value ? player.currentVersion.value : null)
+const songMetadata = useSongMetadata(metadataTrack, metadataVersion, player.currentTime, isLibraryActive)
+const currentCover = computed(() => getSongCoverUrl(displayedSong.value, 'cover'))
 
 function selectSong(song: Song) {
-  player.selectSong(song)
+  selectedSong.value = song
+  rememberSelectedSong(song.id)
+  const snapshot = filteredSongs.value.map(item => ({
+    ...item,
+    cover: getSongCoverUrl(item, 'cover'),
+  }))
+  player.playSnapshot(libraryContext, snapshot, song.id)
 }
 
 function openVideo() {
-  player.pause()
+  if (isLibraryActive.value && player.isPlaying.value)
+    player.togglePlayback()
   videoOpen.value = true
+}
+
+function toggleDisplayedSong() {
+  if (isLibraryActive.value)
+    player.togglePlayback()
+  else
+    selectSong(displayedSong.value)
+}
+
+function selectDisplayedVersion(index: number) {
+  if (isLibraryActive.value) {
+    player.selectVersion(index)
+    return
+  }
+  const song = displayedSong.value
+  const snapshot = filteredSongs.value.map(item => ({ ...item, cover: getSongCoverUrl(item, 'cover') }))
+  player.playSnapshot(libraryContext, snapshot, song.id, index)
 }
 
 function rememberSelectedSong(id: string) {
@@ -87,7 +118,12 @@ function rememberSelectedSong(id: string) {
   }
 }
 
-watch(() => player.currentSong.value.id, (id) => {
+watch(() => isLibraryActive.value ? player.currentTrack.value?.id : selectedSong.value.id, (id) => {
+  if (!id)
+    return
+  const archiveSong = songs.find(song => song.id === id)
+  if (archiveSong)
+    selectedSong.value = archiveSong
   rememberSelectedSong(id)
   if (route.query.song === id)
     return
@@ -101,9 +137,9 @@ onMounted(() => {
   if (errors.length)
     console.warn('[Yuumi Music Library] 数据检查失败：', errors)
 
-  if (route.query.song !== player.currentSong.value.id)
-    void router.replace({ query: { ...route.query, song: player.currentSong.value.id } })
-  rememberSelectedSong(player.currentSong.value.id)
+  if (route.query.song !== displayedSong.value.id)
+    void router.replace({ query: { ...route.query, song: displayedSong.value.id } })
+  rememberSelectedSong(displayedSong.value.id)
 })
 
 onBeforeUnmount(() => {
@@ -136,7 +172,7 @@ onBeforeUnmount(() => {
     <div class="library-shell">
       <Transition name="atmosphere" mode="out-in">
         <img
-          :key="player.currentSong.value.id"
+          :key="displayedSong.id"
           class="atmosphere-cover"
           :src="currentCover"
           alt=""
@@ -151,12 +187,12 @@ onBeforeUnmount(() => {
         <TrackList
           :songs="filteredSongs"
           :total="songs.length"
-          :current-id="player.currentSong.value.id"
+          :current-id="isLibraryActive ? player.currentTrack.value?.id || '' : ''"
           :search="search"
           :kind="kind"
           :year="year"
           :years="years"
-          :has-playable-audio="player.hasPlayableSource"
+          :has-playable-audio="isPlayableTrack"
           @select="selectSong"
           @update:search="search = $event"
           @update:kind="kind = $event"
@@ -164,84 +200,47 @@ onBeforeUnmount(() => {
         />
 
         <AlbumVisual
-          :song="player.currentSong.value"
+          :song="displayedSong"
           :cover="currentCover"
-          :is-playing="player.isPlaying.value"
-          :is-loading="player.isLoading.value"
+          :is-playing="isLibraryActive && player.isPlaying.value"
+          :is-loading="isLibraryActive && player.isLoading.value"
           :lyrics="songMetadata.metadata.value.lyrics"
           :active-lyric-index="songMetadata.activeLyricIndex.value"
           :lyrics-loading="songMetadata.isLoading.value"
         />
 
         <NowPlaying
-          :song="player.currentSong.value"
-          :source="player.currentSource.value"
-          :is-playing="player.isPlaying.value"
-          :is-loading="player.isLoading.value"
-          :current-time="player.currentTime.value"
-          :duration="player.duration.value"
-          :can-play="player.canPlay.value"
-          :error="player.error.value"
+          :song="displayedSong"
+          :version-index="displayedVersionIndex"
+          :is-active="isLibraryActive"
+          :is-playing="isLibraryActive && player.isPlaying.value"
+          :is-loading="isLibraryActive && player.isLoading.value"
+          :current-time="isLibraryActive ? player.currentTime.value : 0"
+          :duration="isLibraryActive ? player.duration.value : 0"
+          :can-play="isPlayableTrack(displayedSong)"
+          :error="isLibraryActive ? player.error.value : null"
           :playback-mode="player.playbackMode.value"
           :volume="player.volume.value"
           :is-muted="player.isMuted.value"
-          @toggle="player.togglePlayback"
+          @toggle="toggleDisplayedSong"
           @previous="player.goPrevious"
           @next="player.goNext()"
           @cycle-mode="player.cyclePlaybackMode"
           @set-volume="player.setVolume"
           @toggle-mute="player.toggleMute"
           @seek="player.seek"
-          @select-source="player.selectSource"
+          @select-version="selectDisplayedVersion"
           @open-video="openVideo"
         />
       </div>
     </div>
 
-    <NeteaseMetingHost
-      v-if="player.backendType.value === 'netease' && player.currentSource.value?.type === 'netease'"
-      :key="`${player.currentSource.value.id}-${player.backendKey.value}`"
-      :source-id="player.currentSource.value.id"
-      :song-id="player.currentSource.value.songId"
-      :api="metingApi"
-      @ready="player.connectNeteasePlayer"
-      @metadata="songMetadata.applyMetingMetadata"
-      @error="player.reportNeteaseError"
-    />
-
-    <GlobalMetingBridge @ready="player.connectGlobalPlayer" />
-
     <VideoDialog
       :open="videoOpen"
-      :title="player.currentSong.value.title"
-      :videos="player.currentSong.value.videos || []"
+      :title="displayedSong.title"
+      :videos="displayedSong.videos || []"
       @close="videoOpen = false"
     />
-
-    <div class="mobile-player" aria-label="移动端播放器">
-      <img
-        :src="currentCover"
-        :alt="`${player.currentSong.value.title} 封面`"
-        width="44"
-        height="44"
-        decoding="async"
-        referrerpolicy="no-referrer"
-        @error="handleSongCoverError"
-      >
-      <div>
-        <strong>{{ player.currentSong.value.title }}</strong>
-        <span>{{ player.currentSong.value.artists.join(' / ') }}</span>
-      </div>
-      <button
-        type="button"
-        :disabled="!player.canPlay.value"
-        :aria-label="player.isPlaying.value ? '暂停' : '播放'"
-        @click="player.togglePlayback"
-      >
-        <span v-if="player.isLoading.value" class="i-ri-loader-4-line mobile-loading" aria-hidden="true" />
-        <span v-else :class="player.isPlaying.value ? 'i-ri-pause-fill' : 'i-ri-play-fill'" aria-hidden="true" />
-      </button>
-    </div>
   </div>
 </template>
 
@@ -367,10 +366,6 @@ onBeforeUnmount(() => {
   opacity: 0;
 }
 
-.mobile-player {
-  display: none;
-}
-
 @media (width < 1200px) and (width >= 768px) {
   .music-library {
     width: min(95vw, 72rem);
@@ -407,6 +402,7 @@ onBeforeUnmount(() => {
   .profile-links {
     justify-content: flex-start;
     margin-top: 1rem;
+    padding-block: 0.15rem;
     overflow-x: auto;
     flex-wrap: nowrap;
     scrollbar-width: none;
@@ -425,6 +421,10 @@ onBeforeUnmount(() => {
     min-width: 2.4rem;
     padding-inline: 0.55rem;
     font-size: 1rem;
+  }
+
+  .profile-links a:hover {
+    transform: none;
   }
 
   .library-shell {
@@ -447,79 +447,6 @@ onBeforeUnmount(() => {
     margin-top: clamp(1rem, 14vw, 2rem);
   }
 
-  .mobile-player {
-    position: fixed;
-    z-index: 18;
-    right: 0.65rem;
-    bottom: max(0.65rem, env(safe-area-inset-bottom));
-    left: 0.65rem;
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) 2.75rem;
-    align-items: center;
-    gap: 0.65rem;
-    border: 1px solid var(--music-border);
-    border-radius: 0.9rem;
-    padding: 0.5rem;
-    background: color-mix(in srgb, var(--va-c-bg) 88%, transparent);
-    box-shadow: 0 0.8rem 2.5rem rgb(0 0 0 / 0.2);
-    backdrop-filter: blur(20px);
-  }
-
-  .mobile-player img {
-    width: 44px;
-    height: 44px;
-    border-radius: 0.58rem;
-    object-fit: cover;
-  }
-
-  .mobile-player > div {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-  }
-
-  .mobile-player strong,
-  .mobile-player span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .mobile-player strong {
-    font-size: 0.8rem;
-  }
-
-  .mobile-player > div span {
-    margin-top: 0.1rem;
-    color: var(--va-c-text-2);
-    font-size: 0.68rem;
-  }
-
-  .mobile-player button {
-    display: grid;
-    width: 2.65rem;
-    height: 2.65rem;
-    place-items: center;
-    border: 0;
-    border-radius: 50%;
-    color: var(--va-c-bg);
-    background: var(--va-c-primary);
-    font-size: 1.25rem;
-    cursor: pointer;
-  }
-
-  .mobile-player button:disabled {
-    opacity: 0.4;
-  }
-
-  .mobile-loading {
-    animation: mobile-spin 0.8s linear infinite;
-  }
-
-}
-
-@keyframes mobile-spin {
-  to { transform: rotate(1turn); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -527,10 +454,6 @@ onBeforeUnmount(() => {
   .atmosphere-enter-active,
   .atmosphere-leave-active {
     transition: none;
-  }
-
-  .mobile-loading {
-    animation: none;
   }
 }
 </style>

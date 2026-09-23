@@ -1,5 +1,4 @@
 export type SongKind = 'solo' | 'collaboration' | 'band' | 'instrumental'
-export type AudioAvailability = 'available' | 'unverified' | 'unavailable'
 export type LinkPlatform = 'bilibili' | 'netease' | 'youtube' | 'nicovideo' | 'acfun' | 'qqmusic' | 'other'
 
 export interface CreditValue {
@@ -12,24 +11,23 @@ export interface SongCredit {
   values: CreditValue[]
 }
 
-interface AudioSourceBase {
+export type MetadataSource =
+  | { type: 'netease', songId: string }
+  | { type: 'bilibili', bvid: string, page?: number }
+
+export type PlaybackCandidate =
+  | { type: 'url', url: string }
+  | { type: 'netease', songId: string }
+  | { type: 'bilibili', bvid: string, page?: number }
+
+export interface SongVersion {
   id: string
-  label: string
-  availability?: AudioAvailability
-  note?: string
+  label?: string
+  metadataSources: MetadataSource[]
+  /** Optional metadata source used only for synchronized lyrics. */
+  lyricSource?: MetadataSource
+  playbackCandidates: PlaybackCandidate[]
 }
-
-export interface UrlAudioSource extends AudioSourceBase {
-  type: 'url'
-  src: string
-}
-
-export interface NeteaseAudioSource extends AudioSourceBase {
-  type: 'netease'
-  songId: string
-}
-
-export type SongAudioSource = UrlAudioSource | NeteaseAudioSource
 
 export interface SongLink {
   label: string
@@ -43,19 +41,27 @@ export interface SongVideo {
   poster?: string
 }
 
-export interface Song {
+export interface PlayableTrack {
   id: string
   title: string
-  date: string
   artists: string[]
+  cover?: string
+  versions: SongVersion[]
+  /** Article tracks prefer API metadata; library tracks retain their archive copy and CDN cover. */
+  preferRemoteMetadata?: boolean
+}
+
+export interface Song extends PlayableTrack {
+  date: string
   kind: SongKind
   credits: SongCredit[]
-  audioSources?: SongAudioSource[]
   links?: SongLink[]
   videos?: SongVideo[]
   notes?: string[]
   tags?: string[]
 }
+
+export type LibrarySongInput = Omit<Song, 'versions'> & { versions?: SongVersion[] }
 
 export interface LyricLine {
   start: number
@@ -63,7 +69,12 @@ export interface LyricLine {
   text: string
 }
 
-export type LyricSource = 'netease' | 'bilibili' | 'none'
+export interface TrackMetadata {
+  title?: string
+  artist?: string
+  cover?: string
+  lyrics: LyricLine[]
+}
 
 const PLATFORM_ICONS: Record<LinkPlatform, string> = {
   bilibili: 'i-ri-bilibili-line',
@@ -75,11 +86,6 @@ const PLATFORM_ICONS: Record<LinkPlatform, string> = {
   other: 'i-ri-external-link-line',
 }
 
-export interface SongDetail {
-  lyrics: LyricLine[]
-  lyricSource: LyricSource
-}
-
 type CreditInput = string | CreditValue
 
 export const value = (text: string, url?: string): CreditValue => ({ text, url })
@@ -89,21 +95,37 @@ export const credit = (role: string, ...values: CreditInput[]): SongCredit => ({
   values: values.map(item => typeof item === 'string' ? { text: item } : item),
 })
 
-export const netease = (songId: string, label = '网易云音乐'): NeteaseAudioSource => ({
-  id: `netease-${songId}`,
-  type: 'netease',
-  songId,
-  label,
-  availability: 'unverified',
-})
-
-export const audioUrl = (
+export function version(
   id: string,
-  src: string,
-  label = '站内音频',
-  availability: AudioAvailability = 'available',
-  note?: string,
-): UrlAudioSource => ({ id, type: 'url', src, label, availability, note })
+  label: string | undefined,
+  metadataSources: MetadataSource[],
+  playbackCandidates: PlaybackCandidate[],
+): SongVersion {
+  return { id, label, metadataSources, playbackCandidates }
+}
+
+/** A semantic version backed by NetEase metadata and playback. */
+export const netease = (songId: string, label?: string): SongVersion => version(
+  `netease-${songId}`,
+  label,
+  [{ type: 'netease', songId }],
+  [{ type: 'netease', songId }],
+)
+
+/** A semantic version backed by a stable, self-hosted URL. */
+export const audioUrl = (id: string, url: string, label?: string): SongVersion => version(
+  id,
+  label,
+  [],
+  [{ type: 'url', url }],
+)
+
+export const bilibiliVersion = (bvid: string, page = 1, label?: string): SongVersion => version(
+  `bilibili-${bvid}-p${page}`,
+  label,
+  [{ type: 'bilibili', bvid, page }],
+  [{ type: 'bilibili', bvid, page }],
+)
 
 export const bilibili = (url: string, label = 'Bilibili'): SongLink => ({ label, url, platform: 'bilibili' })
 
@@ -130,13 +152,82 @@ export function getSongSearchText(song: Song) {
   ].join(' ').normalize('NFKC').toLocaleLowerCase()
 }
 
-export function getNeteaseSongId(song: Song) {
-  return song.audioSources?.find(source => source.type === 'netease')?.songId || null
+function getBilibiliLink(song: Pick<Song, 'links'>) {
+  const url = song.links?.find(link => link.platform === 'bilibili')?.url
+  const bvid = url?.match(/\/(BV[A-Za-z0-9]{10})/)?.[1]
+  if (!bvid)
+    return null
+
+  let page = 1
+  try {
+    page = Math.max(1, Number(new URL(url).searchParams.get('p')) || 1)
+  }
+  catch {
+    // The matched BVID remains useful if an old link is not URL-parseable.
+  }
+  return { bvid, page }
 }
 
-export function getBilibiliVideoId(song: Song) {
-  const url = song.links?.find(link => link.platform === 'bilibili')?.url
-  return url?.match(/\/(BV[A-Za-z0-9]+)/)?.[1] || null
+/**
+ * Completes the mechanical archive migration:
+ * - a Bilibili-only entry receives one playable version;
+ * - a single NetEase version and its Bilibili post become candidates of that same version;
+ * - multi-version entries are never guessed and must declare their mappings explicitly.
+ */
+export function finalizeLibrarySongs(input: LibrarySongInput[]): Song[] {
+  return input.map((song) => {
+    const versions = (song.versions || []).map(item => ({
+      ...item,
+      metadataSources: [...item.metadataSources],
+      lyricSource: item.lyricSource ? { ...item.lyricSource } : undefined,
+      playbackCandidates: [...item.playbackCandidates],
+    }))
+    const bilibiliSource = getBilibiliLink(song)
+
+    if (!versions.length && bilibiliSource) {
+      versions.push(bilibiliVersion(bilibiliSource.bvid, bilibiliSource.page))
+    }
+    else if (versions.length === 1 && bilibiliSource) {
+      const onlyVersion = versions[0]
+      const isNeteaseVersion = onlyVersion.playbackCandidates.some(candidate => candidate.type === 'netease')
+      if (isNeteaseVersion) {
+        if (!onlyVersion.metadataSources.some(source => source.type === 'bilibili'))
+          onlyVersion.metadataSources.push({ type: 'bilibili', ...bilibiliSource })
+        if (!onlyVersion.playbackCandidates.some(candidate => candidate.type === 'bilibili'))
+          onlyVersion.playbackCandidates.push({ type: 'bilibili', ...bilibiliSource })
+      }
+    }
+
+    return { ...song, versions }
+  })
+}
+
+export function isPlayableTrack(track: Pick<PlayableTrack, 'versions'>) {
+  return track.versions.some(item => item.playbackCandidates.length > 0)
+}
+
+export function getNeteaseSongId(track: Pick<PlayableTrack, 'versions'>) {
+  for (const item of track.versions) {
+    const source = item.metadataSources.find(candidate => candidate.type === 'netease')
+      || item.playbackCandidates.find(candidate => candidate.type === 'netease')
+    if (source?.type === 'netease')
+      return source.songId
+  }
+  return null
+}
+
+export function getBilibiliSource(track: Pick<PlayableTrack, 'versions'>) {
+  for (const item of track.versions) {
+    const source = item.metadataSources.find(candidate => candidate.type === 'bilibili')
+      || item.playbackCandidates.find(candidate => candidate.type === 'bilibili')
+    if (source?.type === 'bilibili')
+      return source
+  }
+  return null
+}
+
+export function getBilibiliVideoId(track: Pick<PlayableTrack, 'versions'>) {
+  return getBilibiliSource(track)?.bvid || null
 }
 
 export function validateSongs(list: Song[]) {
@@ -150,12 +241,21 @@ export function validateSongs(list: Song[]) {
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(song.date))
       errors.push(`${song.id} 的日期不是 YYYY-MM-DD`)
+    if (!song.versions.length)
+      errors.push(`${song.id} 没有可播放版本`)
 
-    for (const source of song.audioSources || []) {
-      if (source.type === 'url' && !source.src)
-        errors.push(`${song.id}/${source.id} 缺少音频地址`)
-      if (source.type === 'netease' && !source.songId)
-        errors.push(`${song.id}/${source.id} 缺少网易云 ID`)
+    const versionIds = new Set<string>()
+    for (const item of song.versions) {
+      if (versionIds.has(item.id))
+        errors.push(`${song.id} 的版本 ID 重复：${item.id}`)
+      versionIds.add(item.id)
+      if (song.versions.length > 1 && !item.label)
+        errors.push(`${song.id}/${item.id} 的多版本标签为空`)
+      if (!item.playbackCandidates.length)
+        errors.push(`${song.id}/${item.id} 没有播放候选`)
+      const firstUrl = item.playbackCandidates.findIndex(candidate => candidate.type === 'url')
+      if (firstUrl > 0)
+        errors.push(`${song.id}/${item.id} 的自托管候选没有排在首位`)
     }
   }
 
