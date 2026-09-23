@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PlayableTrack, SongVersion } from './music'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import PlaybackModeIcon from './PlaybackModeIcon.vue'
 import VolumeIcon from './VolumeIcon.vue'
@@ -18,9 +17,7 @@ const lyricMarquee = ref<HTMLElement | null>(null)
 const titleOverflows = ref(false)
 const artistOverflows = ref(false)
 const lyricOverflows = ref(false)
-const metadataTrack = computed<PlayableTrack | null>(() => player.currentTrack.value)
-const metadataVersion = computed<SongVersion | null>(() => player.currentVersion.value)
-const metadata = useSongMetadata(metadataTrack, metadataVersion, player.currentTime)
+const metadata = useSongMetadata(player.currentTrack, player.currentVersion, player.currentTime)
 const currentLyric = metadata.currentLyric
 
 const title = computed(() => {
@@ -65,7 +62,7 @@ function releasePointerFocus(event: MouseEvent) {
 }
 
 function textOverflowDistance(container: HTMLElement | null) {
-  const text = container?.querySelector<HTMLElement>('.marquee-text')
+  const text = container?.querySelector<HTMLElement>('.music-marquee__text')
   if (!container || !text)
     return 0
   const textPadding = Number.parseFloat(getComputedStyle(text).paddingRight) || 0
@@ -245,16 +242,16 @@ onBeforeUnmount(() => {
           :tabindex="hasMultipleVersions ? 0 : undefined"
           :aria-label="hasMultipleVersions ? '切换播放版本' : undefined"
         >
-          <div ref="titleMarquee" class="marquee" :class="{ 'is-scrolling': titleOverflows }">
-            <div :key="title" class="marquee-track">
-              <strong class="marquee-text">{{ title }}</strong>
-              <strong class="marquee-text marquee-copy" aria-hidden="true">{{ title }}</strong>
+          <div ref="titleMarquee" class="music-marquee" :class="{ 'is-scrolling': titleOverflows }">
+            <div :key="title" class="music-marquee__track">
+              <strong class="music-marquee__text">{{ title }}</strong>
+              <strong class="music-marquee__text music-marquee__copy" aria-hidden="true">{{ title }}</strong>
             </div>
           </div>
-          <div ref="artistMarquee" class="marquee" :class="{ 'is-scrolling': artistOverflows }">
-            <div :key="artist" class="marquee-track">
-              <span class="marquee-text">{{ artist }}</span>
-              <span class="marquee-text marquee-copy" aria-hidden="true">{{ artist }}</span>
+          <div ref="artistMarquee" class="music-marquee" :class="{ 'is-scrolling': artistOverflows }">
+            <div :key="artist" class="music-marquee__track">
+              <span class="music-marquee__text">{{ artist }}</span>
+              <span class="music-marquee__text music-marquee__copy" aria-hidden="true">{{ artist }}</span>
             </div>
           </div>
           <div
@@ -281,13 +278,13 @@ onBeforeUnmount(() => {
         <div class="transport-display">
           <div
             ref="lyricMarquee"
-            class="current-lyric marquee"
+            class="current-lyric music-marquee"
             :class="{ 'is-scrolling': lyricOverflows }"
             aria-live="polite"
           >
-            <div :key="currentLyric" class="marquee-track">
-              <span class="marquee-text">{{ currentLyric }}</span>
-              <span class="marquee-text marquee-copy" aria-hidden="true">{{ currentLyric }}</span>
+            <div :key="currentLyric" class="music-marquee__track">
+              <span class="music-marquee__text">{{ currentLyric }}</span>
+              <span class="music-marquee__text music-marquee__copy" aria-hidden="true">{{ currentLyric }}</span>
             </div>
           </div>
           <div class="transport-buttons">
@@ -439,11 +436,6 @@ onBeforeUnmount(() => {
   gap: 0.75rem;
 }
 
-.global-music-player:not(.collapsed) .track-summary,
-.global-music-player:not(.collapsed) .secondary-controls {
-  align-self: center;
-}
-
 .track-summary img {
   width: 3.35rem;
   height: 3.35rem;
@@ -468,38 +460,6 @@ onBeforeUnmount(() => {
 .track-summary strong,
 .track-summary span {
   white-space: nowrap;
-}
-
-.marquee {
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-}
-
-.marquee-text {
-  display: block;
-  flex: 0 0 auto;
-}
-
-.marquee-copy {
-  display: none;
-}
-
-.marquee.is-scrolling .marquee-track {
-  animation: marquee-scroll 18s linear 1s infinite;
-}
-
-.marquee.is-scrolling .marquee-text {
-  padding-right: 2rem;
-}
-
-.marquee.is-scrolling .marquee-copy {
-  display: block;
 }
 
 .track-summary strong {
@@ -586,20 +546,20 @@ onBeforeUnmount(() => {
   transition: opacity 150ms ease;
 }
 
-.current-lyric:not(.is-scrolling) .marquee-track {
+.current-lyric:not(.is-scrolling) .music-marquee__track {
   width: 100%;
   justify-content: center;
 }
 
-.current-lyric.is-scrolling .marquee-track {
+.current-lyric.is-scrolling .music-marquee__track {
   animation: lyric-scroll var(--lyric-scroll-duration, 8s) linear 1s 1 forwards;
 }
 
-.current-lyric.is-scrolling .marquee-text {
+.current-lyric.is-scrolling .music-marquee__text {
   padding-right: 0;
 }
 
-.current-lyric.is-scrolling .marquee-copy {
+.current-lyric.is-scrolling .music-marquee__copy {
   display: none;
 }
 
@@ -658,8 +618,6 @@ onBeforeUnmount(() => {
 }
 
 .primary-control {
-  width: 2.25rem;
-  height: 2.25rem;
   color: white;
   background: var(--va-c-primary);
   font-size: 1.05rem;
@@ -673,8 +631,6 @@ onBeforeUnmount(() => {
 }
 
 .timeline {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgba(182, 82, 0, 0.5);
-
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
   align-items: center;
@@ -685,18 +641,8 @@ onBeforeUnmount(() => {
   font-variant-numeric: tabular-nums;
 }
 
-:global(html.dark .global-music-player .timeline) {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
-}
-
 .timeline span:last-child {
   text-align: right;
-}
-
-.timeline .music-progress-slider,
-.timeline .music-progress-slider::-webkit-slider-runnable-track,
-.timeline .music-progress-slider::-moz-range-track {
-  border: 0;
 }
 
 .player-error {
@@ -829,14 +775,10 @@ onBeforeUnmount(() => {
 
 .global-music-player.collapsed {
   right: auto;
-  left: max(1rem, env(safe-area-inset-left));
-  display: grid;
   width: auto;
-  min-height: 5rem;
   grid-template-columns: 3.35rem 1.7rem;
   gap: 0.55rem;
   margin: 0;
-  padding: 0.7rem 0.85rem;
 }
 
 .collapsed-cover-control {
@@ -921,10 +863,6 @@ onBeforeUnmount(() => {
   to { transform: rotate(360deg); }
 }
 
-@keyframes marquee-scroll {
-  to { transform: translateX(-50%); }
-}
-
 @keyframes lyric-scroll {
   to { transform: translateX(var(--lyric-scroll-distance, 0)); }
 }
@@ -939,8 +877,7 @@ onBeforeUnmount(() => {
 }
 
 @media (width >= 768px) and (width < 1280px) {
-  .global-music-player,
-  .global-music-player.collapsed {
+  .global-music-player {
     height: 5.5rem;
     min-height: 5.5rem;
   }
@@ -983,8 +920,7 @@ onBeforeUnmount(() => {
 }
 
 @media (width >= 1280px) and (width < 1820px) {
-  .global-music-player.collapsed,
-  .global-music-player:not(.collapsed) {
+  .global-music-player {
     height: 10rem;
   }
 
@@ -1090,8 +1026,6 @@ onBeforeUnmount(() => {
   }
 
   .global-music-player.collapsed {
-    width: auto;
-    height: auto;
     min-height: 0;
     grid-template-columns: 2.8rem 1.7rem;
     padding: 0.45rem 0.6rem;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PlayableTrack, Song, SongKind, SongVersion } from './music'
+import type { Song, SongKind } from './music'
 import AlbumVisual from './AlbumVisual.vue'
 import NowPlaying from './NowPlaying.vue'
 import TrackList from './TrackList.vue'
@@ -69,9 +69,7 @@ const displayedSong = computed<Song>(() => (
     : selectedSong.value
 ))
 const displayedVersionIndex = computed(() => isLibraryActive.value ? player.currentVersionIndex.value : 0)
-const metadataTrack = computed<PlayableTrack | null>(() => isLibraryActive.value ? player.currentTrack.value : null)
-const metadataVersion = computed<SongVersion | null>(() => isLibraryActive.value ? player.currentVersion.value : null)
-const songMetadata = useSongMetadata(metadataTrack, metadataVersion, player.currentTime, isLibraryActive)
+const songMetadata = useSongMetadata(player.currentTrack, player.currentVersion, player.currentTime, isLibraryActive)
 const currentCover = computed(() => getSongCoverUrl(displayedSong.value, 'cover'))
 
 function selectSong(song: Song) {
@@ -144,9 +142,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="music-library">
     <header class="library-header">
-      <div>
-        <h1>Yuumi's Songs</h1>
-      </div>
+      <h1>Yuumi's Songs</h1>
       <nav class="profile-links" aria-label="音乐主页">
         <a
           v-for="link in musicProfileLinks"
@@ -348,7 +344,6 @@ onBeforeUnmount(() => {
 .library-grid {
   display: grid;
   height: min(47rem, calc(100vh - 10rem));
-  min-height: min(47rem, calc(100vh - 10rem));
   max-height: 47rem;
   grid-template-columns: 20rem minmax(22rem, 1fr) 23rem;
 }
@@ -397,7 +392,6 @@ onBeforeUnmount(() => {
 
   .library-header {
     display: block;
-    padding: 0 0.35rem;
   }
 
   .profile-links {
@@ -435,7 +429,6 @@ onBeforeUnmount(() => {
   .library-grid {
     display: flex;
     height: auto;
-    min-height: 0;
     max-height: none;
     flex-direction: column;
   }

@@ -193,7 +193,7 @@ function getBilibiliLink(song: Pick<Song, 'links'>) {
 export function finalizeLibrarySongs(input: LibrarySongInput[]): Song[] {
   return input.map((song) => {
     const songLyricSource = song.lyricSource
-    const versions = (song.versions || []).map(item => ({
+    const versions: SongVersion[] = (song.versions || []).map(item => ({
       ...item,
       metadataSources: [...item.metadataSources],
       lyricSource: item.lyricSource

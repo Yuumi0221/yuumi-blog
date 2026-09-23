@@ -240,12 +240,6 @@ watch(() => props.activeLyricIndex, async (index) => {
   to { transform: rotate(1turn); }
 }
 
-@media (width < 1200px) and (width >= 768px) {
-  .album-visual {
-    grid-template-rows: minmax(18rem, 54%) minmax(10rem, 34%);
-  }
-}
-
 @media (width < 768px) {
   .album-visual {
     height: auto;

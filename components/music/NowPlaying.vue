@@ -62,7 +62,6 @@ function onVolumeInput(event: Event) {
       <time :datetime="song.date">{{ song.date.replaceAll('-', '.') }}</time>
 
       <div v-if="song.versions.length > 1" class="version-picker">
-        <p>版本</p>
         <div>
           <button
             v-for="(item, index) in song.versions"
@@ -261,14 +260,6 @@ time {
   margin-top: 1.4rem;
 }
 
-.version-picker p {
-  margin: 0 0 0.5rem;
-  color: var(--va-c-text-2);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
 .version-picker > div {
   display: flex;
   flex-wrap: wrap;
@@ -280,22 +271,8 @@ time {
   font-size: 0.7rem;
 }
 
-.version-picker .music-version-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
-  text-decoration: line-through;
-}
-
 .player-controls {
   margin-top: 1.7rem;
-}
-
-.progress-wrap {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgba(182, 82, 0, 0.5);
-}
-
-:global(html.dark .now-playing .progress-wrap) {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
 }
 
 .music-progress-slider:disabled {

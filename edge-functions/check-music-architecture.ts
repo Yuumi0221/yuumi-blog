@@ -55,6 +55,6 @@ const requestedLyrics: Array<[string, string]> = [
   ['2018-12-25-merry-chri', '29728098'],
 ]
 for (const [id, songId] of requestedLyrics)
-  assert.equal(song(id).versions[0].lyricSource?.songId, songId)
+  assert.deepEqual(song(id).versions[0].lyricSource, { type: 'netease', songId })
 
 console.log(`[music-check] ${songs.length} songs and special version mappings passed`)

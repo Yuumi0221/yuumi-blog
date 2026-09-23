@@ -111,7 +111,7 @@ function onSeek(event: Event) {
   player.seek(Number((event.target as HTMLInputElement).value))
 }
 
-function textOverflowDistance(container: HTMLElement | null, selector = '.marquee-text') {
+function textOverflowDistance(container: HTMLElement | null, selector = '.music-marquee__text') {
   const text = container?.querySelector<HTMLElement>(selector)
   if (!container || !text) {
     return 0
@@ -183,16 +183,16 @@ onBeforeUnmount(() => {
         @error="handleSongCoverError"
       >
       <div class="music-track__copy">
-        <div ref="titleMarquee" class="music-track__marquee" :class="{ scrolling: titleOverflows }">
-          <div :key="track.title" class="music-track__marquee-track">
-            <strong class="marquee-text">{{ track.title }}</strong>
-            <strong class="marquee-text marquee-copy" aria-hidden="true">{{ track.title }}</strong>
+        <div ref="titleMarquee" class="music-marquee" :class="{ 'is-scrolling': titleOverflows }">
+          <div :key="track.title" class="music-marquee__track">
+            <strong class="music-marquee__text">{{ track.title }}</strong>
+            <strong class="music-marquee__text music-marquee__copy" aria-hidden="true">{{ track.title }}</strong>
           </div>
         </div>
-        <div ref="artistMarquee" class="music-track__marquee" :class="{ scrolling: artistOverflows }">
-          <div :key="trackArtist" class="music-track__marquee-track">
-            <span class="marquee-text">{{ trackArtist }}</span>
-            <span class="marquee-text marquee-copy" aria-hidden="true">{{ trackArtist }}</span>
+        <div ref="artistMarquee" class="music-marquee" :class="{ 'is-scrolling': artistOverflows }">
+          <div :key="trackArtist" class="music-marquee__track">
+            <span class="music-marquee__text">{{ trackArtist }}</span>
+            <span class="music-marquee__text music-marquee__copy" aria-hidden="true">{{ trackArtist }}</span>
           </div>
         </div>
         <small v-if="isCurrent && player.error.value" role="status">{{ player.error.value }}</small>
@@ -298,51 +298,13 @@ onBeforeUnmount(() => {
   white-space: nowrap;
 }
 
-.music-track__marquee {
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.music-track__marquee-track {
-  display: flex;
-  width: max-content;
-}
-
-.music-track__marquee .marquee-text {
-  display: block;
-  flex: 0 0 auto;
-}
-
-.music-track__marquee .marquee-copy {
-  display: none;
-}
-
-.music-track__marquee.scrolling .music-track__marquee-track {
-  animation: music-track-marquee 18s linear 1s infinite;
-}
-
-.music-track__marquee.scrolling .marquee-text {
-  padding-right: 2rem;
-}
-
-.music-track__marquee.scrolling .marquee-copy {
-  display: block;
-}
-
 .music-track__playback {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgba(182, 82, 0, 0.5);
-
   box-sizing: border-box;
   width: 100%;
   max-width: none;
   min-width: 0;
   justify-self: center;
   padding-inline: 0.2rem;
-}
-
-:global(html.dark .music-track .music-track__playback) {
-  --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
 }
 
 .music-track__playback p {
@@ -388,12 +350,6 @@ onBeforeUnmount(() => {
 
 .music-track__playback .music-progress-slider {
   display: block;
-  border: 0;
-}
-
-.music-track__playback .music-progress-slider::-webkit-slider-runnable-track,
-.music-track__playback .music-progress-slider::-moz-range-track {
-  border: 0;
 }
 
 .music-track__playback .music-progress-slider:disabled {
@@ -456,10 +412,6 @@ onBeforeUnmount(() => {
 
 @keyframes music-track-lyric-scroll {
   to { transform: translateX(var(--lyric-scroll-distance, 0)); }
-}
-
-@keyframes music-track-marquee {
-  to { transform: translateX(-50%); }
 }
 
 @media (width < 768px) {

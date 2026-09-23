@@ -1,9 +1,11 @@
 .music-progress-slider {
   --music-progress: 0%;
+  --music-progress-thumb-shadow: 0 0 0.55rem rgba(182, 82, 0, 0.5);
 
   appearance: none;
   width: 100%;
   height: 0.32rem;
+  border: 0;
   border-radius: 999px;
   outline: none;
   background: linear-gradient(
@@ -14,8 +16,13 @@
   cursor: pointer;
 }
 
+html.dark .music-progress-slider {
+  --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
+}
+
 .music-progress-slider::-webkit-slider-runnable-track {
   height: 0.32rem;
+  border: 0;
   border-radius: 999px;
   background: transparent;
 }
@@ -33,6 +40,7 @@
 
 .music-progress-slider::-moz-range-track {
   height: 0.32rem;
+  border: 0;
   border-radius: 999px;
   background: color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg));
 }
@@ -50,6 +58,38 @@
   border-radius: 50%;
   background: var(--va-c-primary);
   box-shadow: var(--music-progress-thumb-shadow);
+}
+
+.music-marquee {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.music-marquee__track {
+  display: flex;
+  width: max-content;
+}
+
+.music-marquee__text {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.music-marquee__copy {
+  display: none;
+}
+
+.music-marquee.is-scrolling .music-marquee__track {
+  animation: music-marquee-scroll 18s linear 1s infinite;
+}
+
+.music-marquee.is-scrolling .music-marquee__text {
+  padding-right: 2rem;
+}
+
+.music-marquee.is-scrolling .music-marquee__copy {
+  display: block;
 }
 
 .music-version-button {
@@ -170,4 +210,8 @@
   border-radius: 50%;
   background: var(--music-volume-thumb);
   box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
+}
+
+@keyframes music-marquee-scroll {
+  to { transform: translateX(-50%); }
 }
