@@ -3,7 +3,7 @@ import type { PlayableTrack, SongVersion, TrackMetadata } from './music'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { MUSIC_COVER_PLACEHOLDER, handleSongCoverError } from './covers'
-import { isPlayableTrack } from './music'
+import { formatPlaybackTime, getPlaybackProgress, isPlayableTrack } from './music'
 import { playRegisteredTrack, registerPlaylistTrack, useGlobalMusicPlayer } from './useGlobalMusicPlayer'
 import { emptyTrackMetadata, loadVersionMetadata, useSongMetadata } from './useSongMetadata'
 
@@ -77,8 +77,8 @@ const activeTrack = computed<PlayableTrack | null>(() => isCurrent.value ? playe
 const activeVersion = computed<SongVersion | null>(() => isCurrent.value ? player.currentVersion.value : null)
 const playingMetadata = useSongMetadata(activeTrack, activeVersion, player.currentTime, isCurrent)
 const currentLyric = playingMetadata.currentLyric
-const progressPercent = computed(() => player.duration.value > 0 && isCurrent.value
-  ? Math.min(100, Math.max(0, (player.currentTime.value / player.duration.value) * 100))
+const progressPercent = computed(() => isCurrent.value
+  ? getPlaybackProgress(player.currentTime.value, player.duration.value)
   : 0)
 
 async function loadVisibleMetadata() {
@@ -109,12 +109,6 @@ function toggle() {
 
 function onSeek(event: Event) {
   player.seek(Number((event.target as HTMLInputElement).value))
-}
-
-function formatTime(seconds: number) {
-  if (!Number.isFinite(seconds) || seconds < 0)
-    return '0:00'
-  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`
 }
 
 function textOverflowDistance(container: HTMLElement | null, selector = '.marquee-text') {
@@ -210,11 +204,12 @@ onBeforeUnmount(() => {
         :class="{ idle: !isCurrent, scrolling: lyricOverflows }"
         aria-live="polite"
       >
-        <span :key="isCurrent ? currentLyric : 'idle'">{{ isCurrent ? currentLyric : '\u00a0' }}</span>
+        <span :key="isCurrent ? currentLyric || 'pending' : 'idle'">{{ isCurrent ? currentLyric || '\u00a0' : '\u00a0' }}</span>
       </p>
       <div class="music-track__timeline">
-        <span>{{ formatTime(isCurrent ? player.currentTime.value : 0) }}</span>
+        <span>{{ formatPlaybackTime(isCurrent ? player.currentTime.value : 0) }}</span>
         <input
+          class="music-progress-slider"
           type="range"
           min="0"
           :max="Math.max(player.duration.value, 0)"
@@ -225,7 +220,7 @@ onBeforeUnmount(() => {
           :aria-label="`${track.title} 播放进度`"
           @input="onSeek"
         >
-        <span>{{ formatTime(isCurrent ? player.duration.value : 0) }}</span>
+        <span>{{ formatPlaybackTime(isCurrent ? player.duration.value : 0) }}</span>
       </div>
     </div>
     <button
@@ -391,65 +386,17 @@ onBeforeUnmount(() => {
   text-align: right;
 }
 
-.music-track__playback input {
-  --music-progress: 0%;
-
-  appearance: none;
+.music-track__playback .music-progress-slider {
   display: block;
-  width: 100%;
-  height: 0.32rem;
   border: 0;
-  border-radius: 999px;
-  outline: none;
-  background: linear-gradient(
-    to right,
-    var(--va-c-primary) 0 var(--music-progress),
-    color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg)) var(--music-progress) 100%
-  );
-  cursor: pointer;
 }
 
-.music-track__playback input::-webkit-slider-runnable-track {
-  height: 0.32rem;
+.music-track__playback .music-progress-slider::-webkit-slider-runnable-track,
+.music-track__playback .music-progress-slider::-moz-range-track {
   border: 0;
-  border-radius: 999px;
-  background: transparent;
 }
 
-.music-track__playback input::-webkit-slider-thumb {
-  width: 0.9rem;
-  height: 0.9rem;
-  margin-top: -0.29rem;
-  appearance: none;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
-}
-
-.music-track__playback input::-moz-range-track {
-  height: 0.32rem;
-  border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg));
-}
-
-.music-track__playback input::-moz-range-progress {
-  height: 0.32rem;
-  border-radius: 999px;
-  background: var(--va-c-primary);
-}
-
-.music-track__playback input::-moz-range-thumb {
-  width: 0.72rem;
-  height: 0.72rem;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
-}
-
-.music-track__playback input:disabled {
+.music-track__playback .music-progress-slider:disabled {
   cursor: default;
   opacity: 0.42;
 }

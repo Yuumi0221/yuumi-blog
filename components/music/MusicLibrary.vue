@@ -6,7 +6,7 @@ import TrackList from './TrackList.vue'
 import VideoDialog from './VideoDialog.vue'
 import { getSongCoverUrl, handleSongCoverError } from './covers'
 import { musicProfileLinks, songs } from '../../pages/posts/songs.config'
-import { getPlatformIcon, getSongSearchText, getSongYear, isPlayableTrack, validateSongs } from './music'
+import { getPlatformIcon, getSongSearchText, getSongYear } from './music'
 import { useGlobalMusicPlayer } from './useGlobalMusicPlayer'
 import { useSongMetadata } from './useSongMetadata'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
@@ -77,17 +77,16 @@ const currentCover = computed(() => getSongCoverUrl(displayedSong.value, 'cover'
 function selectSong(song: Song) {
   selectedSong.value = song
   rememberSelectedSong(song.id)
-  const snapshot = filteredSongs.value.map(item => ({
-    ...item,
-    cover: getSongCoverUrl(item, 'cover'),
-  }))
-  player.playSnapshot(libraryContext, snapshot, song.id)
+  player.playSnapshot(libraryContext, librarySnapshot(), song.id)
 }
 
 function openVideo() {
-  if (isLibraryActive.value && player.isPlaying.value)
-    player.togglePlayback()
+  player.pause()
   videoOpen.value = true
+}
+
+function librarySnapshot() {
+  return filteredSongs.value.map(item => ({ ...item, cover: getSongCoverUrl(item, 'cover') }))
 }
 
 function toggleDisplayedSong() {
@@ -103,8 +102,7 @@ function selectDisplayedVersion(index: number) {
     return
   }
   const song = displayedSong.value
-  const snapshot = filteredSongs.value.map(item => ({ ...item, cover: getSongCoverUrl(item, 'cover') }))
-  player.playSnapshot(libraryContext, snapshot, song.id, index)
+  player.playSnapshot(libraryContext, librarySnapshot(), song.id, index)
 }
 
 function rememberSelectedSong(id: string) {
@@ -121,9 +119,9 @@ function rememberSelectedSong(id: string) {
 watch(() => isLibraryActive.value ? player.currentTrack.value?.id : selectedSong.value.id, (id) => {
   if (!id)
     return
-  const archiveSong = songs.find(song => song.id === id)
-  if (archiveSong)
-    selectedSong.value = archiveSong
+  const librarySong = songs.find(song => song.id === id)
+  if (librarySong)
+    selectedSong.value = librarySong
   rememberSelectedSong(id)
   if (route.query.song === id)
     return
@@ -132,10 +130,6 @@ watch(() => isLibraryActive.value ? player.currentTrack.value?.id : selectedSong
 
 onMounted(() => {
   document.documentElement.classList.add('yuumi-music-library-page')
-
-  const errors = validateSongs(songs)
-  if (errors.length)
-    console.warn('[Yuumi Music Library] 数据检查失败：', errors)
 
   if (route.query.song !== displayedSong.value.id)
     void router.replace({ query: { ...route.query, song: displayedSong.value.id } })
@@ -192,7 +186,6 @@ onBeforeUnmount(() => {
           :kind="kind"
           :year="year"
           :years="years"
-          :has-playable-audio="isPlayableTrack"
           @select="selectSong"
           @update:search="search = $event"
           @update:kind="kind = $event"
@@ -203,7 +196,6 @@ onBeforeUnmount(() => {
           :song="displayedSong"
           :cover="currentCover"
           :is-playing="isLibraryActive && player.isPlaying.value"
-          :is-loading="isLibraryActive && player.isLoading.value"
           :lyrics="songMetadata.metadata.value.lyrics"
           :active-lyric-index="songMetadata.activeLyricIndex.value"
           :lyrics-loading="songMetadata.isLoading.value"
@@ -217,7 +209,6 @@ onBeforeUnmount(() => {
           :is-loading="isLibraryActive && player.isLoading.value"
           :current-time="isLibraryActive ? player.currentTime.value : 0"
           :duration="isLibraryActive ? player.duration.value : 0"
-          :can-play="isPlayableTrack(displayedSong)"
           :error="isLibraryActive ? player.error.value : null"
           :playback-mode="player.playbackMode.value"
           :volume="player.volume.value"

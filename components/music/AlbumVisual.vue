@@ -7,7 +7,6 @@ const props = defineProps<{
   song: Song
   cover: string
   isPlaying: boolean
-  isLoading: boolean
   lyrics: LyricLine[]
   activeLyricIndex: number
   lyricsLoading: boolean

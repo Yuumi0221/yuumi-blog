@@ -5,8 +5,8 @@
   "scripts": {
     "build": "npm run fuse && npm run build:ssg && npm run rss",
     "build:edgeone": "pnpm run sync:music-covers && pnpm run build",
-    "build:spa": "valaxy build",
-    "build:ssg": "valaxy build --ssg",
+    "build:spa": "pnpm run check:music && valaxy build",
+    "build:ssg": "pnpm run check:music && valaxy build --ssg",
     "check:music": "jiti edge-functions/check-music-architecture.ts",
     "fuse": "valaxy fuse",
     "dev": "NODE_USE_ENV_PROXY=1 valaxy",

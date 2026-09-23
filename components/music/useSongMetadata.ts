@@ -17,7 +17,7 @@ export function emptyTrackMetadata(): TrackMetadata {
   return { lyrics: [] }
 }
 
-export function getVersionMetadataKey(item: SongVersion) {
+function getVersionMetadataKey(item: SongVersion) {
   const sources = item.metadataSources.map(metadataSourceKey).join('|')
   const lyricSource = item.lyricSource ? metadataSourceKey(item.lyricSource) : ''
   return `${item.id}|${sources}|lyrics:${lyricSource}`

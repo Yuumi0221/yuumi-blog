@@ -6,10 +6,6 @@ export class LruCache<K, V> {
       throw new Error('LRU capacity must be a positive integer')
   }
 
-  get size() {
-    return this.entries.size
-  }
-
   get(key: K) {
     const value = this.entries.get(key)
     if (value === undefined)

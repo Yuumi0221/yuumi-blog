@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { PlayableTrack, SongVersion } from './music'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import PlaybackModeIcon from './PlaybackModeIcon.vue'
+import VolumeIcon from './VolumeIcon.vue'
 import { MUSIC_COVER_PLACEHOLDER, handleSongCoverError } from './covers'
-import { useGlobalMusicPlayer } from './useGlobalMusicPlayer'
+import { formatPlaybackTime, getPlaybackProgress } from './music'
+import { PLAYBACK_MODE_LABELS, useGlobalMusicPlayer } from './useGlobalMusicPlayer'
 import { useSongMetadata } from './useSongMetadata'
 
 const player = useGlobalMusicPlayer()
@@ -44,30 +47,8 @@ const cover = computed(() => {
     : (track.cover || metadata.metadata.value.cover || MUSIC_COVER_PLACEHOLDER)
 })
 
-const progressPercent = computed(() => player.duration.value > 0
-  ? Math.min(100, Math.max(0, (player.currentTime.value / player.duration.value) * 100))
-  : 0)
-
-const modeMeta = computed(() => ({
-  list: { label: '列表循环', icon: 'i-ri-repeat-2-line' },
-  one: { label: '单曲循环', icon: 'i-ri-repeat-one-line' },
-  random: { label: '随机播放', icon: 'i-ri-shuffle-line' },
-  stop: { label: '播完停止', icon: 'i-ri-stop-circle-line' },
-})[player.playbackMode.value])
-
-const volumeIcon = computed(() => {
-  if (player.isMuted.value || player.volume.value === 0)
-    return 'i-ri-volume-mute-line'
-  if (player.volume.value < 0.5)
-    return 'i-ri-volume-down-line'
-  return 'i-ri-volume-up-line'
-})
-
-function formatTime(seconds: number) {
-  if (!Number.isFinite(seconds) || seconds < 0)
-    return '0:00'
-  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`
-}
+const progressPercent = computed(() => getPlaybackProgress(player.currentTime.value, player.duration.value))
+const modeLabel = computed(() => PLAYBACK_MODE_LABELS[player.playbackMode.value])
 
 function onSeek(event: Event) {
   player.seek(Number((event.target as HTMLInputElement).value))
@@ -77,10 +58,9 @@ function onVolume(event: Event) {
   player.setVolume(Number((event.target as HTMLInputElement).value))
 }
 
-function onTogglePlayback(event: MouseEvent) {
-  player.togglePlayback()
-  if (event.detail > 0)
-    (event.currentTarget as HTMLButtonElement).blur()
+function releasePointerFocus(event: MouseEvent) {
+  if (event.detail > 0 && event.target instanceof Element)
+    event.target.closest<HTMLElement>('button, input')?.blur()
 }
 
 function textOverflowDistance(container: HTMLElement | null) {
@@ -224,27 +204,36 @@ onBeforeUnmount(() => {
     class="global-music-player"
     :class="{ collapsed: player.isCollapsed.value, paused: !player.isPlaying.value }"
     aria-label="全站音乐播放器"
+    @click="releasePointerFocus"
   >
     <template v-if="player.isCollapsed.value">
-      <img :src="cover" :alt="`${title} 封面`" @error="handleSongCoverError">
+      <button
+        type="button"
+        class="collapsed-cover-control"
+        :aria-label="player.isPlaying.value ? '暂停' : '播放'"
+        :aria-pressed="player.isPlaying.value"
+        @click="player.togglePlayback"
+      >
+        <img :src="cover" :alt="`${title} 封面`" @error="handleSongCoverError">
+        <span
+          :class="player.isPlaying.value ? 'i-ri-pause-circle-line' : 'i-ri-play-circle-line'"
+          class="collapsed-playback-icon"
+          aria-hidden="true"
+        />
+      </button>
       <div class="collapsed-transport">
         <button type="button" class="round-control collapsed-main-control" aria-label="下一首" @click="player.goNext()">
           <span class="i-ri-skip-forward-fill" aria-hidden="true" />
         </button>
         <button
           type="button"
-          class="round-control primary-control collapsed-main-control"
-          :aria-label="player.isPlaying.value ? '暂停' : '播放'"
-          :aria-pressed="player.isPlaying.value"
-          @click="onTogglePlayback"
+          class="round-control collapsed-main-control"
+          aria-label="展开播放器"
+          @click="player.toggleCollapsed"
         >
-          <span v-if="player.isLoading.value" class="i-ri-loader-4-line spin" aria-hidden="true" />
-          <span v-else :class="player.isPlaying.value ? 'i-ri-pause-fill' : 'i-ri-play-fill'" aria-hidden="true" />
+          <span class="i-ri-expand-left-right-line" aria-hidden="true" />
         </button>
       </div>
-      <button type="button" class="expand-control" aria-label="展开播放器" @click="player.toggleCollapsed">
-        <span class="i-ri-arrow-right-s-line" aria-hidden="true" />
-      </button>
     </template>
 
     <template v-else>
@@ -296,36 +285,8 @@ onBeforeUnmount(() => {
             </div>
           </div>
           <div class="transport-buttons">
-            <button type="button" class="round-control mode-control" :aria-label="modeMeta.label" @click="player.cyclePlaybackMode">
-              <svg
-                v-if="player.playbackMode.value === 'list' || player.playbackMode.value === 'stop'"
-                class="mode-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <defs v-if="player.playbackMode.value === 'stop'">
-                  <mask id="global-music-stop-slash-mask">
-                    <rect width="24" height="24" fill="white" />
-                    <path d="M3 1 23 21" stroke="black" stroke-width="3" stroke-linecap="butt" />
-                  </mask>
-                </defs>
-                <path
-                  fill="currentColor"
-                  :mask="player.playbackMode.value === 'stop' ? 'url(#global-music-stop-slash-mask)' : undefined"
-                  d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4z"
-                />
-                <path
-                  v-if="player.playbackMode.value === 'stop'"
-                  d="M2 2 22 22"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="butt"
-                />
-              </svg>
-              <span v-else :class="modeMeta.icon" aria-hidden="true" />
+            <button type="button" class="round-control" :aria-label="modeLabel" @click="player.cyclePlaybackMode">
+              <PlaybackModeIcon :mode="player.playbackMode.value" mask-id="global-music-stop-slash-mask" />
             </button>
             <button type="button" class="round-control" aria-label="上一首" @click="player.goPrevious">
               <span class="i-ri-skip-back-fill" aria-hidden="true" />
@@ -335,7 +296,7 @@ onBeforeUnmount(() => {
               class="round-control primary-control"
               :aria-label="player.isPlaying.value ? '暂停' : '播放'"
               :aria-pressed="player.isPlaying.value"
-              @click="onTogglePlayback"
+              @click="player.togglePlayback"
             >
               <span v-if="player.isLoading.value" class="i-ri-loader-4-line spin" aria-hidden="true" />
               <span v-else :class="player.isPlaying.value ? 'i-ri-pause-fill' : 'i-ri-play-fill'" aria-hidden="true" />
@@ -343,7 +304,7 @@ onBeforeUnmount(() => {
             <button type="button" class="round-control" aria-label="下一首" @click="player.goNext()">
               <span class="i-ri-skip-forward-fill" aria-hidden="true" />
             </button>
-            <div class="volume-control">
+            <div class="music-volume-control">
               <button
                 type="button"
                 class="round-control"
@@ -351,11 +312,11 @@ onBeforeUnmount(() => {
                 :aria-pressed="player.isMuted.value"
                 @click="player.toggleMute"
               >
-                <span :class="volumeIcon" aria-hidden="true" />
+                <VolumeIcon :volume="player.volume.value" :is-muted="player.isMuted.value" />
               </button>
-              <div class="volume-popover">
+              <div class="music-volume-popover">
                 <input
-                  class="volume-slider"
+                  class="music-volume-slider"
                   type="range"
                   min="0"
                   max="1"
@@ -372,8 +333,9 @@ onBeforeUnmount(() => {
         </div>
 
         <div class="timeline">
-          <span>{{ formatTime(player.currentTime.value) }}</span>
+          <span>{{ formatPlaybackTime(player.currentTime.value) }}</span>
           <input
+            class="music-progress-slider"
             type="range"
             min="0"
             :max="Math.max(player.duration.value, 0)"
@@ -383,7 +345,7 @@ onBeforeUnmount(() => {
             aria-label="播放进度"
             @input="onSeek"
           >
-          <span>{{ formatTime(player.duration.value) }}</span>
+          <span>{{ formatPlaybackTime(player.duration.value) }}</span>
         </div>
         <p v-if="player.error.value" class="player-error" role="status">{{ player.error.value }}</p>
       </div>
@@ -425,7 +387,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <button type="button" class="round-control" aria-label="收起播放器" @click="collapsePlayer">
-          <span class="i-ri-arrow-left-s-line" aria-hidden="true" />
+          <span class="i-ri-contract-left-right-line" aria-hidden="true" />
         </button>
       </div>
     </template>
@@ -474,8 +436,7 @@ onBeforeUnmount(() => {
   align-self: center;
 }
 
-.track-summary img,
-.global-music-player.collapsed > img {
+.track-summary img {
   width: 3.35rem;
   height: 3.35rem;
   border-radius: 0.7rem;
@@ -628,14 +589,12 @@ onBeforeUnmount(() => {
   transition: opacity 150ms ease;
 }
 
-.global-music-player:not(.collapsed).paused .current-lyric,
 .global-music-player:not(.collapsed):hover .current-lyric,
 .global-music-player:not(.collapsed):focus-within .current-lyric {
   opacity: 0;
   visibility: hidden;
 }
 
-.global-music-player:not(.collapsed).paused .transport-buttons,
 .global-music-player:not(.collapsed):hover .transport-buttons,
 .global-music-player:not(.collapsed):focus-within .transport-buttons {
   opacity: 1;
@@ -643,8 +602,7 @@ onBeforeUnmount(() => {
   visibility: visible;
 }
 
-.round-control,
-.expand-control {
+.round-control {
   display: inline-grid;
   width: 2.25rem;
   height: 2.25rem;
@@ -657,22 +615,14 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.mode-icon {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
 .round-control:hover,
-.round-control:focus-visible,
-.expand-control:hover,
-.expand-control:focus-visible {
+.round-control:focus-visible {
   color: var(--va-c-primary);
   background: rgb(var(--va-c-primary-rgb), 0.11);
   outline: none;
 }
 
-.round-control:focus-visible,
-.expand-control:focus-visible {
+.round-control:focus-visible {
   box-shadow: 0 0 0 3px rgb(var(--va-c-primary-rgb), 0.18);
 }
 
@@ -712,61 +662,10 @@ onBeforeUnmount(() => {
   text-align: right;
 }
 
-.timeline input {
-  --music-progress: 0%;
-
-  appearance: none;
-  width: 100%;
-  height: 0.32rem;
+.timeline .music-progress-slider,
+.timeline .music-progress-slider::-webkit-slider-runnable-track,
+.timeline .music-progress-slider::-moz-range-track {
   border: 0;
-  border-radius: 999px;
-  outline: none;
-  background: linear-gradient(
-    to right,
-    var(--va-c-primary) 0 var(--music-progress),
-    color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg)) var(--music-progress) 100%
-  );
-  cursor: pointer;
-}
-
-.timeline input::-webkit-slider-runnable-track {
-  height: 0.32rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.timeline input::-webkit-slider-thumb {
-  width: 0.9rem;
-  height: 0.9rem;
-  margin-top: -0.29rem;
-  appearance: none;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
-}
-
-.timeline input::-moz-range-track {
-  height: 0.32rem;
-  border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg));
-}
-
-.timeline input::-moz-range-progress {
-  height: 0.32rem;
-  border-radius: 999px;
-  background: var(--va-c-primary);
-}
-
-.timeline input::-moz-range-thumb {
-  width: 0.72rem;
-  height: 0.72rem;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
 }
 
 .player-error {
@@ -893,106 +792,6 @@ onBeforeUnmount(() => {
   font-size: 0.67rem;
 }
 
-.volume-control {
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
-.volume-popover {
-  position: absolute;
-  z-index: 4;
-  bottom: calc(100% + 0.45rem);
-  left: 50%;
-  display: flex;
-  width: 3rem;
-  align-items: center;
-  flex-direction: column;
-  gap: 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--va-c-text) 14%, transparent);
-  border-radius: 0.7rem;
-  padding: 0.75rem 0 0.55rem;
-  color: #fff;
-  background: color-mix(in srgb, #202229 94%, transparent);
-  box-shadow: 0 0.7rem 1.8rem rgb(0 0 0 / 0.25);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 0.35rem);
-  transition: opacity 150ms ease, transform 150ms ease;
-}
-
-.volume-popover::after {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 0.55rem;
-  content: '';
-}
-
-.volume-control:hover .volume-popover,
-.volume-control:focus-within .volume-popover {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
-}
-
-.volume-popover span {
-  font-variant-numeric: tabular-nums;
-  font-size: 0.65rem;
-}
-
-.volume-slider {
-  --music-volume: 70%;
-
-  width: 0.34rem;
-  height: 5.5rem;
-  appearance: none;
-  border-radius: 999px;
-  outline: none;
-  background: linear-gradient(
-    to top,
-    var(--va-c-primary) 0 var(--music-volume),
-    rgb(255 255 255 / 0.2) var(--music-volume) 100%
-  );
-  cursor: pointer;
-  writing-mode: vertical-lr;
-  direction: rtl;
-}
-
-.volume-slider::-webkit-slider-runnable-track {
-  width: 0.34rem;
-  height: 5.5rem;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.volume-slider::-webkit-slider-thumb {
-  width: 0.82rem;
-  height: 0.82rem;
-  margin-left: -0.24rem;
-  appearance: none;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
-}
-
-.volume-slider::-moz-range-track {
-  width: 0.34rem;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.volume-slider::-moz-range-thumb {
-  width: 0.82rem;
-  height: 0.82rem;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
-}
-
 .spin {
   animation: player-spin 850ms linear infinite;
 }
@@ -1003,15 +802,61 @@ onBeforeUnmount(() => {
   display: grid;
   width: auto;
   min-height: 5rem;
-  grid-template-columns: 3.35rem 1.7rem 1.65rem;
+  grid-template-columns: 3.35rem 1.7rem;
   gap: 0.55rem;
   margin: 0;
   padding: 0.7rem 0.85rem;
 }
 
-.global-music-player.collapsed > img {
+.collapsed-cover-control {
+  position: relative;
+  display: block;
   width: 3.35rem;
   height: 3.35rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.7rem;
+  padding: 0;
+  background: var(--va-c-bg-soft);
+  cursor: pointer;
+}
+
+.collapsed-cover-control img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.collapsed-cover-control:focus-visible {
+  outline: 2px solid var(--va-c-primary);
+  outline-offset: 2px;
+}
+
+.collapsed-playback-icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 2.35rem;
+  height: 2.35rem;
+  box-shadow: none;
+  color: #fff;
+  filter: none;
+  pointer-events: none;
+  text-shadow: none;
+  transform: translate(-50%, -50%);
+  transition: top 220ms ease, left 220ms ease, width 220ms ease, height 220ms ease, transform 220ms ease;
+}
+
+.global-music-player.collapsed:not(.paused) .collapsed-playback-icon {
+  top: calc(100% - 0.3rem);
+  left: calc(100% - 0.3rem);
+  width: 1rem;
+  height: 1rem;
+  transform: translate(-100%, -100%);
 }
 
 .collapsed-main-control {
@@ -1028,10 +873,17 @@ onBeforeUnmount(() => {
   gap: 0.05rem;
 }
 
-.expand-control {
-  width: 1.65rem;
-  height: 1.65rem;
-  font-size: 0.85rem;
+@media (hover: none) {
+  .global-music-player:not(.collapsed).paused .current-lyric {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .global-music-player:not(.collapsed).paused .transport-buttons {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
 }
 
 @keyframes player-spin {
@@ -1210,11 +1062,11 @@ onBeforeUnmount(() => {
     width: auto;
     height: auto;
     min-height: 0;
-    grid-template-columns: 2.8rem 1.7rem 1.65rem;
+    grid-template-columns: 2.8rem 1.7rem;
     padding: 0.45rem 0.6rem;
   }
 
-  .global-music-player.collapsed > img {
+  .collapsed-cover-control {
     width: 2.8rem;
     height: 2.8rem;
   }

@@ -1,6 +1,6 @@
 import type { Song } from './music'
 
-export type SongCoverSize = 'thumb' | 'cover'
+type SongCoverSize = 'thumb' | 'cover'
 
 const DEFAULT_COVER_BASE_URL = 'https://cdn.yuumi.link/music/covers'
 const COVER_PIPELINE_QUERY = 'pipeline=platform'

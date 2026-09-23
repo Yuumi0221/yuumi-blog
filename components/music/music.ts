@@ -124,7 +124,7 @@ export const audioUrl = (id: string, url: string, label?: string): SongVersion =
   [{ type: 'url', url }],
 )
 
-export const bilibiliVersion = (bvid: string, page = 1, label?: string): SongVersion => version(
+const bilibiliVersion = (bvid: string, page = 1, label?: string): SongVersion => version(
   `bilibili-${bvid}-p${page}`,
   label,
   [{ type: 'bilibili', bvid, page }],
@@ -145,6 +145,18 @@ export function getSongYear(song: Song) {
 
 export function getPlatformIcon(platform: LinkPlatform) {
   return PLATFORM_ICONS[platform]
+}
+
+export function formatPlaybackTime(seconds: number) {
+  if (!Number.isFinite(seconds) || seconds < 0)
+    return '0:00'
+  return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`
+}
+
+export function getPlaybackProgress(currentTime: number, duration: number) {
+  return duration > 0
+    ? Math.min(100, Math.max(0, (currentTime / duration) * 100))
+    : 0
 }
 
 export function getSongSearchText(song: Song) {
@@ -227,7 +239,7 @@ export function getNeteaseSongId(track: Pick<PlayableTrack, 'versions'>) {
   return null
 }
 
-export function getBilibiliSource(track: Pick<PlayableTrack, 'versions'>) {
+function getBilibiliSource(track: Pick<PlayableTrack, 'versions'>) {
   for (const item of track.versions) {
     const source = item.metadataSources.find(candidate => candidate.type === 'bilibili')
       || item.playbackCandidates.find(candidate => candidate.type === 'bilibili')

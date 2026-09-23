@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { defineWebPage, useSchemaOrg } from '@unhead/schema-org/vue'
-import MusicLibrary from '../components/music/MusicLibrary.vue'
 import { useFrontmatter, useSiteConfig } from 'valaxy'
+import { defineAsyncComponent } from 'vue'
+
+const MusicLibrary = defineAsyncComponent(() => import('../components/music/MusicLibrary.vue'))
 
 const frontmatter = useFrontmatter()
 const siteConfig = useSiteConfig()

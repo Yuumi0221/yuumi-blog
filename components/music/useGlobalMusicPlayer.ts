@@ -3,6 +3,13 @@ import { computed, ref, shallowRef } from 'vue'
 
 export type PlaybackMode = 'list' | 'one' | 'random' | 'stop'
 
+export const PLAYBACK_MODE_LABELS: Record<PlaybackMode, string> = {
+  list: '列表循环',
+  one: '单曲循环',
+  random: '随机播放',
+  stop: '播完停止',
+}
+
 const SETTINGS_KEY = 'yuumi-global-music-settings-v1'
 const LOAD_TIMEOUT_MS = 10_000
 const UNAVAILABLE_MESSAGE = '暂时无法播放，请稍后重试'
@@ -305,6 +312,14 @@ function togglePlayback() {
   void element.play().catch(handlePlayRejection)
 }
 
+function pause() {
+  pendingAutoplay = false
+  playbackIntent = false
+  audio.value?.pause()
+  isPlaying.value = false
+  isLoading.value = false
+}
+
 function selectVersion(index: number) {
   const track = currentTrack.value
   if (!track || index < 0 || index >= track.versions.length || index === currentVersionIndex.value)
@@ -453,7 +468,6 @@ export function useGlobalMusicPlayer() {
     contextId,
     currentIndex,
     currentVersionIndex,
-    currentCandidateIndex,
     currentTrack,
     currentVersion,
     hasTrack,
@@ -467,10 +481,10 @@ export function useGlobalMusicPlayer() {
     isLoading,
     error,
     attachAudio,
-    initializeSettings,
     playSnapshot,
     playQueueTrack,
     togglePlayback,
+    pause,
     selectVersion,
     seek,
     setVolume,

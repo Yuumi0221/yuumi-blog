@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { Song } from './music'
 import type { PlaybackMode } from './useGlobalMusicPlayer'
-import { getPlatformIcon } from './music'
 import { computed } from 'vue'
+import PlaybackModeIcon from './PlaybackModeIcon.vue'
+import VolumeIcon from './VolumeIcon.vue'
+import { formatPlaybackTime, getPlatformIcon, getPlaybackProgress } from './music'
+import { PLAYBACK_MODE_LABELS } from './useGlobalMusicPlayer'
 
 const props = defineProps<{
   song: Song
@@ -12,7 +15,6 @@ const props = defineProps<{
   isLoading: boolean
   currentTime: number
   duration: number
-  canPlay: boolean
   error: string | null
   playbackMode: PlaybackMode
   volume: number
@@ -32,24 +34,8 @@ const emit = defineEmits<{
 }>()
 
 const progressMax = computed(() => Math.max(props.duration, 0))
-const progressPercent = computed(() => props.duration > 0
-  ? Math.min(100, Math.max(0, (props.currentTime / props.duration) * 100))
-  : 0)
-
-const playbackModeMeta = computed(() => ({
-  list: { label: '列表循环', icon: '' },
-  one: { label: '单曲循环', icon: 'i-ri-repeat-one-line' },
-  random: { label: '随机播放', icon: 'i-ri-shuffle-line' },
-  stop: { label: '播完停止', icon: '' },
-})[props.playbackMode])
-
-const volumeIcon = computed(() => {
-  if (props.isMuted || props.volume === 0)
-    return 'i-ri-volume-mute-line'
-  if (props.volume < 0.5)
-    return 'i-ri-volume-down-line'
-  return 'i-ri-volume-up-line'
-})
+const progressPercent = computed(() => getPlaybackProgress(props.currentTime, props.duration))
+const playbackModeLabel = computed(() => PLAYBACK_MODE_LABELS[props.playbackMode])
 
 const displayLinks = computed(() => (props.song.links || []).map(link => ({
   ...link,
@@ -57,14 +43,6 @@ const displayLinks = computed(() => (props.song.links || []).map(link => ({
     .replace(/^(?:Bilibili|网易云音乐|网易云|QQ\s*音乐|AcFun|YouTube)(?:\s*[·｜|/—-]\s*)?/i, '')
     .trim(),
 })))
-
-function formatTime(seconds: number) {
-  if (!Number.isFinite(seconds) || seconds < 0)
-    return '0:00'
-  const minutes = Math.floor(seconds / 60)
-  const rest = Math.floor(seconds % 60).toString().padStart(2, '0')
-  return `${minutes}:${rest}`
-}
 
 function onSeek(event: Event) {
   emit('seek', Number((event.target as HTMLInputElement).value))
@@ -99,22 +77,23 @@ function onVolumeInput(event: Event) {
         </div>
       </div>
 
-      <div class="player-controls" :class="{ disabled: !canPlay }">
+      <div class="player-controls">
         <div class="progress-wrap">
           <input
+            class="music-progress-slider"
             type="range"
             min="0"
             :max="progressMax"
             :value="Math.min(currentTime, progressMax)"
             step="0.1"
-            :disabled="!isActive || !canPlay || !duration"
+            :disabled="!isActive || !duration"
             :style="{ '--music-progress': `${progressPercent}%` }"
             aria-label="播放进度"
             @input="onSeek"
           >
           <div class="time-row">
-            <span>{{ formatTime(currentTime) }}</span>
-            <span>{{ formatTime(duration) }}</span>
+            <span>{{ formatPlaybackTime(currentTime) }}</span>
+            <span>{{ formatPlaybackTime(duration) }}</span>
           </div>
         </div>
 
@@ -122,45 +101,12 @@ function onVolumeInput(event: Event) {
           <button
             type="button"
             class="mode-button"
-            :aria-label="`播放顺序：${playbackModeMeta.label}。点击切换`"
-            :title="playbackModeMeta.label"
+            :aria-label="`播放顺序：${playbackModeLabel}。点击切换`"
+            :title="playbackModeLabel"
             :disabled="!isActive"
             @click="emit('cycle-mode')"
           >
-            <svg
-              v-if="playbackMode === 'list' || playbackMode === 'stop'"
-              class="mode-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M0 0h24v24H0z" fill="none" />
-              <defs v-if="playbackMode === 'stop'">
-                <mask id="music-stop-slash-mask">
-                  <rect width="24" height="24" fill="white" />
-                  <path
-                    d="M3 1 23 21"
-                    stroke="black"
-                    stroke-width="3"
-                    stroke-linecap="butt"
-                  />
-                </mask>
-              </defs>
-              <path
-                fill="currentColor"
-                :mask="playbackMode === 'stop' ? 'url(#music-stop-slash-mask)' : undefined"
-                d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4z"
-              />
-              <path
-                v-if="playbackMode === 'stop'"
-                d="M2 2 22 22"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="butt"
-              />
-            </svg>
-            <span v-else :class="playbackModeMeta.icon" aria-hidden="true" />
+            <PlaybackModeIcon :mode="playbackMode" mask-id="music-stop-slash-mask" />
           </button>
           <button type="button" class="skip-button" :disabled="!isActive" aria-label="上一首" @click="emit('previous')">
             <span class="i-ri-skip-back-mini-fill" aria-hidden="true" />
@@ -168,7 +114,7 @@ function onVolumeInput(event: Event) {
           <button
             type="button"
             class="play-button"
-            :disabled="!canPlay || (isLoading && !duration)"
+            :disabled="isLoading && !duration"
             :aria-label="isPlaying ? '暂停' : '播放'"
             @click="emit('toggle')"
           >
@@ -178,10 +124,10 @@ function onVolumeInput(event: Event) {
           <button type="button" class="skip-button" :disabled="!isActive" aria-label="下一首" @click="emit('next')">
             <span class="i-ri-skip-forward-mini-fill" aria-hidden="true" />
           </button>
-          <div class="volume-control">
-            <div class="volume-popover">
+          <div class="music-volume-control">
+            <div class="music-volume-popover">
               <input
-                class="volume-slider"
+                class="music-volume-slider"
                 type="range"
                 min="0"
                 max="1"
@@ -200,12 +146,11 @@ function onVolumeInput(event: Event) {
               :title="isMuted ? '取消静音' : '静音'"
               @click="emit('toggle-mute')"
             >
-              <span :class="volumeIcon" aria-hidden="true" />
+              <VolumeIcon :volume="volume" :is-muted="isMuted" />
             </button>
           </div>
         </div>
 
-        <p v-if="!canPlay" class="player-message">这首作品目前仅作档案展示</p>
         <p v-if="error" class="player-message player-message--error" role="status">{{ error }}</p>
       </div>
 
@@ -368,61 +313,7 @@ time {
   --music-progress-thumb-shadow: 0 0 0.55rem rgb(255, 242, 223);
 }
 
-.progress-wrap input {
-  --music-progress: 0%;
-
-  appearance: none;
-  width: 100%;
-  height: 0.32rem;
-  border-radius: 999px;
-  outline: none;
-  background: linear-gradient(
-    to right,
-    var(--va-c-primary) 0 var(--music-progress),
-    color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg)) var(--music-progress) 100%
-  );
-  cursor: pointer;
-}
-
-.progress-wrap input::-webkit-slider-runnable-track {
-  height: 0.32rem;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.progress-wrap input::-webkit-slider-thumb {
-  width: 0.9rem;
-  height: 0.9rem;
-  margin-top: -0.29rem;
-  appearance: none;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
-}
-
-.progress-wrap input::-moz-range-track {
-  height: 0.32rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--va-c-text) 14%, var(--va-c-bg));
-}
-
-.progress-wrap input::-moz-range-progress {
-  height: 0.32rem;
-  border-radius: 999px;
-  background: var(--va-c-primary);
-}
-
-.progress-wrap input::-moz-range-thumb {
-  width: 0.72rem;
-  height: 0.72rem;
-  border: 0;
-  border-radius: 50%;
-  background: var(--va-c-primary);
-  box-shadow: var(--music-progress-thumb-shadow);
-}
-
-.progress-wrap input:disabled {
+.music-progress-slider:disabled {
   cursor: not-allowed;
   opacity: 0.38;
 }
@@ -467,17 +358,6 @@ time {
   font-size: 1.15rem;
 }
 
-.mode-icon {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
-.volume-control {
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
 .volume-button {
   width: 2.35rem;
   height: 2.35rem;
@@ -485,103 +365,9 @@ time {
 }
 
 .volume-button:not(:disabled):hover,
-.volume-control:focus-within .volume-button {
+.music-volume-control:focus-within .volume-button {
   color: var(--va-c-primary);
   background: rgb(var(--va-c-primary-rgb), 0.11);
-}
-
-.volume-popover {
-  position: absolute;
-  z-index: 4;
-  bottom: calc(100% + 0.45rem);
-  left: 50%;
-  display: flex;
-  width: 3rem;
-  align-items: center;
-  flex-direction: column;
-  gap: 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--va-c-text) 14%, transparent);
-  border-radius: 0.7rem;
-  padding: 0.75rem 0 0.55rem;
-  color: #fff;
-  background: color-mix(in srgb, #202229 94%, transparent);
-  box-shadow: 0 0.7rem 1.8rem rgb(0 0 0 / 0.25);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 0.35rem);
-  transition: opacity 150ms ease, transform 150ms ease;
-}
-
-.volume-popover::after {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 0.55rem;
-  content: '';
-}
-
-.volume-control:hover .volume-popover,
-.volume-control:focus-within .volume-popover {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
-}
-
-.volume-popover span {
-  font-variant-numeric: tabular-nums;
-  font-size: 0.65rem;
-}
-
-.volume-slider {
-  --music-volume: 70%;
-
-  width: 0.34rem;
-  height: 5.5rem;
-  appearance: none;
-  border-radius: 999px;
-  outline: none;
-  background: linear-gradient(
-    to top,
-    var(--va-c-primary) 0 var(--music-volume),
-    rgb(255 255 255 / 0.2) var(--music-volume) 100%
-  );
-  cursor: pointer;
-  writing-mode: vertical-lr;
-  direction: rtl;
-}
-
-.volume-slider::-webkit-slider-runnable-track {
-  width: 0.34rem;
-  height: 5.5rem;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.volume-slider::-webkit-slider-thumb {
-  width: 0.82rem;
-  height: 0.82rem;
-  margin-left: -0.24rem;
-  appearance: none;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
-}
-
-.volume-slider::-moz-range-track {
-  width: 0.34rem;
-  border-radius: 999px;
-  background: transparent;
-}
-
-.volume-slider::-moz-range-thumb {
-  width: 0.82rem;
-  height: 0.82rem;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
 }
 
 .mode-button:not(:disabled):hover,
@@ -647,7 +433,7 @@ time {
 :global(html.dark .now-playing .control-row .skip-button:not(:disabled):hover),
 :global(html.dark .now-playing .control-row .skip-button:focus-visible),
 :global(html.dark .now-playing .volume-button:not(:disabled):hover),
-:global(html.dark .now-playing .volume-control:focus-within .volume-button) {
+:global(html.dark .now-playing .music-volume-control:focus-within .volume-button) {
   color: var(--va-c-primary) !important;
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Song, SongKind } from './music'
-import MusicCover from './MusicCover.vue'
 import { nextTick, onMounted, ref, watch } from 'vue'
+import { getSongCoverUrl, handleSongCoverError } from './covers'
 
 export interface YearOption {
   year: number
@@ -16,7 +16,6 @@ const props = defineProps<{
   kind: SongKind | 'all'
   year: number | null
   years: YearOption[]
-  hasPlayableAudio: (song: Song) => boolean
 }>()
 
 const emit = defineEmits<{
@@ -171,17 +170,23 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
         @click="emit('select', song)"
       >
         <span class="track-cover-wrap">
-          <MusicCover
+          <img
             class="track-cover"
-            :song="song"
-          />
+            :src="getSongCoverUrl(song, 'thumb')"
+            :alt="`${song.title} 封面`"
+            width="48"
+            height="48"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            @error="handleSongCoverError"
+          >
         </span>
         <span class="track-copy">
           <strong>{{ song.title }}</strong>
           <span>{{ song.artists.join(' / ') }}</span>
           <time :datetime="song.date">{{ song.date.replaceAll('-', '.') }}</time>
         </span>
-        <span v-if="!hasPlayableAudio(song)" class="archive-only" title="仅档案">档案</span>
       </button>
 
       <div v-if="!songs.length" class="empty-state">
@@ -430,7 +435,7 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
   position: relative;
   display: grid;
   width: 100%;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 0.72rem;
   border: 0;
@@ -507,14 +512,6 @@ const kindOptions: Array<{ value: SongKind | 'all', label: string }> = [
 .track-copy time {
   color: var(--va-c-text-2);
   font-size: 0.7rem;
-}
-
-.archive-only {
-  border: 1px solid var(--music-border);
-  border-radius: 999px;
-  padding: 0.15rem 0.38rem;
-  color: var(--va-c-text-2);
-  font-size: 0.62rem;
 }
 
 .empty-state {
