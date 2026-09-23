@@ -49,6 +49,7 @@ const cover = computed(() => {
 
 const progressPercent = computed(() => getPlaybackProgress(player.currentTime.value, player.duration.value))
 const modeLabel = computed(() => PLAYBACK_MODE_LABELS[player.playbackMode.value])
+const hasMultipleVersions = computed(() => (player.currentTrack.value?.versions.length || 0) > 1)
 
 function onSeek(event: Event) {
   player.seek(Number((event.target as HTMLInputElement).value))
@@ -239,7 +240,11 @@ onBeforeUnmount(() => {
     <template v-else>
       <div class="track-summary">
         <img :src="cover" :alt="`${title} 封面`" @error="handleSongCoverError">
-        <div>
+        <div
+          class="track-summary-copy"
+          :tabindex="hasMultipleVersions ? 0 : undefined"
+          :aria-label="hasMultipleVersions ? '切换播放版本' : undefined"
+        >
           <div ref="titleMarquee" class="marquee" :class="{ 'is-scrolling': titleOverflows }">
             <div :key="title" class="marquee-track">
               <strong class="marquee-text">{{ title }}</strong>
@@ -253,14 +258,15 @@ onBeforeUnmount(() => {
             </div>
           </div>
           <div
-            v-if="player.currentTrack.value && player.currentTrack.value.versions.length > 1"
-            class="global-version-picker"
+            v-if="hasMultipleVersions"
+            class="global-version-popover"
             aria-label="歌曲版本"
           >
             <button
               v-for="(item, index) in player.currentTrack.value.versions"
               :key="item.id"
               type="button"
+              class="music-version-button"
               :class="{ active: player.currentVersionIndex.value === index }"
               :aria-pressed="player.currentVersionIndex.value === index"
               @click="player.selectVersion(index)"
@@ -424,6 +430,8 @@ onBeforeUnmount(() => {
 }
 
 .track-summary {
+  position: relative;
+  z-index: 2;
   display: grid;
   min-width: 0;
   grid-template-columns: 3.35rem minmax(0, 1fr);
@@ -444,10 +452,17 @@ onBeforeUnmount(() => {
   background: var(--va-c-bg-soft);
 }
 
-.track-summary > div {
+.track-summary-copy {
+  position: relative;
   display: flex;
   min-width: 0;
   flex-direction: column;
+}
+
+.track-summary-copy:focus-visible {
+  border-radius: 0.3rem;
+  outline: 2px solid rgb(var(--va-c-primary-rgb), 0.45);
+  outline-offset: 0.2rem;
 }
 
 .track-summary strong,
@@ -496,37 +511,53 @@ onBeforeUnmount(() => {
   font-size: 0.7rem;
 }
 
-.global-version-picker {
+.global-version-popover {
+  position: absolute;
+  z-index: 6;
+  bottom: calc(100% + 0.45rem);
+  left: 0;
   display: flex;
-  gap: 0.24rem;
-  margin-top: 0.16rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.global-version-picker::-webkit-scrollbar {
-  display: none;
-}
-
-.global-version-picker button {
-  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(20rem, calc(100vw - 2rem));
+  flex-wrap: wrap;
+  gap: 0.35rem;
   border: 1px solid var(--player-border);
-  border-radius: 999px;
-  padding: 0.08rem 0.35rem;
-  color: var(--va-c-text-2);
-  background: transparent;
-  font: inherit;
-  font-size: 0.58rem;
-  cursor: pointer;
+  border-radius: 0.7rem;
+  padding: 0.55rem;
+  color: var(--va-c-text);
+  background: var(--player-surface);
+  box-shadow: 0 0.7rem 1.8rem rgb(0 0 0 / 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.35rem);
+  transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
+  visibility: hidden;
 }
 
-.global-version-picker button.active,
-.global-version-picker button:hover,
-.global-version-picker button:focus-visible {
-  border-color: rgb(var(--va-c-primary-rgb), 0.45);
-  color: var(--va-c-primary);
-  background: rgb(var(--va-c-primary-rgb), 0.1);
-  outline: none;
+.global-version-popover::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0.55rem;
+  content: '';
+}
+
+.track-summary-copy:hover .global-version-popover,
+.track-summary-copy:focus-within .global-version-popover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.global-version-popover .music-version-button {
+  flex: 0 0 auto;
+  padding: 0.28rem 0.55rem;
+  font: inherit;
+  font-size: 0.68rem;
+  white-space: nowrap;
 }
 
 .transport {

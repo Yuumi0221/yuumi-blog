@@ -68,6 +68,7 @@ function onVolumeInput(event: Event) {
             v-for="(item, index) in song.versions"
             :key="item.id"
             type="button"
+            class="music-version-button"
             :class="{ active: versionIndex === index }"
             :aria-pressed="versionIndex === index"
             @click="emit('select-version', index)"
@@ -196,7 +197,6 @@ function onVolumeInput(event: Event) {
 <style scoped>
 .now-playing {
   --details-scroll-thumb: rgb(var(--va-c-primary-rgb), 0);
-  --music-control-color: #171717;
 
   height: 100%;
   min-width: 0;
@@ -204,10 +204,6 @@ function onVolumeInput(event: Event) {
   overflow: hidden;
   border-left: 1px solid var(--music-border);
   background: var(--music-panel);
-}
-
-:global(html.dark .now-playing) {
-  --music-control-color: #fff;
 }
 
 .now-playing__scroll {
@@ -279,23 +275,12 @@ time {
   gap: 0.4rem;
 }
 
-.version-picker button {
-  border: 1px solid var(--music-border);
-  border-radius: 999px;
+.version-picker .music-version-button {
   padding: 0.35rem 0.62rem;
-  color: var(--va-c-text-2);
-  background: transparent;
   font-size: 0.7rem;
-  cursor: pointer;
 }
 
-.version-picker button.active {
-  border-color: var(--va-c-primary);
-  color: var(--va-c-primary);
-  background: rgb(var(--va-c-primary-rgb), 0.1);
-}
-
-.version-picker button:disabled {
+.version-picker .music-version-button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
   text-decoration: line-through;
@@ -340,7 +325,7 @@ time {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  color: var(--music-control-color);
+  color: var(--va-c-text-2);
   background: transparent;
   cursor: pointer;
   transition: color var(--va-transition-duration-fast), background-color var(--va-transition-duration-fast), filter var(--va-transition-duration-fast);
@@ -422,19 +407,6 @@ time {
   cursor: not-allowed;
   filter: grayscale(0.65);
   opacity: 0.45;
-}
-
-:global(html.dark .now-playing .control-row button:not(.play-button)) {
-  color: #fff !important;
-}
-
-:global(html.dark .now-playing .control-row .mode-button:not(:disabled):hover),
-:global(html.dark .now-playing .control-row .mode-button:focus-visible),
-:global(html.dark .now-playing .control-row .skip-button:not(:disabled):hover),
-:global(html.dark .now-playing .control-row .skip-button:focus-visible),
-:global(html.dark .now-playing .volume-button:not(:disabled):hover),
-:global(html.dark .now-playing .music-volume-control:focus-within .volume-button) {
-  color: var(--va-c-primary) !important;
 }
 
 .loading-icon {

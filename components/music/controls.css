@@ -52,6 +52,23 @@
   box-shadow: var(--music-progress-thumb-shadow);
 }
 
+.music-version-button {
+  border: 1px solid color-mix(in srgb, var(--va-c-text) 13%, transparent);
+  border-radius: 999px;
+  color: var(--va-c-text-2);
+  background: transparent;
+  cursor: pointer;
+}
+
+.music-version-button.active,
+.music-version-button:hover,
+.music-version-button:focus-visible {
+  border-color: var(--va-c-primary);
+  color: var(--va-c-primary);
+  background: rgb(var(--va-c-primary-rgb), 0.1);
+  outline: none;
+}
+
 .music-volume-control {
   position: relative;
   display: grid;
@@ -59,6 +76,9 @@
 }
 
 .music-volume-popover {
+  --music-volume-track: color-mix(in srgb, var(--va-c-text) 18%, transparent);
+  --music-volume-thumb: var(--va-c-primary-dark);
+
   position: absolute;
   z-index: 4;
   bottom: calc(100% + 0.45rem);
@@ -68,11 +88,11 @@
   align-items: center;
   flex-direction: column;
   gap: 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--va-c-text) 14%, transparent);
+  border: 1px solid var(--player-border, var(--music-border, color-mix(in srgb, var(--va-c-text) 14%, transparent)));
   border-radius: 0.7rem;
   padding: 0.75rem 0 0.55rem;
-  color: #fff;
-  background: color-mix(in srgb, #202229 94%, transparent);
+  color: var(--va-c-text);
+  background: var(--player-surface, var(--music-panel, var(--va-c-bg)));
   box-shadow: 0 0.7rem 1.8rem rgb(0 0 0 / 0.25);
   opacity: 0;
   pointer-events: none;
@@ -112,7 +132,7 @@
   background: linear-gradient(
     to top,
     var(--va-c-primary) 0 var(--music-volume),
-    rgb(255 255 255 / 0.2) var(--music-volume) 100%
+    var(--music-volume-track) var(--music-volume) 100%
   );
   cursor: pointer;
   writing-mode: vertical-lr;
@@ -133,7 +153,7 @@
   appearance: none;
   border: 0;
   border-radius: 50%;
-  background: #fff;
+  background: var(--music-volume-thumb);
   box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
 }
 
@@ -148,6 +168,6 @@
   height: 0.82rem;
   border: 0;
   border-radius: 50%;
-  background: #fff;
+  background: var(--music-volume-thumb);
   box-shadow: 0 1px 5px rgb(0 0 0 / 0.3);
 }

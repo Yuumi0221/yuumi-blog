@@ -237,6 +237,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .music-library {
+  --player-surface: color-mix(in srgb, var(--va-c-bg) 92%, var(--va-c-bg-soft));
   --music-panel: color-mix(in srgb, var(--va-c-bg) 82%, transparent);
   --music-control: color-mix(in srgb, var(--va-c-bg-soft) 78%, transparent);
   --music-border: color-mix(in srgb, var(--va-c-text) 13%, transparent);
