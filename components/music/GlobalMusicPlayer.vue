@@ -884,17 +884,10 @@ onBeforeUnmount(() => {
 }
 
 @media (width >= 1280px) {
-  .global-music-player.collapsed {
-    height: 9rem;
-    padding: 0.75rem;
-  }
-
   .global-music-player:not(.collapsed) {
-    --desktop-player-layout-left: max(1rem, calc((100vw - 42rem - var(--yun-post-card-max-width, 56.25rem)) / 2));
-
     right: auto;
     left: 1rem;
-    width: calc(var(--desktop-player-layout-left) + 19rem);
+    width: calc((100vw - 42rem) / 2 - 2rem);
     height: 9rem;
     min-height: 0;
     grid-template-columns: minmax(0, 1fr);
@@ -913,31 +906,37 @@ onBeforeUnmount(() => {
 
   .global-music-player:not(.collapsed) .secondary-controls {
     position: absolute;
-    top: 50%;
+    top: 1.3rem;
     right: 0.75rem;
-    transform: translateY(-50%);
+    transform: none;
+  }
+}
+
+@media (width >= 1536px) {
+  .global-music-player:not(.collapsed) {
+    width: calc((100vw - var(--yun-post-card-max-width, 56.25rem)) / 2 - 2rem);
   }
 }
 
 @media (width >= 1280px) and (width < 1820px) {
-  .global-music-player {
-    height: 10rem;
+  .global-music-player:not(.collapsed) {
+    height: auto;
+    min-height: 9rem;
   }
 
-  .global-music-player:not(.collapsed) .track-summary {
-    position: absolute;
-    top: 50%;
-    right: 5.9rem;
-    left: 0.75rem;
-    padding-right: 0;
-    transform: translateY(-50%);
+  .global-music-player:not(.collapsed) .secondary-controls {
+    z-index: 3;
   }
 
-  .global-music-player:not(.collapsed) .transport {
-    position: absolute;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    left: 0.75rem;
+  .queue-popover {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .global-music-player:not(.collapsed) .player-error {
+    position: static;
+    margin-top: 0.15rem;
   }
 }
 
@@ -1021,8 +1020,9 @@ onBeforeUnmount(() => {
   }
 
   .player-error {
-    bottom: -0.35rem;
-    text-align: left;
+    position: static;
+    margin: 0.15rem 0.35rem 0;
+    text-align: center;
   }
 
   .global-music-player.collapsed {

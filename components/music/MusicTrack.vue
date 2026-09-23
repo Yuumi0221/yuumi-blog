@@ -414,6 +414,14 @@ onBeforeUnmount(() => {
   to { transform: translateX(var(--lyric-scroll-distance, 0)); }
 }
 
+@media (width >= 1024px) and (width < 1536px) {
+  .music-track {
+    grid-template-columns: minmax(10rem, 1fr) minmax(0, 2.6fr) auto;
+    gap: 0.85rem;
+    padding-inline: 1.5rem;
+  }
+}
+
 @media (width < 768px) {
   .music-track {
     grid-template-columns: minmax(0, 1fr) auto;
