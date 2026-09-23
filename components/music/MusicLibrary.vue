@@ -315,12 +315,21 @@ onBeforeUnmount(() => {
   border-radius: 1.35rem;
   overflow: hidden;
   background: color-mix(in srgb, var(--va-c-bg) 60%, transparent);
-  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.12);
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.08);
   isolation: isolate;
   backdrop-filter: blur(18px);
+  transition: box-shadow var(--va-transition-duration);
+}
+
+.library-shell:hover {
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.12);
 }
 
 :global(html.dark) .library-shell {
+  box-shadow: 0 0.25rem 0.75rem rgb(255 255 255 / 0.05);
+}
+
+:global(html.dark) .library-shell:hover {
   box-shadow: 0 1.5rem 4rem rgb(255 255 255 / 0.09);
 }
 

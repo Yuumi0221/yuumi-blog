@@ -35,4 +35,26 @@ assert.deepEqual(messiah.map(item => item.playbackCandidates.map(candidate => ca
 ])
 assert.deepEqual(messiah[0].lyricSource, { type: 'netease', songId: '1880246715' })
 
+const requestedLyrics: Array<[string, string]> = [
+  ['2026-01-11-chronostasis', '29593073'],
+  ['2024-10-02-uchiage-hanabi', '496869422'],
+  ['2023-07-25-hua-si-ji', '1997525129'],
+  ['2023-06-18-sing-2015', '30706961'],
+  ['2022-12-25-seinaru-hi-no-inori', '1832908905'],
+  ['2022-10-12-ssfwl', '1382384478'],
+  ['2022-08-12-hikaru-nara', '29732992'],
+  ['2022-06-04-romance-no-yakusoku', '1862479259'],
+  ['2021-10-31-dancing-stars-on-me', '32235959'],
+  ['2021-10-11-queendom-izone-flip', '1869975831'],
+  ['2021-05-07-sing-and-smile', '1834880550'],
+  ['2020-12-06-hitchcock', '557581315'],
+  ['2020-11-20-saikai', '1492062605'],
+  ['2020-10-15-gekijo-no-ghost', '1337928912'],
+  ['2020-08-13-tokyo-summer-session', '33211444'],
+  ['2019-08-15-additional-memory', '1321543977'],
+  ['2018-12-25-merry-chri', '29728098'],
+]
+for (const [id, songId] of requestedLyrics)
+  assert.equal(song(id).versions[0].lyricSource?.songId, songId)
+
 console.log(`[music-check] ${songs.length} songs and special version mappings passed`)

@@ -61,7 +61,11 @@ export interface Song extends PlayableTrack {
   tags?: string[]
 }
 
-export type LibrarySongInput = Omit<Song, 'versions'> & { versions?: SongVersion[] }
+export type LibrarySongInput = Omit<Song, 'versions'> & {
+  versions?: SongVersion[]
+  /** Default lyric source copied to versions that do not define one. */
+  lyricSource?: MetadataSource
+}
 
 export interface LyricLine {
   start: number
@@ -176,16 +180,22 @@ function getBilibiliLink(song: Pick<Song, 'links'>) {
  */
 export function finalizeLibrarySongs(input: LibrarySongInput[]): Song[] {
   return input.map((song) => {
+    const songLyricSource = song.lyricSource
     const versions = (song.versions || []).map(item => ({
       ...item,
       metadataSources: [...item.metadataSources],
-      lyricSource: item.lyricSource ? { ...item.lyricSource } : undefined,
+      lyricSource: item.lyricSource
+        ? { ...item.lyricSource }
+        : songLyricSource ? { ...songLyricSource } : undefined,
       playbackCandidates: [...item.playbackCandidates],
     }))
     const bilibiliSource = getBilibiliLink(song)
 
     if (!versions.length && bilibiliSource) {
-      versions.push(bilibiliVersion(bilibiliSource.bvid, bilibiliSource.page))
+      const generated = bilibiliVersion(bilibiliSource.bvid, bilibiliSource.page)
+      if (songLyricSource)
+        generated.lyricSource = { ...songLyricSource }
+      versions.push(generated)
     }
     else if (versions.length === 1 && bilibiliSource) {
       const onlyVersion = versions[0]
@@ -198,7 +208,8 @@ export function finalizeLibrarySongs(input: LibrarySongInput[]): Song[] {
       }
     }
 
-    return { ...song, versions }
+    const { lyricSource: _lyricSource, ...songData } = song
+    return { ...songData, versions }
   })
 }
 

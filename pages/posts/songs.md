@@ -13,5 +13,5 @@ cover: https://cdn.yuumi.link/images/settings/Yuumi_Icon.png
 aside: false
 sidebar: false
 nav: false
-excerpt: 翻唱、原创、乐队
+excerpt: 关注 Yuumi 喵~ 关注 Yuumi 谢谢喵~
 ---

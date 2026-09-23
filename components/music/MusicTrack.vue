@@ -261,7 +261,7 @@ onBeforeUnmount(() => {
   border-radius: 0.95rem;
   padding: 0.9rem clamp(1.5rem, 4vw, 3rem);
   color: var(--va-c-text);
-  background: color-mix(in srgb, var(--va-c-bg-soft) 78%, transparent);
+  background: color-mix(in srgb, var(--va-c-bg) 78%, transparent);
   transition: border-color 180ms ease, background-color 180ms ease;
 }
 

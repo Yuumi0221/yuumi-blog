@@ -29,6 +29,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2026-01-11-chronostasis', title: 'クロノスタシス', date: '2026-01-11',
     artists: ['Yuumi', '饼飞Cookifei'], kind: 'band',
+    lyricSource: { type: 'netease', songId: '29593073' },
     credits: [
       credit('Original', value('きのこ帝国', 'https://www.youtube.com/watch?v=cCx4I4Fk5FE')),
       credit('Vocal', 'Yuumi'), credit('Instrument', '饼飞Cookifei'), credit('Mix', '章宛枫'),
@@ -73,6 +74,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2024-10-02-uchiage-hanabi', title: '打上花火', date: '2024-10-02',
     artists: ['Yuumi', '饼飞Cookifei'], kind: 'band',
+    lyricSource: { type: 'netease', songId: '496869422' },
     credits: [credit('Original', value('DAOKO × 米津玄師', 'https://www.youtube.com/watch?v=-tKVN2mAKRI')), credit('Vocal', 'Yuumi'), credit('Band', '饼飞Cookifei'), credit('Mix', '蚊子'), credit('PV', 'Yuumi')],
     links: [bilibili('https://www.bilibili.com/video/BV19w4NecECZ')],
   },
@@ -93,6 +95,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2023-07-25-hua-si-ji', title: '化四季', date: '2023-07-25',
     artists: ['Yuumi', '霖Linn'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1997525129' },
     credits: [credit('Original', value('阴阳师', 'https://www.bilibili.com/video/BV18e4y1W7FQ')), credit('Vocal', 'Yuumi', '霖Linn'), credit('Tune', '樱庭落'), credit('Mix', '果屋OFFICE')],
     versions: [audioUrl('main', 'https://cdn.yuumi.link/music/audio/化四季/化四季.wav')],
     notes: ['歌曲已下架，仅作为存档保留。'],
@@ -100,6 +103,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2023-06-18-sing-2015', title: 'Sing 2015', date: '2023-06-18',
     artists: ['Yuumi', '小雨', '变态', '小琦', '狐狸', '猫毛'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '30706961' },
     credits: [credit('Original', value('Goose House', 'https://www.youtube.com/watch?v=AfjLSAOY7rE')), credit('Vocal', 'Yuumi', '小雨', '变态', '小琦', '狐狸', '猫毛'), credit('Mix', '果屋OFFICE'), credit('PV', 'KiK'), credit('Illust', '狐狸')],
     links: [bilibili('https://www.bilibili.com/video/BV1su411a7VT/')],
   },
@@ -120,6 +124,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2022-12-25-seinaru-hi-no-inori', title: '聖なる日の祈り (先行版)', date: '2022-12-25',
     artists: ['AmeAkane', 'Yuumi'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1832908905' },
     credits: [credit('Original', value('Aqours', 'https://www.youtube.com/watch?v=fREtIttC3LE')), credit('Vocal', 'AmeAkane', 'Yuumi'), credit('Mix / Video', 'AmeAkane')],
     links: [bilibili('https://www.bilibili.com/video/BV12e4y1L79E/')],
   },
@@ -150,6 +155,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2022-10-12-ssfwl', title: '第五季节 (SSFWL)', date: '2022-10-12',
     artists: ['GE*ZONE'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1382384478' },
     credits: [
       credit('Original', value('OH MY GIRL', 'https://www.youtube.com/watch?v=udGwca1HBM4')),
       credit('Vocal', '琴川归人', 'ひかり', '律律子', 'AmeAkane', '奶茶Miruky', '柠檬', 'Yuumi'),
@@ -173,6 +179,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2022-08-12-hikaru-nara', title: '光るなら', date: '2022-08-12',
     artists: ['七草动漫社宅舞翻唱部'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '29732992' },
     credits: [credit('Original', value('Goose house', 'https://www.youtube.com/watch?v=SnXkhkEvNIM')), credit('Vocal', '七草动漫社宅舞翻唱部、阿荨、阿鱼、初玖、D少、陌北凉、秦玖、时织、水丸子、雁、依久、亿碗饭、Yuumi'), credit('Mix', '亿碗饭'), credit('策划、视频', '玉子')],
     links: [bilibili('https://www.bilibili.com/video/BV19t4y1g79U/')],
     notes: ['真诚建议，千万别听！！'],
@@ -191,6 +198,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2022-06-04-romance-no-yakusoku', title: 'ロマンスの約束', date: '2022-06-04',
     artists: ['Yuumi'], kind: 'solo',
+    lyricSource: { type: 'netease', songId: '1862479259' },
     credits: [credit('Original', value('幾田りら', 'https://www.youtube.com/watch?v=5r7ooPbDn-Q')), credit('Vocal', 'Yuumi'), credit('Guitar', 'Martin Weiwen'), credit('Drum', 'Zis'), credit('Mix', 'Yuumi', 'Weiwen')],
     links: [bilibili('https://www.bilibili.com/video/BV1VW4y1k7MN/')],
   },
@@ -227,6 +235,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2021-10-31-dancing-stars-on-me', title: 'Dancing stars on me!', date: '2021-10-31',
     artists: ['音乃木坂幼稚園'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '32235959' },
     credits: [
       credit('Original', value("μ's", 'https://www.youtube.com/watch?v=PBeKaFMS6nY')),
       credit('Vocal', '穂乃果－小裙边', 'ことり－乌五云', '海未－Hika', '真姫－DouDou', '凛－Yuumi', '花陽－花守织', 'にこ－赤也', '絵里－蕾伊娜', '希－Mamiko'),
@@ -237,6 +246,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2021-10-11-queendom-izone-flip', title: 'Queendom (IZ*ONE flip)', date: '2021-10-11',
     artists: ['GE*ZONE'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1869975831' },
     credits: [
       credit('Original', value('Red Velvet', 'https://www.youtube.com/watch?v=c9RzZpV460k')),
       credit('Vocal', 'AmeAkane', 'Yuumi', '奶茶', '律律子', 'ひかり', '柠檬'),
@@ -269,7 +279,10 @@ const songEntries: LibrarySongInput[] = [
         lyricSource: { type: 'netease', songId: '1880246715' },
       },
       netease('1880246715', '无念白版'),
-      audioUrl('acapella', 'https://cdn.yuumi.link/music/audio/祝福のメシアとアイの塔/爱之塔(纯人声).mp3', '纯人声版'),
+      {
+        ...audioUrl('acapella', 'https://cdn.yuumi.link/music/audio/祝福のメシアとアイの塔/爱之塔(纯人声).mp3', '纯人声版'),
+        lyricSource: { type: 'netease', songId: '1880246715' },
+      },
     ],
     links: [neteaseLink('1880246715', '网易云 · 无念白版')],
     videos: [{ title: '念白版 MV', src: 'https://cdn.yuumi.link/music/audio/祝福のメシアとアイの塔/爱之塔(念白版).mp4' }],
@@ -327,6 +340,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2021-05-07-sing-and-smile', title: 'Sing&Smile!!', date: '2021-05-07',
     artists: ['羊驼', '帕露', 'Yuumi', '星月モモ'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1834880550' },
     credits: [credit('Original', value('QU4RTZ', 'https://www.youtube.com/watch?v=9SEiiwiiha4')), credit('Vocal', '中须霞—羊驼', '艾玛·维尔德—帕露', '近江彼方—Yuumi', '天王寺璃奈—星月モモ'), credit('Mix', '桜庭落'), credit('PV', '柿恋')],
     links: [bilibili('https://www.bilibili.com/video/BV1CP4y1a7i1/')],
   },
@@ -360,6 +374,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2020-12-06-hitchcock', title: 'ヒッチコック', date: '2020-12-06',
     artists: ['Yuumi', 'zayze_'], kind: 'solo',
+    lyricSource: { type: 'netease', songId: '557581315' },
     credits: [credit('Original', value('ヨルシカ', 'https://youtu.be/t7MBzMP4OzY')), credit('Vocal', 'Yuumi'), credit('Guitar', 'zayze_')],
     links: [bilibili('https://www.bilibili.com/video/BV1iV41187qq/')],
   },
@@ -381,6 +396,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2020-11-20-saikai', title: '再会', date: '2020-11-20',
     artists: ['Ito', 'Yuumi'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1492062605' },
     credits: [credit('Original', value('LiSA × Uru produced by Ayase', 'https://youtu.be/impSuIygMiQ')), credit('Instrument', value('汐澤香緒礼（感谢授权）', 'https://www.bilibili.com/video/BV16r4y1w7c3')), credit('Vocal', 'Ito', 'Yuumi'), credit('Mix', '萨摩灰'), credit('Illust', '清水近', 'Yuumi'), credit('PV', 'Ito'), credit('手写字幕', 'Yuumi')],
     versions: [audioUrl('main', 'https://cdn.yuumi.link/music/audio/再会/再会.mp3')],
     videos: [{ title: '再会 MV', src: 'https://cdn.yuumi.link/music/audio/再会/再会.mp4' }],
@@ -389,6 +405,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2020-10-15-gekijo-no-ghost', title: 'You are a ghost, I am a ghost 〜劇場のゴースト〜', date: '2020-10-15',
     artists: ['Ito', 'Yuumi'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1337928912' },
     credits: [credit('Original', value('Starlight九九组', 'https://www.youtube.com/watch?v=R8zIk-x3DrA')), credit('Vocal', 'Ito', 'Yuumi'), credit('Mix', '宵夜混音铺（夏璃夜）'), credit('Illust', '拉芙斯Dodo'), credit('PV', 'Ito')],
     versions: [audioUrl('main', 'https://cdn.yuumi.link/music/audio/你鬼我鬼/你鬼我鬼.mp3')],
     videos: [{ title: '劇場のゴースト MV', src: 'https://cdn.yuumi.link/music/audio/你鬼我鬼/你鬼我鬼.mp4' }],
@@ -397,6 +414,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2020-08-13-tokyo-summer-session', title: '東京サマーセッション', date: '2020-08-13',
     artists: ['3000', 'Kurita', 'Ito', 'Arima', 'Yuumi', 'Linn'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '33211444' },
     credits: [credit('Original', value('HoneyWorks', 'https://www.youtube.com/watch?v=sXLzVwgmv_w')), credit('策划', 'Ito'), credit('Vocal', '3000', 'Kurita', 'Ito', 'Arima', 'Yuumi', 'Linn'), credit('Mix', '宵夜混音铺（夏璃夜）'), credit('Illust', '绘本组—Noni', '告白组—清水近', '吃醋组—长风', '6人自拍CG—残残'), credit('PV', '墨恒纾')],
     versions: [audioUrl('main', 'https://cdn.yuumi.link/music/audio/东京夏日相会/东京夏日相会.mp3')],
     videos: [{ title: '東京サマーセッション MV', src: 'https://cdn.yuumi.link/music/audio/东京夏日相会/东京夏日相会.mp4' }],
@@ -487,6 +505,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2019-08-15-additional-memory', title: 'アディショナルメモリー', date: '2019-08-15',
     artists: ['Yuumi', 'J.C.'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '1321543977' },
     credits: [credit('Original', value('じん（自然の敵P）· 原曲', 'https://www.nicovideo.jp/watch/sm33854807'), value('Bilibili', 'https://www.bilibili.com/video/BV1jW411y7hP')), credit('Vocal', 'Yuumi', 'J.C.'), credit('Mix', 'J.C.')],
     versions: [audioUrl('main', 'https://cdn.yuumi.link/music/audio/回忆追加/回忆追加.mp3')],
     notes: ['因为两个人都觉得不是很满意，所以没有在任何地方投稿。'],
@@ -525,6 +544,7 @@ const songEntries: LibrarySongInput[] = [
   {
     id: '2018-12-25-merry-chri', title: 'Merry-Chri', date: '2018-12-25',
     artists: ['Yuumi', '奶茶Miruky'], kind: 'collaboration',
+    lyricSource: { type: 'netease', songId: '29728098' },
     credits: [credit('Original', 'BoA'), credit('Vocal', 'Yuumi', '奶茶Miruky'), credit('Mix', '花見Mix'), credit('Illust', 'Yukari（线稿）', '3bs（上色）'), credit('Movie', '词典')],
     links: [bilibili('https://www.bilibili.com/video/BV1Qt411k7SL/')],
     notes: ['被网易云下架了T^T'],
